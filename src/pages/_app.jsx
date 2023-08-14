@@ -3,20 +3,21 @@ import '@rainbow-me/rainbowkit/styles.css'
 import {
 	RainbowKitProvider,
 	getDefaultWallets,
-	connectorsForWallets,
 	darkTheme
 } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { polygon, polygonMumbai } from 'wagmi/chains'
+import { polygon, polygonMumbai, celoAlfajores, celo } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 import { ChakraProvider } from '@chakra-ui/react'
 
-const { chains, publicClient, webSocketPublicClient } = configureChains(
+const { chains, publicClient } = configureChains(
 	[
-		...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'false' ? [polygon] : []),
+		...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'false'
+			? [celo, polygon]
+			: []),
 
 		...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-			? [polygonMumbai]
+			? [celoAlfajores, polygonMumbai]
 			: [])
 	],
 	[publicProvider()]
@@ -24,7 +25,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 
 const projectId = '0'
 
-const { wallets } = getDefaultWallets({
+const { connectors } = getDefaultWallets({
 	appName: 'RainbowKit dApp',
 	projectId,
 	chains
@@ -34,13 +35,10 @@ const demoAppInfo = {
 	appName: 'RainbowKit dApp'
 }
 
-const connectors = connectorsForWallets([...wallets])
-
 const wagmiConfig = createConfig({
 	autoConnect: true,
 	connectors,
-	publicClient,
-	webSocketPublicClient
+	publicClient
 })
 
 export default function App({ Component, pageProps }) {
