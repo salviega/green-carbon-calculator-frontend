@@ -5,7 +5,6 @@ import {
 	Flex,
 	Avatar,
 	HStack,
-	Text,
 	IconButton,
 	Button,
 	Menu,
@@ -15,15 +14,17 @@ import {
 	MenuDivider,
 	useDisclosure,
 	useColorModeValue,
+  useColorMode,
 	Stack
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon,  MoonIcon, SunIcon  } from '@chakra-ui/icons'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Links = ['Dashboard', 'Projects', 'Team']
 
 const Layout = ({ children }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
+  const { colorMode, toggleColorMode } = useColorMode()
 	const NavLink = props => {
 		const { children } = props
 		return (
@@ -54,12 +55,12 @@ const Layout = ({ children }) => {
 						onClick={isOpen ? onClose : onOpen}
 					/>
 					<HStack spacing={8} alignItems={'center'}>
-							<Image
-								src='/images/logo.png'
-								width={30}
-								height={30}
-								alt='Picture of the author'
-							/>
+						<Image
+							src='/images/logo.png'
+							width={30}
+							height={30}
+							alt='Picture of the author'
+						/>
 						<HStack
 							as={'nav'}
 							spacing={4}
@@ -93,8 +94,12 @@ const Layout = ({ children }) => {
 								<MenuItem>Link 3</MenuItem>
 							</MenuList>
 						</Menu>
-						<Box mx={4} />
+						<Box mx={2} />
 						<ConnectButton />
+						<Box mx={2} />
+						<Button onClick={toggleColorMode}>
+							{colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+						</Button>
 					</Flex>
 				</Flex>
 
@@ -109,7 +114,7 @@ const Layout = ({ children }) => {
 				) : null}
 			</Box>
 
-			<Box p={4}>{children}</Box>
+			<Box>{children}</Box>
 		</div>
 	)
 }
