@@ -17,7 +17,7 @@ import {
   useColorMode,
 	Stack
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon,  MoonIcon, SunIcon  } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon,  MoonIcon, SunIcon  } from '@chakra-ui/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Links = ['Dashboard', 'Projects', 'Team']
@@ -113,7 +113,6 @@ const Layout = ({ children }) => {
 					</Box>
 				) : null}
 			</Box>
-
 			<Box>{children}</Box>
 		</div>
 	)
