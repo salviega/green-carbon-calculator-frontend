@@ -1,4 +1,3 @@
-import Wallet from '@/components/Wallet'
 import React, { useEffect, useRef, useState } from 'react'
 
 export default function Explorer() {
@@ -7,7 +6,6 @@ export default function Explorer() {
 	}
 	return (
 		<>
-			<Wallet />
 			<button onClick={onCo2Storage}>HAHAHA</button>
 		</>
 	)

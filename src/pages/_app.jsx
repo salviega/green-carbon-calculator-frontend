@@ -9,6 +9,7 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { polygon, polygonMumbai, celoAlfajores, celo } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 import { ChakraProvider } from '@chakra-ui/react'
+import Layout from '@/components/Layout'
 
 const { chains, publicClient } = configureChains(
 	[
@@ -57,7 +58,9 @@ export default function App({ Component, pageProps }) {
 				})}
 			>
 				<ChakraProvider>
-					<Component {...pageProps} />
+          <Layout>
+					  <Component {...pageProps} />
+          </Layout>
 				</ChakraProvider>
 			</RainbowKitProvider>
 		</WagmiConfig>
