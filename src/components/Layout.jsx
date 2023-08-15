@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import Image from 'next/image'
 import {
 	Box,
 	Flex,
@@ -16,30 +17,31 @@ import {
 	useColorModeValue,
 	Stack
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Links = ['Dashboard', 'Projects', 'Team']
 
 const Layout = ({ children }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
-  const NavLink = (props) => {
-    const { children } = props
-    return (
-      <Box
-        as="a"
-        px={2}
-        py={1}
-        rounded={'md'}
-        _hover={{
-          textDecoration: 'none',
-          bg: useColorModeValue('gray.200', 'gray.700'),
-        }}
-        href={'#'}>
-        {children}
-      </Box>
-    )
-  }
+	const NavLink = props => {
+		const { children } = props
+		return (
+			<Box
+				as='a'
+				px={2}
+				py={1}
+				rounded={'md'}
+				_hover={{
+					textDecoration: 'none',
+					bg: useColorModeValue('gray.200', 'gray.700')
+				}}
+				href={children}
+			>
+				{children}
+			</Box>
+		)
+	}
 	return (
 		<div>
 			<Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -52,7 +54,12 @@ const Layout = ({ children }) => {
 						onClick={isOpen ? onClose : onOpen}
 					/>
 					<HStack spacing={8} alignItems={'center'}>
-						<Box>Logo</Box>
+							<Image
+								src='/images/logo.png'
+								width={30}
+								height={30}
+								alt='Picture of the author'
+							/>
 						<HStack
 							as={'nav'}
 							spacing={4}
@@ -86,8 +93,8 @@ const Layout = ({ children }) => {
 								<MenuItem>Link 3</MenuItem>
 							</MenuList>
 						</Menu>
-            <Box mx={4} />
-            <ConnectButton/>
+						<Box mx={4} />
+						<ConnectButton />
 					</Flex>
 				</Flex>
 
@@ -102,9 +109,7 @@ const Layout = ({ children }) => {
 				) : null}
 			</Box>
 
-			<Box p={4}>
-        {children}
-      </Box>
+			<Box p={4}>{children}</Box>
 		</div>
 	)
 }
