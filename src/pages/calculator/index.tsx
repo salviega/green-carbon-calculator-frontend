@@ -19,7 +19,7 @@ import {
 	FormHelperText,
 	FormErrorMessage
 } from '@chakra-ui/react'
-import Form1, { Form1Ref } from '../../components/calculator/Form1'
+import Form1, { Form1Input, Form1Ref } from '../../components/calculator/Form1'
 
 const Form2 = () => {
 	return (
@@ -257,37 +257,60 @@ const Form3 = () => {
 		</div>
 	)
 }
-
+export interface CalculatorForm {
+	eventName: string;
+	duration: string;
+	country: string;
+	participants: string;
+	employees: string;
+	heatedArea: string | undefined,
+	airConditionedArea: string| undefined,
+}
 export default function Calculator() {
-	const form1Ref = useRef<Form1Ref>(null);
-	const form2Ref = useRef<Form1Ref>(null);
-	const form3Ref = useRef<Form1Ref>(null);
+	const stepNumber = 4
+	const form1Ref = useRef<Form1Ref>(null)
+	const form2Ref = useRef<Form1Ref>(null)
+	const form3Ref = useRef<Form1Ref>(null)
 	const toast = useToast()
 	const [step, setStep] = useState(1)
-	const [progress, setProgress] = useState(33.33)
+	const [progress, setProgress] = useState(100 / stepNumber)
+	const [formInfo, setFormInfo] = useState<CalculatorForm>({
+		eventName: '',
+		duration: '',
+		country: '',
+		participants: '',
+		employees: '',
+		heatedArea: '',
+		airConditionedArea: '',
+	})
 	const onNext = () => {
-		console.log(form1Ref.current);
-		console.log(step);
-		
-		if(step === 1 && form1Ref.current) {
-			console.log('entered to validation');
+		if (step === 1 && form1Ref.current) {
 			form1Ref.current.validateAndSubmit(() => {
-        // This callback function will be executed from Form1
-        console.log('Form1 validation and submission complete');
-        // You can perform actions in Calculator here
-      });
+				showNextForm()
+			})
 		}
-
-		// setStep(step + 1)
-		// if (step === 3) {
-		// 	setProgress(100)
-		// } else {
-		// 	setProgress(progress + 33.33)
-		// }
 	}
 	const showNextForm = () => {
-		
-	};
+		setStep(step + 1)
+		if (step === 3) {
+			setProgress(100)
+		} else {
+			setProgress(progress + 33.33)
+		}
+	}
+	const onSetInfo = (info : Form1Input) => {
+		console.log(info);
+		setFormInfo({
+			...formInfo, 
+			duration: info.duration,
+			country: info.country,
+			participants: info.participants,
+			employees: info.employees,
+			eventName: info.eventName,
+			heatedArea:  info.heatedArea,
+			airConditionedArea:  info.airConditionedArea,
+		})
+	}
 	return (
 		<div>
 			<Box
@@ -306,7 +329,13 @@ export default function Calculator() {
 					mx='5%'
 					isAnimated
 				></Progress>
-				{step === 1 ? <Form1 ref={form1Ref} onValidationComplete={onNext}/> : step === 2 ? <Form2 /> : <Form3 />}
+				{step === 1 ? (
+					<Form1 ref={form1Ref} onValidationComplete={onSetInfo} />
+				) : step === 2 ? (
+					<Form2 />
+				) : (
+					<Form3 />
+				)}
 				<ButtonGroup mt='5%' w='100%'>
 					<Flex w='100%' justifyContent='space-between'>
 						<Flex>

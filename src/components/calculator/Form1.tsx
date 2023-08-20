@@ -8,14 +8,17 @@ import {
 	FormLabel,
 	FormErrorMessage
 } from '@chakra-ui/react'
-interface Form1Input {
+export interface Form1Input {
+	eventName: string
 	duration: string
-	// country: string
+	country: string
 	participants: string
 	employees: string
+	heatedArea?: string
+	airConditionedArea?: string
 }
 interface Form1Props {
-	onValidationComplete: () => void // Define the prop type
+	onValidationComplete: (info: Form1Input) => void // Define the prop type
 }
 export interface Form1Ref {
 	validateAndSubmit: (callback: () => void) => void
@@ -24,16 +27,19 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 	{ onValidationComplete },
 	ref
 ) => {
-	const [errorField, setErrorField] = useState('This field is required')
-	const [inputValues, setInputValues] = useState({
+	const [inputValues, setInputValues] = useState<Form1Input>({
+		eventName: '',
 		duration: '',
-		// country: '',
+		country: '',
 		participants: '',
-		employees: ''
+		employees: '',
+		heatedArea: '0',
+		airConditionedArea: '0'
 	})
 	const [inputErrors, setInputErrors] = useState<Form1Input>({
+		eventName: '',
 		duration: '',
-		// country: '',
+		country: '',
 		participants: '',
 		employees: ''
 	})
@@ -41,29 +47,28 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 		const { id, value } = e.target
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
+	const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const { id, value } = e.target
+		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
+	}
 	const validateAndSubmit = (callback: () => void) => {
 		let hasErrors = false
 		const newErrors: Form1Input = {
+			eventName: '',
 			duration: '',
-			// country: '',
+			country: '',
 			participants: '',
 			employees: ''
 		}
-		console.log('1')
-
 		Object.keys(inputValues).forEach(key => {
 			if (!inputValues[key as keyof Form1Input]) {
 				newErrors[key as keyof Form1Input] = 'Field is required'
 				hasErrors = true
 			}
 		})
-		setInputErrors(newErrors)
-		console.log('has errors', hasErrors)
-
+		setInputErrors(newErrors);
 		if (!hasErrors) {
-			// Perform form submission or other actions
-			console.log('No errors were submitted')
-
+			onValidationComplete(inputValues)
 			callback()
 		}
 	}
@@ -75,11 +80,18 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
 				General
 			</Heading>
-			<FormControl mt='2%'>
-				<FormLabel htmlFor='name' fontWeight={'normal'}>
+			<FormControl mt='2%' isRequired isInvalid={!!inputErrors.eventName}>
+				<FormLabel htmlFor='eventName' fontWeight={'normal'}>
 					Event Name
 				</FormLabel>
-				<Input id='name' type='text' maxLength={70} />
+				<Input
+					id='eventName'
+					type='text'
+					maxLength={70}
+					required
+					value={inputValues.eventName}
+					onChange={handleInputChange}
+				/>
 			</FormControl>
 			<Flex mt='2%'>
 				<FormControl mr='2%' isRequired isInvalid={!!inputErrors.duration}>
@@ -96,7 +108,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 					/>
 					<FormErrorMessage>{inputErrors.duration}</FormErrorMessage>
 				</FormControl>
-				<FormControl>
+				<FormControl isRequired isInvalid={!!inputErrors.country}>
 					<FormLabel htmlFor='country' fontWeight={'normal'}>
 						Country
 					</FormLabel>
@@ -107,10 +119,12 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						placeholder='Pick country'
 						w='full'
 						rounded='md'
+						value={inputValues.country}
+						onChange={handleCountryChange}
 					>
-						<option>Category 1</option>
-						<option>Category 2</option>
-						<option>Category 3</option>
+						<option value={'col'}>Category 1</option>
+						<option value={'ven'}>Category 2</option>
+						<option value={'arg'}>Category 3</option>
 					</Select>
 				</FormControl>
 			</Flex>
