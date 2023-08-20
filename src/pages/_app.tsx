@@ -1,4 +1,5 @@
-import '@/styles/globals.css'
+import React from 'react'
+import '../styles/globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import {
 	RainbowKitProvider,
@@ -9,7 +10,8 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { polygon, polygonMumbai, celoAlfajores, celo } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 import { ChakraProvider } from '@chakra-ui/react'
-import Layout from '@/components/Layout'
+// import Layout from '@/components/Layout'
+import Layout from '../components/Layout'
 
 const { chains, publicClient } = configureChains(
 	[
