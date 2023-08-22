@@ -6,7 +6,7 @@ Green Carbon Calculator: decentralized calculator
 
 https://green-carbon-calculator-frontend.vercel.app/
 
-Green Carbon Calculator - contracts:
+Green Carbon Calculator - contracts: https://github.com/salviega/green-carbon-calculator-contracts.git
 
 Repository url:
 
