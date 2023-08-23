@@ -8,6 +8,7 @@ import {
 	FormLabel,
 	FormErrorMessage
 } from '@chakra-ui/react'
+import countriesData from '../../pages/calculator/countries.json'
 export interface Form1Input {
 	eventName: string
 	duration: string
@@ -23,10 +24,17 @@ interface Form1Props {
 export interface Form1Ref {
 	validateAndSubmit: (callback: () => void) => void
 }
+export interface CountryData {
+	name: string
+	flag: string
+}
 const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 	{ onValidationComplete },
 	ref
 ) => {
+	const [countries, setCountries] = useState<CountryData[]>(
+		countriesData.countries
+	)
 	const [inputValues, setInputValues] = useState<Form1Input>({
 		eventName: '',
 		duration: '',
@@ -66,7 +74,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 				hasErrors = true
 			}
 		})
-		setInputErrors(newErrors);
+		setInputErrors(newErrors)
 		if (!hasErrors) {
 			onValidationComplete(inputValues)
 			callback()
@@ -122,9 +130,11 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						value={inputValues.country}
 						onChange={handleCountryChange}
 					>
-						<option value={'col'}>Category 1</option>
-						<option value={'ven'}>Category 2</option>
-						<option value={'arg'}>Category 3</option>
+						{countries.map((country, index) => (
+							<option value={country.name} key={index + country.name}>
+								{country.name}
+							</option>
+						))}
 					</Select>
 				</FormControl>
 			</Flex>
@@ -158,19 +168,27 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 			</Flex>
 			<Flex mt='2%'>
 				<FormControl mr='2%'>
-					<FormLabel htmlFor='area' fontWeight={'normal'}>
+					<FormLabel htmlFor='heatedArea' fontWeight={'normal'}>
 						Heated area (m2)
 					</FormLabel>
-					<Input id='area' placeholder='Area ...' type='number' />
+					<Input
+						id='heatedArea'
+						placeholder='Area ...'
+						type='number'
+						value={inputValues.heatedArea}
+						onChange={handleInputChange}
+					/>
 				</FormControl>
 				<FormControl>
-					<FormLabel htmlFor='ac_area' fontWeight={'normal'}>
+					<FormLabel htmlFor='airConditionedArea' fontWeight={'normal'}>
 						Air conditioned area (m2)
 					</FormLabel>
 					<Input
-						id='ac_area'
+						id='airConditionedArea'
 						placeholder='# Air conditioned ...'
 						type='number'
+						value={inputValues.airConditionedArea}
+						onChange={handleInputChange}
 					/>
 				</FormControl>
 			</Flex>

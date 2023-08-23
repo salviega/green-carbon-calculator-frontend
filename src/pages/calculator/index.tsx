@@ -4,267 +4,32 @@ import {
 	Box,
 	ButtonGroup,
 	Button,
-	Heading,
 	Flex,
-	GridItem,
-	Input,
-	Select,
-	SimpleGrid,
-	InputLeftAddon,
-	InputGroup,
-	Textarea,
 	useToast,
-	FormControl,
-	FormLabel,
-	FormHelperText,
-	FormErrorMessage
 } from '@chakra-ui/react'
 import Form1, { Form1Input, Form1Ref } from '../../components/calculator/Form1'
+import Form2, { Form2Input } from '../../components/calculator/Form2'
+import Form3, { Form3Input } from '../../components/calculator/Form3'
 
-const Form2 = () => {
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-				User Details
-			</Heading>
-			<FormControl as={GridItem} colSpan={[6, 3]}>
-				<FormLabel
-					htmlFor='country'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Country / Region
-				</FormLabel>
-				<Select
-					id='country'
-					name='country'
-					autoComplete='country'
-					placeholder='Select option'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				>
-					<option>United States</option>
-					<option>Canada</option>
-					<option>Mexico</option>
-				</Select>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={6}>
-				<FormLabel
-					htmlFor='street_address'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					Street address
-				</FormLabel>
-				<Input
-					type='text'
-					name='street_address'
-					id='street_address'
-					autoComplete='street-address'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-				<FormLabel
-					htmlFor='city'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					City
-				</FormLabel>
-				<Input
-					type='text'
-					name='city'
-					id='city'
-					autoComplete='city'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormLabel
-					htmlFor='state'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					State / Province
-				</FormLabel>
-				<Input
-					type='text'
-					name='state'
-					id='state'
-					autoComplete='state'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormLabel
-					htmlFor='postal_code'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					ZIP / Postal
-				</FormLabel>
-				<Input
-					type='text'
-					name='postal_code'
-					id='postal_code'
-					autoComplete='postal-code'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormControl mt='2%'>
-					<FormLabel
-						htmlFor='postal_code'
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-						mt='2%'
-					>
-						Email Address
-					</FormLabel>
-					<Input
-						type='text'
-						name='postal_code'
-						id='postal_code'
-						autoComplete='postal-code'
-						focusBorderColor='brand.400'
-						shadow='sm'
-						size='sm'
-						w='full'
-						rounded='md'
-					/>
-					<FormHelperText>We&apos;ll never share your email.</FormHelperText>
-				</FormControl>
-			</FormControl>
-		</div>
-	)
-}
-
-const Form3 = () => {
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal'>
-				Additional Information
-			</Heading>
-			<SimpleGrid columns={1} spacing={6}>
-				<FormControl as={GridItem} colSpan={[3, 2]}>
-					<FormLabel
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-					>
-						Website
-					</FormLabel>
-					<InputGroup size='sm'>
-						<InputLeftAddon
-							bg='gray.50'
-							_dark={{
-								bg: 'gray.800'
-							}}
-							color='gray.500'
-							rounded='md'
-						>
-							http://
-						</InputLeftAddon>
-						<Input
-							type='tel'
-							placeholder='www.example.com'
-							focusBorderColor='brand.400'
-							rounded='md'
-						/>
-					</InputGroup>
-				</FormControl>
-
-				<FormControl id='email' mt={1}>
-					<FormLabel
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-					>
-						About
-					</FormLabel>
-					<Textarea
-						placeholder='you@example.com'
-						rows={3}
-						shadow='sm'
-						focusBorderColor='brand.400'
-						fontSize={{
-							sm: 'sm'
-						}}
-					/>
-					<FormHelperText>
-						Brief description for your profile. URLs are hyperlinked.
-					</FormHelperText>
-				</FormControl>
-			</SimpleGrid>
-		</div>
-	)
-}
 export interface CalculatorForm {
-	eventName: string;
-	duration: string;
-	country: string;
-	participants: string;
-	employees: string;
-	heatedArea: string | undefined,
-	airConditionedArea: string| undefined,
+	event_name: string
+	event_duration: string
+	country: string
+	participants: string
+	employees: string
+	heated_area: string | undefined
+	air_conditioned_area: string | undefined
+	number_of_people_arriving_by_car: string | undefined
+	average_distance_traveled_by_car: string | undefined
+	number_of_people_traveling_by_public_transport: string | undefined
+	average_distance_traveled_public: string | undefined
+	short_haul_flights: string | undefined
+	medium_haul_flights: string | undefined
+	long_haul_flights: string | undefined
+	percentage_business_clas: string | undefined
+	over_night_stay_three_stars: string | undefined
+	over_night_stay_four_stars: string | undefined
+	over_night_stay_five_stars: string | undefined
 }
 export default function Calculator() {
 	const stepNumber = 4
@@ -275,40 +40,78 @@ export default function Calculator() {
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(100 / stepNumber)
 	const [formInfo, setFormInfo] = useState<CalculatorForm>({
-		eventName: '',
-		duration: '',
+		event_name: '',
+		event_duration: '',
 		country: '',
 		participants: '',
 		employees: '',
-		heatedArea: '',
-		airConditionedArea: '',
+		heated_area: '',
+		air_conditioned_area: '',
+		number_of_people_arriving_by_car: '',
+		average_distance_traveled_by_car: '',
+		number_of_people_traveling_by_public_transport: '',
+		average_distance_traveled_public: '',
+		short_haul_flights: '',
+		medium_haul_flights: '',
+		long_haul_flights: '',
+		percentage_business_clas: '',
+		over_night_stay_three_stars: '',
+		over_night_stay_four_stars: '',
+		over_night_stay_five_stars: ''
 	})
 	const onNext = () => {
 		if (step === 1 && form1Ref.current) {
 			form1Ref.current.validateAndSubmit(() => {
 				showNextForm()
 			})
+		} else if (step === 2 && form2Ref.current) {
+			form2Ref.current.validateAndSubmit(() => {
+				showNextForm()
+			})
 		}
 	}
 	const showNextForm = () => {
 		setStep(step + 1)
-		if (step === 3) {
+		if (step === stepNumber) {
 			setProgress(100)
 		} else {
-			setProgress(progress + 33.33)
+			setProgress(progress + 100 / stepNumber)
 		}
 	}
-	const onSetInfo = (info : Form1Input) => {
-		console.log(info);
+	const onSetInfoForm1 = (info: Form1Input) => {
 		setFormInfo({
-			...formInfo, 
-			duration: info.duration,
+			...formInfo,
+			event_duration: info.duration,
 			country: info.country,
 			participants: info.participants,
 			employees: info.employees,
-			eventName: info.eventName,
-			heatedArea:  info.heatedArea,
-			airConditionedArea:  info.airConditionedArea,
+			event_name: info.eventName,
+			heated_area: info.heatedArea,
+			air_conditioned_area: info.airConditionedArea
+		})
+	}
+	const onSetInfoForm2 = (info: Form2Input) => {
+		console.log(info)
+		setFormInfo({
+			...formInfo,
+			number_of_people_arriving_by_car: info.peopleByCar,
+			average_distance_traveled_by_car: info.distanceByCar,
+			number_of_people_traveling_by_public_transport:
+				info.peopleByPublicTransport,
+			average_distance_traveled_public: info.distanceByPublicTransport,
+			short_haul_flights: info.shortHaulFlights,
+			medium_haul_flights: info.mediumHaulFlights,
+			long_haul_flights: info.longHaulFlights,
+			percentage_business_clas: info.percentageBusinessClass
+		})
+	}
+	const onSetInfoForm3 = (info: Form3Input) => {
+		console.log(info)
+		setFormInfo({
+			...formInfo,
+			over_night_stay_three_stars: info.overnight2_3Stars,
+			over_night_stay_four_stars: info.overnight4Stars,
+			over_night_stay_five_stars: info.overnight5Stars
 		})
 	}
 	return (
@@ -330,11 +133,13 @@ export default function Calculator() {
 					isAnimated
 				></Progress>
 				{step === 1 ? (
-					<Form1 ref={form1Ref} onValidationComplete={onSetInfo} />
+					<Form1 ref={form1Ref} onValidationComplete={onSetInfoForm1} />
 				) : step === 2 ? (
-					<Form2 />
+					<Form2 ref={form2Ref} onValidationComplete={onSetInfoForm2} />
+				) : step === 3 ? (
+					<Form3 ref={form3Ref} onValidationComplete={onSetInfoForm3} />
 				) : (
-					<Form3 />
+					<Form3 ref={form3Ref} onValidationComplete={onSetInfoForm3} />
 				)}
 				<ButtonGroup mt='5%' w='100%'>
 					<Flex w='100%' justifyContent='space-between'>
@@ -354,7 +159,7 @@ export default function Calculator() {
 							</Button>
 							<Button
 								w='7rem'
-								isDisabled={step === 3}
+								isDisabled={step === stepNumber}
 								onClick={onNext}
 								colorScheme='teal'
 								variant='outline'
@@ -362,7 +167,7 @@ export default function Calculator() {
 								Next
 							</Button>
 						</Flex>
-						{step === 3 ? (
+						{step === stepNumber ? (
 							<Button
 								w='7rem'
 								colorScheme='red'
