@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
 	Progress,
 	Box,
@@ -6,358 +6,74 @@ import {
 	Button,
 	Heading,
 	Flex,
-	FormControl,
-	GridItem,
-	FormLabel,
-	Input,
-	Select,
-	SimpleGrid,
-	InputLeftAddon,
-	InputGroup,
-	Textarea,
-	FormHelperText,
-	InputRightElement
 } from '@chakra-ui/react'
 
 import { useToast } from '@chakra-ui/react'
-
-const Form1 = () => {
-	const [show, setShow] = useState(false)
-	const handleClick = () => setShow(!show)
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-				Project Details
-			</Heading>
-			<FormControl mt='2%'>
-				<FormLabel htmlFor='name' fontWeight={'normal'}>
-					Project Name
-				</FormLabel>
-				<Input id='name' type='text' />
-			</FormControl>
-			<Flex mt='2%'>
-				<FormControl mr='2%'>
-					<FormLabel htmlFor='budget' fontWeight={'normal'}>
-						Budget (USD)
-					</FormLabel>
-					<Input id='budget' placeholder='Budget ...' type='number' />
-				</FormControl>
-				<FormControl>
-					<FormLabel htmlFor='category' fontWeight={'normal'}>
-						Category
-					</FormLabel>
-					<Select
-						id='category'
-						name='category'
-						autoComplete='category'
-						placeholder='Pick category'
-						focusBorderColor='brand.400'
-						w='full'
-						rounded='md'
-					>
-						<option>Category 1</option>
-						<option>Category 2</option>
-						<option>Category 3</option>
-					</Select>
-				</FormControl>
-			</Flex>
-			<FormControl id='email' mt='2%'>
-				<FormLabel
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Project Description
-				</FormLabel>
-				<Textarea
-					placeholder='Description ...'
-					rows={3}
-					shadow='sm'
-					focusBorderColor='brand.400'
-					fontSize={{
-						sm: 'sm'
-					}}
-				/>
-				<FormHelperText>Brief description for your project.</FormHelperText>
-			</FormControl>
-			<FormControl mt='2%'>
-				<FormLabel
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Website
-				</FormLabel>
-				<InputGroup>
-					<InputLeftAddon
-						bg='gray.50'
-						_dark={{
-							bg: 'gray.800'
-						}}
-						color='gray.500'
-						rounded='md'
-					>
-						http://
-					</InputLeftAddon>
-					<Input
-						type='tel'
-						placeholder='www.example.com'
-						focusBorderColor='brand.400'
-						rounded='md'
-					/>
-				</InputGroup>
-			</FormControl>
-		</div>
-	)
-}
-
-const Form2 = () => {
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-				User Details
-			</Heading>
-			<FormControl as={GridItem} colSpan={[6, 3]}>
-				<FormLabel
-					htmlFor='country'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Country / Region
-				</FormLabel>
-				<Select
-					id='country'
-					name='country'
-					autoComplete='country'
-					placeholder='Select option'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				>
-					<option>United States</option>
-					<option>Canada</option>
-					<option>Mexico</option>
-				</Select>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={6}>
-				<FormLabel
-					htmlFor='street_address'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					Street address
-				</FormLabel>
-				<Input
-					type='text'
-					name='street_address'
-					id='street_address'
-					autoComplete='street-address'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-				<FormLabel
-					htmlFor='city'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					City
-				</FormLabel>
-				<Input
-					type='text'
-					name='city'
-					id='city'
-					autoComplete='city'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormLabel
-					htmlFor='state'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					State / Province
-				</FormLabel>
-				<Input
-					type='text'
-					name='state'
-					id='state'
-					autoComplete='state'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormLabel
-					htmlFor='postal_code'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					ZIP / Postal
-				</FormLabel>
-				<Input
-					type='text'
-					name='postal_code'
-					id='postal_code'
-					autoComplete='postal-code'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormControl mt='2%'>
-					<FormLabel
-						htmlFor='postal_code'
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-						mt='2%'
-					>
-						Email Address
-					</FormLabel>
-					<Input
-						type='text'
-						name='postal_code'
-						id='postal_code'
-						autoComplete='postal-code'
-						focusBorderColor='brand.400'
-						shadow='sm'
-						size='sm'
-						w='full'
-						rounded='md'
-					/>
-					<FormHelperText>We&apos;ll never share your email.</FormHelperText>
-				</FormControl>
-			</FormControl>
-		</div>
-	)
-}
-
-const Form3 = () => {
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal'>
-				Additional Information
-			</Heading>
-			<SimpleGrid columns={1} spacing={6}>
-				<FormControl as={GridItem} colSpan={[3, 2]}>
-					<FormLabel
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-					>
-						Website
-					</FormLabel>
-					<InputGroup size='sm'>
-						<InputLeftAddon
-							bg='gray.50'
-							_dark={{
-								bg: 'gray.800'
-							}}
-							color='gray.500'
-							rounded='md'
-						>
-							http://
-						</InputLeftAddon>
-						<Input
-							type='tel'
-							placeholder='www.example.com'
-							focusBorderColor='brand.400'
-							rounded='md'
-						/>
-					</InputGroup>
-				</FormControl>
-
-				<FormControl id='email' mt={1}>
-					<FormLabel
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-					>
-						About
-					</FormLabel>
-					<Textarea
-						placeholder='you@example.com'
-						rows={3}
-						shadow='sm'
-						focusBorderColor='brand.400'
-						fontSize={{
-							sm: 'sm'
-						}}
-					/>
-					<FormHelperText>
-						Brief description for your profile. URLs are hyperlinked.
-					</FormHelperText>
-				</FormControl>
-			</SimpleGrid>
-		</div>
-	)
+import Form1Create, {
+	Form1CreateInput,
+	Form1CreateRef
+} from '../../components/create/Form1Create'
+import Form2Create, {
+	Form2CreateInput,
+	Form2CreateRef
+} from '../../components/create/Form2Create'
+export interface CreateprojectForm {
+	proyectName: string
+	proyectDescription: string
+	category: string
+	members: string
+	responsableName: string
 }
 
 export default function Multistep() {
+	const stepNumber = 2
+	const form1CreateRef = useRef<Form1CreateRef>(null)
+	const form2CreateRef = useRef<Form2CreateRef>(null)
 	const toast = useToast()
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(33.33)
-
+	const [show, setShow] = useState(false)
+	const [formInfo, setFormInfo] = useState<CreateprojectForm>({
+		proyectName: '',
+		proyectDescription: '',
+		category: '',
+		members: '',
+		responsableName: ''
+	})
+	const onSetInfoForm1 = (info: Form1CreateInput) => {
+		setFormInfo({
+			...formInfo,
+			proyectName: info.proyectName,
+			proyectDescription: info.proyectDescription,
+			category: info.category,
+			members: info.members
+		})
+	}
+	const onSetInfoForm2 = (info: Form2CreateInput) => {
+		setFormInfo({
+			...formInfo,
+			responsableName: info.responsableName,
+		})
+	}
+	const onNext = () => {
+		if (step === 1 && form1CreateRef.current) {
+			form1CreateRef.current.validateAndSubmit(() => {
+				showNextForm()
+			})
+		} else if (step === 2 && form2CreateRef.current) {
+			form2CreateRef.current.validateAndSubmit(() => {
+				showNextForm()
+			})
+		}
+	}
+	const showNextForm = () => {
+		setStep(step + 1)
+		if (step === stepNumber + 1) {
+			setProgress(100)
+		} else {
+			setProgress(progress + 100 / stepNumber + 1)
+		}
+	}
 	return (
 		<div>
 			<Box
@@ -376,14 +92,24 @@ export default function Multistep() {
 					mx='5%'
 					isAnimated
 				></Progress>
-				{step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+				{step === 1 ? (
+					<Form1Create
+						ref={form1CreateRef}
+						onValidationComplete={onSetInfoForm1}
+					/>
+				) : (
+					<Form2Create
+						ref={form2CreateRef}
+						onValidationComplete={onSetInfoForm2}
+					/>
+				)}
 				<ButtonGroup mt='5%' w='100%'>
 					<Flex w='100%' justifyContent='space-between'>
 						<Flex>
 							<Button
 								onClick={() => {
 									setStep(step - 1)
-									setProgress(progress - 33.33)
+									setProgress(progress - 100 / stepNumber)
 								}}
 								isDisabled={step === 1}
 								colorScheme='teal'
@@ -395,22 +121,15 @@ export default function Multistep() {
 							</Button>
 							<Button
 								w='7rem'
-								isDisabled={step === 3}
-								onClick={() => {
-									setStep(step + 1)
-									if (step === 3) {
-										setProgress(100)
-									} else {
-										setProgress(progress + 33.33)
-									}
-								}}
+								isDisabled={step === stepNumber}
+								onClick={onNext}
 								colorScheme='teal'
 								variant='outline'
 							>
 								Next
 							</Button>
 						</Flex>
-						{step === 3 ? (
+						{step === stepNumber ? (
 							<Button
 								w='7rem'
 								colorScheme='red'

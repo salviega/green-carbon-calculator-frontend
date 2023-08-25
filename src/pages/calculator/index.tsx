@@ -247,7 +247,7 @@ export default function Calculator() {
 							<Button
 								onClick={() => {
 									setStep(step - 1)
-									setProgress(progress - 33.33)
+									setProgress(progress - 100 / stepNumber)
 								}}
 								isDisabled={step === 1}
 								colorScheme='teal'

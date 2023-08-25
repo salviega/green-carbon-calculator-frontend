@@ -136,6 +136,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 							</option>
 						))}
 					</Select>
+					<FormErrorMessage>{inputErrors.country}</FormErrorMessage>
 				</FormControl>
 			</Flex>
 			<Flex mt='2%'>
@@ -151,6 +152,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						value={inputValues.participants}
 						onChange={handleInputChange}
 					/>
+					<FormErrorMessage>{inputErrors.participants}</FormErrorMessage>
 				</FormControl>
 				<FormControl isRequired isInvalid={!!inputErrors.employees}>
 					<FormLabel htmlFor='employees' fontWeight={'normal'}>
@@ -164,6 +166,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						value={inputValues.employees}
 						onChange={handleInputChange}
 					/>
+					<FormErrorMessage>{inputErrors.employees}</FormErrorMessage>
 				</FormControl>
 			</Flex>
 			<Flex mt='2%'>
