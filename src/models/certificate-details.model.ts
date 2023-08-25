@@ -1,5 +1,6 @@
 export interface CertificateDetails {
 	owner: string // wallet
+	image: string // ipfs image
 	project_name: string
 	project_description: string
 	event_id: string // consecutivo
