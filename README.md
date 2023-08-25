@@ -2,13 +2,19 @@
 
 Green Carbon Calculator: decentralized calculator
 
-### URL
+### Vercel deploy
 
-https://green-carbon-calculator-frontend.vercel.app/
+Vercel url: https://green-carbon-calculator-frontend.vercel.app/
 
-Green Carbon Calculator - contracts: https://github.com/salviega/green-carbon-calculator-contracts.git
+### Green Carbon Calculator - contracts:
 
-Repository url:
+Repository url: https://github.com/salviega/green-carbon-calculator-contracts.git
+
+### Green Carbon Calculator - backend python:
+
+Repository url: https://github.com/RookieCol/scrapper_co2.git
+
+### Green Carbon Calculator - UI Figma:
 
 ## Quick start 🏄
 
@@ -33,6 +39,8 @@ yarn dev
 ```
 
 ## Authors 🏗
+
+[gitguti](https://github.com/gitguti)
 
 [sheva323](https://github.com/sheva323)
 
