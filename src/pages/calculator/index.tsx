@@ -7,7 +7,8 @@ import {
 	Button,
 	Flex,
 	useToast,
-	Heading
+	Heading,
+	Text
 } from '@chakra-ui/react'
 import Form1, { Form1Input, Form1Ref } from '../../components/calculator/Form1'
 import Form2, { Form2Input, Form2Ref } from '../../components/calculator/Form2'
@@ -16,7 +17,7 @@ import Form4, { Form4Input, Form4Ref } from '../../components/calculator/Form4'
 import Form5, { Form5Input, Form5Ref } from '../../components/calculator/Form5'
 import Form6, { Form6Input, Form6Ref } from '../../components/calculator/Form6'
 import { EventDetails } from '../../models/event-details.model'
-import LiveVisitsChart from '../../components/charts/LiveVisitsChart';
+import LiveVisitsChart from '../../components/charts/LiveVisitsChart'
 export default function Calculator() {
 	const stepNumber = 6
 	let form6info: Form6Input
@@ -330,9 +331,17 @@ export default function Calculator() {
 				as='form'
 			>
 				<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-					{formInfo.event_name}Testing
+					{`Event ${formInfo.event_name} Results`}
 				</Heading>
-				<LiveVisitsChart/>
+				<LiveVisitsChart />
+				<Flex
+					flexDirection='column'
+					alignItems='center'
+					justifyContent='center'
+					mt={2}
+				>
+					<Text mt={4}>Este es el texto que aparece debajo del gráfico</Text>
+				</Flex>
 				<ButtonGroup mt='5%' w='100%'>
 					<Flex w='100%' justifyContent='space-between'>
 						<Flex>
@@ -358,14 +367,14 @@ export default function Calculator() {
 								Re-Calculate
 							</Button>
 						</Flex>
-							<Button
-								w='12rem'
-								colorScheme='green'
-								variant='solid'
-								onClick={onNext}
-							>
-								Create Project
-							</Button>
+						<Button
+							w='12rem'
+							colorScheme='green'
+							variant='solid'
+							onClick={onNext}
+						>
+							Create Project
+						</Button>
 					</Flex>
 				</ButtonGroup>
 			</Box>
