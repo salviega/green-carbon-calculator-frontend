@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import axios from 'axios';
+import axios from 'axios'
 import {
 	Progress,
 	Box,
@@ -16,11 +16,10 @@ import Form4, { Form4Input, Form4Ref } from '../../components/calculator/Form4'
 import Form5, { Form5Input, Form5Ref } from '../../components/calculator/Form5'
 import Form6, { Form6Input, Form6Ref } from '../../components/calculator/Form6'
 import { EventDetails } from '../../models/event-details.model'
-
+import LiveVisitsChart from '../../components/charts/LiveVisitsChart';
 export default function Calculator() {
-
 	const stepNumber = 6
-	let form6info : Form6Input;
+	let form6info: Form6Input
 	const form1Ref = useRef<Form1Ref>(null)
 	const form2Ref = useRef<Form2Ref>(null)
 	const form3Ref = useRef<Form3Ref>(null)
@@ -28,6 +27,7 @@ export default function Calculator() {
 	const form5Ref = useRef<Form5Ref>(null)
 	const form6Ref = useRef<Form6Ref>(null)
 	const toast = useToast()
+	const [calculated, setCalculated] = useState(false)
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(100 / stepNumber)
 	const [formInfo, setFormInfo] = useState<EventDetails>({
@@ -63,7 +63,7 @@ export default function Calculator() {
 		plastics: '',
 		recyclable_material: '',
 		plant_based_materials: '',
-		event_stand_area: '',
+		event_stand_area: ''
 	})
 	const onNext = () => {
 		if (step === 1 && form1Ref.current) {
@@ -109,8 +109,10 @@ export default function Calculator() {
 			participants: parseInt(info.participants),
 			employees: parseInt(info.employees),
 			event_name: info.eventName,
-			heated_area: info.heatedArea? parseInt(info.heatedArea) : 0,
-			air_conditioned_area: info.airConditionedArea? parseInt(info.airConditionedArea) : 0,
+			heated_area: info.heatedArea ? parseInt(info.heatedArea) : 0,
+			air_conditioned_area: info.airConditionedArea
+				? parseInt(info.airConditionedArea)
+				: 0
 		})
 	}
 	const onSetInfoForm2 = (info: Form2Input) => {
@@ -119,13 +121,16 @@ export default function Calculator() {
 			...formInfo,
 			number_of_people_arriving_by_car: parseInt(info.peopleByCar),
 			average_distance_traveled_by_car: info.distanceByCar,
-			number_of_people_traveling_by_public_transport:
-				parseInt(info.peopleByPublicTransport),
-			average_distance_traveled_public: parseInt(info.distanceByPublicTransport),
+			number_of_people_traveling_by_public_transport: parseInt(
+				info.peopleByPublicTransport
+			),
+			average_distance_traveled_public: parseInt(
+				info.distanceByPublicTransport
+			),
 			short_haul_flights: parseInt(info.shortHaulFlights),
 			medium_haul_flights: parseInt(info.mediumHaulFlights),
 			long_haul_flights: parseInt(info.longHaulFlights),
-			percentage_business_class: info.percentageBusinessClass,
+			percentage_business_class: info.percentageBusinessClass
 		})
 	}
 	const onSetInfoForm3 = (info: Form3Input) => {
@@ -165,9 +170,9 @@ export default function Calculator() {
 	}
 	const onSetInfoForm6 = (info: Form6Input) => {
 		console.log(info)
-		form6info = info;
+		form6info = info
 	}
-	const onCalculate = async ()=> {
+	const onCalculate = async () => {
 		try {
 			const body = {
 				event_name: formInfo.event_name,
@@ -177,14 +182,18 @@ export default function Calculator() {
 				employees: formInfo.employees,
 				heated_area: formInfo.heated_area ?? 0,
 				air_conditioned_area: formInfo.air_conditioned_area ?? 0,
-				number_of_people_arriving_by_car: formInfo.number_of_people_arriving_by_car ?? 0,
-				average_distance_traveled_by_car: formInfo.average_distance_traveled_by_car ?? '0',
-				number_of_people_traveling_by_public_transport: formInfo.number_of_people_traveling_by_public_transport ?? 0,
+				number_of_people_arriving_by_car:
+					formInfo.number_of_people_arriving_by_car ?? 0,
+				average_distance_traveled_by_car:
+					formInfo.average_distance_traveled_by_car ?? '0',
+				number_of_people_traveling_by_public_transport:
+					formInfo.number_of_people_traveling_by_public_transport ?? 0,
 				short_haul_flights: formInfo.short_haul_flights ?? 0,
 				medium_haul_flights: formInfo.medium_haul_flights ?? 0,
 				long_haul_flights: formInfo.long_haul_flights ?? 0,
 				percentage_business_class: formInfo.percentage_business_class ?? '0',
-				over_night_stay_three_stars: formInfo.over_night_stay_three_stars ?? '0',
+				over_night_stay_three_stars:
+					formInfo.over_night_stay_three_stars ?? '0',
 				over_night_stay_four_stars: formInfo.over_night_stay_four_stars ?? '0',
 				over_night_stay_five_stars: formInfo.over_night_stay_five_stars ?? '0',
 				meal_meat_amount: formInfo.meal_meat_amount ?? '0',
@@ -202,18 +211,18 @@ export default function Calculator() {
 				recyclable_material: formInfo.recyclable_material ?? '0',
 				plant_based_materials: formInfo.plant_based_materials ?? '0',
 				event_stand_area: formInfo.event_stand_area ?? '0',
-				transported_weight: form6info.transported_weight ,
-				transported_distance: form6info.transported_distance ,
-				garbage: form6info.garbage ,
-				recycling: form6info.recycling ,
+				transported_weight: form6info.transported_weight,
+				transported_distance: form6info.transported_distance,
+				garbage: form6info.garbage,
+				recycling: form6info.recycling
 			}
 			const headers = {
-        'Content-Type': 'application/json',
-      };
-			const scrapperUrl = "http://localhost:8000/co2calculation"
-			const response = await axios.post(scrapperUrl, body, { headers: headers });
-			console.log(response);
-			
+				'Content-Type': 'application/json'
+			}
+			const scrapperUrl = 'http://localhost:8000/co2calculation'
+			const response = await axios.post(scrapperUrl, body, { headers: headers })
+			console.log(response)
+
 			toast({
 				title: 'Account created.',
 				description: "We've created your account for you.",
@@ -222,19 +231,21 @@ export default function Calculator() {
 				isClosable: true
 			})
 		} catch (error) {
-			console.log(error);
+			console.log(error)
 			toast({
 				title: 'Error calculating.',
-				description: "Pleaase try again later.",
+				description: 'Pleaase try again later.',
 				status: 'error',
 				duration: 3000,
 				isClosable: true
 			})
 		}
 	}
-	return (
+	return calculated ? (
 		<div>
-			<Heading as="h1" textAlign="center" my={5}>Footprint Calculator</Heading>
+			<Heading as='h1' textAlign='center' my={5}>
+				Footprint Calculator
+			</Heading>
 			<Box
 				borderWidth='1px'
 				rounded='lg'
@@ -300,6 +311,61 @@ export default function Calculator() {
 								Submit
 							</Button>
 						) : null}
+					</Flex>
+				</ButtonGroup>
+			</Box>
+		</div>
+	) : (
+		<div>
+			<Heading as='h1' textAlign='center' my={5}>
+				Event Calculation Result
+			</Heading>
+			<Box
+				borderWidth='1px'
+				rounded='lg'
+				shadow='1px 1px 3px rgba(0,0,0,0.3)'
+				maxWidth={800}
+				p={6}
+				m='10px auto'
+				as='form'
+			>
+				<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
+					{formInfo.event_name}Testing
+				</Heading>
+				<LiveVisitsChart/>
+				<ButtonGroup mt='5%' w='100%'>
+					<Flex w='100%' justifyContent='space-between'>
+						<Flex>
+							<Button
+								onClick={() => {
+									setStep(step - 1)
+									setProgress(progress - 100 / stepNumber)
+								}}
+								colorScheme='teal'
+								variant='solid'
+								w='7rem'
+								mr='5%'
+							>
+								Go Home
+							</Button>
+							<Button
+								w='12rem'
+								isDisabled={step === stepNumber}
+								onClick={onNext}
+								colorScheme='teal'
+								variant='outline'
+							>
+								Re-Calculate
+							</Button>
+						</Flex>
+							<Button
+								w='12rem'
+								colorScheme='green'
+								variant='solid'
+								onClick={onNext}
+							>
+								Create Project
+							</Button>
 					</Flex>
 				</ButtonGroup>
 			</Box>
