@@ -12,8 +12,11 @@ import countriesData from '../../pages/calculator/countries.json'
 import { CountryData } from '../calculator/Form1'
 export interface Form2CreateInput {
 	responsableName: string
-	projectUrl?: string
 	projectCountry: string
+	webpage?: string
+	twitter?: string
+	youtube?: string
+	linkedin?: string
 }
 interface Form2CreateProps {
 	onValidationComplete: (info: Form2CreateInput) => void // Define the prop type
@@ -30,8 +33,11 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 	)
 	const [inputValues, setInputValues] = useState<Form2CreateInput>({
 		responsableName: '',
-		projectUrl: '',
 		projectCountry: '',
+		webpage: '',
+		twitter: '',
+		youtube: '',
+		linkedin: '',
 	})
 	const [inputErrors, setInputErrors] = useState<Form2CreateInput>({
 		responsableName: '',
@@ -46,6 +52,8 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
 	const validateAndSubmit = (callback: () => void) => {
+		console.log(inputValues);
+		
 		let hasErrors = false
 		const newErrors: Form2CreateInput = {
 			responsableName: '',
@@ -59,8 +67,8 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 		})
 		setInputErrors(newErrors)
 		if (!hasErrors) {
-			onValidationComplete(inputValues)
-			callback()
+			onValidationComplete(inputValues);
+			callback();
 		}
 	}
 	useImperativeHandle(ref, () => ({
@@ -73,10 +81,11 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 			</Heading>
 			<FormControl mt='2%' isRequired isInvalid={!!inputErrors.responsableName}>
 				<FormLabel htmlFor='responsableName' fontWeight={'normal'}>
-					Responsable Name
+					Main Responsable Name (or handle)
 				</FormLabel>
 				<Input
 					id='responsableName'
+					placeholder='Main responsable ...'
 					type='text'
 					maxLength={70}
 					required
@@ -85,23 +94,9 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 				/>
 				<FormErrorMessage>{inputErrors.responsableName}</FormErrorMessage>
 			</FormControl>
-			<Flex mt='2%'>
-				<FormControl mr='2%'>
-					<FormLabel htmlFor='projectUrl' fontWeight={'normal'}>
-						Project URL
-					</FormLabel>
-					<Input
-						id='projectUrl'
-						placeholder='Duration ...'
-						type='number'
-						required
-						value={inputValues.projectUrl}
-						onChange={handleInputChange}
-					/>
-				</FormControl>
-				<FormControl isRequired isInvalid={!!inputErrors.projectCountry}>
+			<FormControl mt='2%' isRequired isInvalid={!!inputErrors.projectCountry}>
 					<FormLabel htmlFor='projectCountry' fontWeight={'normal'}>
-						Group country is based
+						Country where the group is based
 					</FormLabel>
 					<Select
 						id='projectCountry'
@@ -120,6 +115,65 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 						))}
 					</Select>
 					<FormErrorMessage>{inputErrors.projectCountry}</FormErrorMessage>
+				</FormControl>
+			<Flex mt='2%'>
+				<FormControl mr='2%'>
+					<FormLabel htmlFor='webpage' fontWeight={'normal'}>
+						Project Webpage URL
+					</FormLabel>
+					<Input
+						id='webpage'
+						placeholder='Web site ...'
+						type='text'
+						maxLength={120}
+						required
+						value={inputValues.webpage}
+						onChange={handleInputChange}
+					/>
+				</FormControl>
+				<FormControl mr='2%'>
+					<FormLabel htmlFor='twitter' fontWeight={'normal'}>
+						Project Twitter URL
+					</FormLabel>
+					<Input
+						id='twitter'
+						placeholder='Twitter ...'
+						type='text'
+						maxLength={120}
+						required
+						value={inputValues.twitter}
+						onChange={handleInputChange}
+					/>
+				</FormControl>
+			</Flex>
+			<Flex mt='2%'>
+				<FormControl mr='2%'>
+					<FormLabel htmlFor='youtube' fontWeight={'normal'}>
+						Project Youtube URL
+					</FormLabel>
+					<Input
+						id='youtube'
+						placeholder='Youtube ...'
+						type='text'
+						maxLength={120}
+						required
+						value={inputValues.youtube}
+						onChange={handleInputChange}
+					/>
+				</FormControl>
+				<FormControl mr='2%'>
+					<FormLabel htmlFor='linkedin' fontWeight={'normal'}>
+						Project LinkedIn URL
+					</FormLabel>
+					<Input
+						id='linkedin'
+						placeholder='Linkedin ...'
+						type='text'
+						maxLength={120}
+						required
+						value={inputValues.linkedin}
+						onChange={handleInputChange}
+					/>
 				</FormControl>
 			</Flex>
 		</div>

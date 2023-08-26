@@ -1,14 +1,18 @@
 import React, { useRef, useState } from 'react'
+import { firebaseApi } from '../../../services/firebaseApi'
+import { storage, database } from '../../../firebase.config';
+import { ref as fireRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore';
 import {
 	Progress,
 	Box,
 	ButtonGroup,
 	Button,
 	Heading,
-	Flex,
+	Flex
 } from '@chakra-ui/react'
-
 import { useToast } from '@chakra-ui/react'
+import { Project } from '../../models/project.model'
 import Form1Create, {
 	Form1CreateInput,
 	Form1CreateRef
@@ -19,41 +23,48 @@ import Form2Create, {
 } from '../../components/create/Form2Create'
 export interface CreateprojectForm {
 	proyectName: string
+	projectCountry: string
 	proyectDescription: string
 	category: string
 	members: string
-	responsableName: string
+	logo?: File | string | null | undefined
+	banner?: File | string | null | undefined
 }
 
 export default function Multistep() {
+	const { createProject } = firebaseApi()
+	const toast = useToast()
 	const stepNumber = 2
+	let form2info : Form2CreateInput;
 	const form1CreateRef = useRef<Form1CreateRef>(null)
 	const form2CreateRef = useRef<Form2CreateRef>(null)
-	const toast = useToast()
 	const [step, setStep] = useState(1)
-	const [progress, setProgress] = useState(33.33)
-	const [show, setShow] = useState(false)
+	const [progress, setProgress] = useState(100 / stepNumber)
 	const [formInfo, setFormInfo] = useState<CreateprojectForm>({
 		proyectName: '',
+		projectCountry: '',
 		proyectDescription: '',
 		category: '',
 		members: '',
-		responsableName: ''
+		logo: null,
+		banner: null,
 	})
+	
+
+
 	const onSetInfoForm1 = (info: Form1CreateInput) => {
 		setFormInfo({
 			...formInfo,
 			proyectName: info.proyectName,
 			proyectDescription: info.proyectDescription,
 			category: info.category,
-			members: info.members
+			members: info.members,
+			logo: info.logo,
+			banner: info.banner
 		})
 	}
 	const onSetInfoForm2 = (info: Form2CreateInput) => {
-		setFormInfo({
-			...formInfo,
-			responsableName: info.responsableName,
-		})
+		form2info = info;
 	}
 	const onNext = () => {
 		if (step === 1 && form1CreateRef.current) {
@@ -62,7 +73,7 @@ export default function Multistep() {
 			})
 		} else if (step === 2 && form2CreateRef.current) {
 			form2CreateRef.current.validateAndSubmit(() => {
-				showNextForm()
+				onCreateProject()
 			})
 		}
 	}
@@ -72,6 +83,96 @@ export default function Multistep() {
 			setProgress(100)
 		} else {
 			setProgress(progress + 100 / stepNumber + 1)
+		}
+	}
+	const onCreateProject = async () => {
+		try {
+			console.log('Loading Creation');
+			
+			//upload logo & banner images to firebase
+			const images : File[] = [
+				formInfo.logo as File,
+				formInfo.banner as File,
+			]
+			const imgs : string[] | null = await uploadImages(images);
+
+			const newProject: Project = {
+				name: formInfo.proyectName,
+				description: formInfo.proyectDescription,
+				responsableName: form2info.responsableName,
+				logo: imgs? imgs[0] : '', //url
+				banner: imgs? imgs[1] : '', //url
+				country: form2info.projectCountry,
+				events: [],
+				raisedTotal: 0,
+				eventTotal: 0,
+				socialNetwors: {
+					webpage: form2info.webpage,
+					twitter: form2info.twitter,
+					youtube: form2info.youtube,
+					linkedin: form2info.linkedin
+				},
+				certificates: []
+			}
+			const response = await createProject(newProject)
+			console.log(response);
+			toast({
+				title: 'Account created.',
+				description: "We've created your account for you.",
+				status: 'success',
+				duration: 3000,
+				isClosable: true
+			})
+			console.log('Project Done');
+		} catch (error) {
+			console.log(error);
+			toast({
+				title: 'Error creating project',
+				description: 'Please try again.',
+				status: 'error',
+				duration: 5000,
+				isClosable: true
+			})
+		}
+	}
+	const uploadImages = async (files : File[]) : Promise<string[] | null> => {
+		try {
+			const urls: string[] = [];
+			const uploadPromises = Array.from(files).map(async (file) => {
+				try {
+					if (!file){
+						urls.push('');
+						return Promise.resolve();
+					} 
+					const fileRef = fireRef(storage, file.name);
+	
+					await uploadBytesResumable(fileRef, file);
+					
+					const fileURL = await getDownloadURL(fileRef);
+					urls.push(fileURL);
+				} catch (error) {
+					console.error("Error uploading image: ", error);
+					toast({
+						title: 'Error uploading the file',
+						description: 'Please try again.',
+						status: 'error',
+						duration: 5000,
+						isClosable: true
+					})
+				}
+			});
+			await Promise.all(uploadPromises);
+    	return urls;
+		} catch (error) {
+			console.log(error)
+			toast({
+				title: 'Error uploading the file',
+				description: 'Please try again.',
+				status: 'error',
+				duration: 5000,
+				isClosable: true
+			})
+			return null;
 		}
 	}
 	return (
@@ -92,6 +193,7 @@ export default function Multistep() {
 					mx='5%'
 					isAnimated
 				></Progress>
+				{}
 				{step === 1 ? (
 					<Form1Create
 						ref={form1CreateRef}
@@ -134,17 +236,9 @@ export default function Multistep() {
 								w='7rem'
 								colorScheme='red'
 								variant='solid'
-								onClick={() => {
-									toast({
-										title: 'Account created.',
-										description: "We've created your account for you.",
-										status: 'success',
-										duration: 3000,
-										isClosable: true
-									})
-								}}
+								onClick={onNext}
 							>
-								Submit
+								Create
 							</Button>
 						) : null}
 					</Flex>

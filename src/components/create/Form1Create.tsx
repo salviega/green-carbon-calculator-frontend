@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, {
+	ChangeEvent,
+	forwardRef,
+	useImperativeHandle,
+	useState
+} from 'react'
 import {
 	Heading,
 	Flex,
@@ -8,14 +13,21 @@ import {
 	FormLabel,
 	FormErrorMessage,
 	Textarea,
-	FormHelperText
+	FormHelperText,
+	useToast,
+	Image
 } from '@chakra-ui/react'
-import countriesData from '../../pages/calculator/countries.json'
 export interface Form1CreateInput {
 	proyectName: string
 	proyectDescription: string
 	category: string
 	members: string
+	logo?: File | string | null
+	banner?: File | string | null
+}
+enum ImageType {
+	'LOGO',
+	'BANNER'
 }
 interface Form1CreateProps {
 	onValidationComplete: (info: Form1CreateInput) => void // Define the prop type
@@ -27,27 +39,31 @@ const Form1Create: React.ForwardRefRenderFunction<
 	Form1CreateRef,
 	Form1CreateProps
 > = ({ onValidationComplete }, ref) => {
+	const [selectedLogo, setSelectedLogo] = useState<string | null>(null)
+	const [selectedBanner, setSelectedBanner] = useState<string | null>(null)
 	const [inputValues, setInputValues] = useState<Form1CreateInput>({
 		proyectName: '',
 		proyectDescription: '',
 		members: '',
 		category: '',
+		logo: null,
+		banner: null
 	})
 	const [inputErrors, setInputErrors] = useState<Form1CreateInput>({
 		proyectName: '',
 		proyectDescription: '',
 		members: '',
-		category: '',
+		category: ''
 	})
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
-	const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const { id, value } = e.target
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
-	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { id, value } = e.target
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
@@ -57,23 +73,63 @@ const Form1Create: React.ForwardRefRenderFunction<
 			proyectName: '',
 			proyectDescription: '',
 			members: '',
-			category: '',
+			category: ''
 		}
-		Object.keys(inputValues).forEach(key => {
+		const mandatoryFields = [
+			'proyectName',
+			'proyectDescription',
+			'members',
+			'category'
+		]
+		mandatoryFields.forEach(key => {
 			if (!inputValues[key as keyof Form1CreateInput]) {
 				newErrors[key as keyof Form1CreateInput] = 'Field is required'
 				hasErrors = true
 			}
 		})
-		setInputErrors(newErrors)
+		setInputErrors(newErrors);
 		if (!hasErrors) {
-			onValidationComplete(inputValues)
-			callback()
+			onValidationComplete(inputValues);
+			console.log(inputValues);
+			callback();
 		}
 	}
 	useImperativeHandle(ref, () => ({
 		validateAndSubmit: validateAndSubmit // Expose the function through the ref
 	}))
+	const handleImageChange = (
+		e: ChangeEvent<HTMLInputElement>,
+		imgType: ImageType
+	) => {
+		const file: File | null = e.target.files ? e.target.files[0] : null
+		const { id } = e.target
+		if (file) {
+			const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
+			if (file && !validImageTypes.includes(file.type)) {
+				alert('Please select a valid image type (jpg, png, gif).')
+				return
+			}
+			setInputValues(prevValues => ({
+				...prevValues,
+				[id]: file
+			}))
+			const reader = new FileReader()
+			reader.onloadend = () => {
+				switch (imgType) {
+					case ImageType.LOGO:
+						setSelectedLogo(reader.result as string)
+						break
+					case ImageType.BANNER:
+						setSelectedBanner(reader.result as string)
+						break
+					default:
+						setSelectedLogo(reader.result as string)
+						break
+				}
+			}
+			reader.readAsDataURL(file);
+		}
+	}
 	return (
 		<div>
 			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
@@ -170,6 +226,64 @@ const Form1Create: React.ForwardRefRenderFunction<
 					<FormErrorMessage>{inputErrors.members}</FormErrorMessage>
 				</FormControl>
 			</Flex>
+			<Flex mt='2%'>
+				<FormControl mr='2%'>
+					<FormLabel htmlFor='logo' fontWeight={'normal'}>
+						Pick project logo image
+					</FormLabel>
+					<div>
+						<input
+							type='file'
+							onChange={e => handleImageChange(e, ImageType.LOGO)}
+							id='logo'
+						/>
+					</div>
+				</FormControl>
+				<FormControl mr='2%' ml='2%'>
+					<FormLabel htmlFor='banner' fontWeight={'normal'}>
+						Pick project banner image
+					</FormLabel>
+					<div>
+						<input
+							type='file'
+							onChange={e => handleImageChange(e, ImageType.BANNER)}
+							id='banner'
+						/>
+					</div>
+				</FormControl>
+			</Flex>
+			<FormControl mt='2%'>
+				{selectedLogo && (
+					<>
+						<FormLabel htmlFor='logo' fontWeight={'normal'}>
+							Logo Image
+						</FormLabel>
+						<Flex align='center' justify='center' mb='2%'>
+							<Image
+								objectFit='cover'
+								src={selectedLogo}
+								alt='Logo Project Selected Image'
+								maxHeight={200}
+							/>
+						</Flex>
+					</>
+				)}
+				{selectedBanner && (
+					<>
+						<FormLabel htmlFor='banner' fontWeight={'normal'}>
+							Banner Image
+						</FormLabel>
+						<Flex align='center' justify='center'>
+							<Image
+								objectFit='cover'
+								src={selectedBanner}
+								alt='Logo Project Selected Image'
+								maxHeight={200}
+							/>
+						</Flex>
+					</>
+				)}
+			</FormControl>
 		</div>
 	)
 }
