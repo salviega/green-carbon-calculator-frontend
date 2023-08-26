@@ -18,8 +18,6 @@ export function firebaseApi() {
 
   const createProject = async (project: Project) => {
     await addDoc(projectsCollectionRef, project);
-    console.log("project: ", project);
-    console.log("project created");
   };
 
   return {

@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react'
+import axios from 'axios';
 import {
 	Progress,
 	Box,
 	ButtonGroup,
 	Button,
 	Flex,
-	useToast
+	useToast,
+	Heading
 } from '@chakra-ui/react'
 import Form1, { Form1Input, Form1Ref } from '../../components/calculator/Form1'
 import Form2, { Form2Input, Form2Ref } from '../../components/calculator/Form2'
@@ -13,48 +15,12 @@ import Form3, { Form3Input, Form3Ref } from '../../components/calculator/Form3'
 import Form4, { Form4Input, Form4Ref } from '../../components/calculator/Form4'
 import Form5, { Form5Input, Form5Ref } from '../../components/calculator/Form5'
 import Form6, { Form6Input, Form6Ref } from '../../components/calculator/Form6'
+import { EventDetails } from '../../models/event-details.model'
 
-export interface CalculatorForm {
-	event_name: string
-	event_duration: string
-	country: string
-	participants: string
-	employees: string
-	heated_area: string | undefined
-	air_conditioned_area: string | undefined
-	number_of_people_arriving_by_car: string | undefined
-	average_distance_traveled_by_car: string | undefined
-	number_of_people_traveling_by_public_transport: string | undefined
-	average_distance_traveled_public: string | undefined
-	short_haul_flights: string | undefined
-	medium_haul_flights: string | undefined
-	long_haul_flights: string | undefined
-	percentage_business_clas: string | undefined
-	over_night_stay_three_stars: string | undefined
-	over_night_stay_four_stars: string | undefined
-	over_night_stay_five_stars: string | undefined
-	meal_meat_amount: string | undefined
-	meal_vegetarian_amount: string | undefined
-	snacks_amount: string | undefined
-	soda_liters: string | undefined
-	coffee_cups: string | undefined
-	tea_cups: string | undefined
-	wine_liters: string | undefined
-	beer_liters: string | undefined
-	spirits_liters: string | undefined
-	power_consumption: string | undefined
-	printed_matter: string | undefined
-	plastics: string | undefined
-	recyclable_material: string | undefined
-	plant_based_materials: string | undefined
-	event_stand_area: string | undefined
-	transported_weight: string | undefined
-	transported_distance: string | undefined
-	garbage: string | undefined
-	recycling: string | undefined
-}
 export default function Calculator() {
+
 	const stepNumber = 6
+	let form6info : Form6Input;
 	const form1Ref = useRef<Form1Ref>(null)
 	const form2Ref = useRef<Form2Ref>(null)
 	const form3Ref = useRef<Form3Ref>(null)
@@ -64,22 +30,22 @@ export default function Calculator() {
 	const toast = useToast()
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(100 / stepNumber)
-	const [formInfo, setFormInfo] = useState<CalculatorForm>({
+	const [formInfo, setFormInfo] = useState<EventDetails>({
 		event_name: '',
-		event_duration: '',
+		event_duration: 0,
 		country: '',
-		participants: '',
-		employees: '',
-		heated_area: '',
-		air_conditioned_area: '',
-		number_of_people_arriving_by_car: '',
+		participants: 0,
+		employees: 0,
+		heated_area: 0,
+		air_conditioned_area: 0,
+		number_of_people_arriving_by_car: 0,
 		average_distance_traveled_by_car: '',
-		number_of_people_traveling_by_public_transport: '',
-		average_distance_traveled_public: '',
-		short_haul_flights: '',
-		medium_haul_flights: '',
-		long_haul_flights: '',
-		percentage_business_clas: '',
+		number_of_people_traveling_by_public_transport: 0,
+		average_distance_traveled_public: 0,
+		short_haul_flights: 0,
+		medium_haul_flights: 0,
+		long_haul_flights: 0,
+		percentage_business_class: '',
 		over_night_stay_three_stars: '',
 		over_night_stay_four_stars: '',
 		over_night_stay_five_stars: '',
@@ -98,10 +64,6 @@ export default function Calculator() {
 		recyclable_material: '',
 		plant_based_materials: '',
 		event_stand_area: '',
-		transported_weight: '',
-		transported_distance: '',
-		garbage: '',
-		recycling: ''
 	})
 	const onNext = () => {
 		if (step === 1 && form1Ref.current) {
@@ -126,7 +88,7 @@ export default function Calculator() {
 			})
 		} else if (step === 6 && form6Ref.current) {
 			form6Ref.current.validateAndSubmit(() => {
-				showNextForm()
+				onCalculate()
 			})
 		}
 	}
@@ -139,30 +101,31 @@ export default function Calculator() {
 		}
 	}
 	const onSetInfoForm1 = (info: Form1Input) => {
+		console.log(info)
 		setFormInfo({
 			...formInfo,
-			event_duration: info.duration,
+			event_duration: parseInt(info.duration),
 			country: info.country,
-			participants: info.participants,
-			employees: info.employees,
+			participants: parseInt(info.participants),
+			employees: parseInt(info.employees),
 			event_name: info.eventName,
-			heated_area: info.heatedArea,
-			air_conditioned_area: info.airConditionedArea
+			heated_area: info.heatedArea? parseInt(info.heatedArea) : 0,
+			air_conditioned_area: info.airConditionedArea? parseInt(info.airConditionedArea) : 0,
 		})
 	}
 	const onSetInfoForm2 = (info: Form2Input) => {
 		console.log(info)
 		setFormInfo({
 			...formInfo,
-			number_of_people_arriving_by_car: info.peopleByCar,
+			number_of_people_arriving_by_car: parseInt(info.peopleByCar),
 			average_distance_traveled_by_car: info.distanceByCar,
 			number_of_people_traveling_by_public_transport:
-				info.peopleByPublicTransport,
-			average_distance_traveled_public: info.distanceByPublicTransport,
-			short_haul_flights: info.shortHaulFlights,
-			medium_haul_flights: info.mediumHaulFlights,
-			long_haul_flights: info.longHaulFlights,
-			percentage_business_clas: info.percentageBusinessClass
+				parseInt(info.peopleByPublicTransport),
+			average_distance_traveled_public: parseInt(info.distanceByPublicTransport),
+			short_haul_flights: parseInt(info.shortHaulFlights),
+			medium_haul_flights: parseInt(info.mediumHaulFlights),
+			long_haul_flights: parseInt(info.longHaulFlights),
+			percentage_business_class: info.percentageBusinessClass,
 		})
 	}
 	const onSetInfoForm3 = (info: Form3Input) => {
@@ -202,16 +165,76 @@ export default function Calculator() {
 	}
 	const onSetInfoForm6 = (info: Form6Input) => {
 		console.log(info)
-		setFormInfo({
-			...formInfo,
-			transported_weight: info.transported_weight,
-			transported_distance: info.transported_distance,
-			garbage: info.garbage,
-			recycling: info.recycling
-		})
+		form6info = info;
+	}
+	const onCalculate = async ()=> {
+		try {
+			const body = {
+				event_name: formInfo.event_name,
+				event_duration: formInfo.event_duration,
+				country: formInfo.country,
+				participants: formInfo.participants,
+				employees: formInfo.employees,
+				heated_area: formInfo.heated_area ?? 0,
+				air_conditioned_area: formInfo.air_conditioned_area ?? 0,
+				number_of_people_arriving_by_car: formInfo.number_of_people_arriving_by_car ?? 0,
+				average_distance_traveled_by_car: formInfo.average_distance_traveled_by_car ?? '0',
+				number_of_people_traveling_by_public_transport: formInfo.number_of_people_traveling_by_public_transport ?? 0,
+				short_haul_flights: formInfo.short_haul_flights ?? 0,
+				medium_haul_flights: formInfo.medium_haul_flights ?? 0,
+				long_haul_flights: formInfo.long_haul_flights ?? 0,
+				percentage_business_class: formInfo.percentage_business_class ?? '0',
+				over_night_stay_three_stars: formInfo.over_night_stay_three_stars ?? '0',
+				over_night_stay_four_stars: formInfo.over_night_stay_four_stars ?? '0',
+				over_night_stay_five_stars: formInfo.over_night_stay_five_stars ?? '0',
+				meal_meat_amount: formInfo.meal_meat_amount ?? '0',
+				meal_vegetarian_amount: formInfo.meal_vegetarian_amount ?? '0',
+				snacks_amount: formInfo.snacks_amount ?? '0',
+				soda_liters: formInfo.soda_liters ?? '0',
+				coffee_cups: formInfo.coffee_cups ?? '0',
+				tea_cups: formInfo.tea_cups ?? '0',
+				wine_liters: formInfo.wine_liters ?? '0',
+				beer_liters: formInfo.beer_liters ?? '0',
+				spirits_liters: formInfo.spirits_liters ?? '0',
+				power_consumption: formInfo.power_consumption ?? '0',
+				printed_matter: formInfo.printed_matter ?? '0',
+				plastics: formInfo.plastics ?? '0',
+				recyclable_material: formInfo.recyclable_material ?? '0',
+				plant_based_materials: formInfo.plant_based_materials ?? '0',
+				event_stand_area: formInfo.event_stand_area ?? '0',
+				transported_weight: form6info.transported_weight ,
+				transported_distance: form6info.transported_distance ,
+				garbage: form6info.garbage ,
+				recycling: form6info.recycling ,
+			}
+			const headers = {
+        'Content-Type': 'application/json',
+      };
+			const scrapperUrl = "http://localhost:8000/co2calculation"
+			const response = await axios.post(scrapperUrl, body, { headers: headers });
+			console.log(response);
+			
+			toast({
+				title: 'Account created.',
+				description: "We've created your account for you.",
+				status: 'success',
+				duration: 3000,
+				isClosable: true
+			})
+		} catch (error) {
+			console.log(error);
+			toast({
+				title: 'Error calculating.',
+				description: "Pleaase try again later.",
+				status: 'error',
+				duration: 3000,
+				isClosable: true
+			})
+		}
 	}
 	return (
 		<div>
+			<Heading as="h1" textAlign="center" my={5}>Footprint Calculator</Heading>
 			<Box
 				borderWidth='1px'
 				rounded='lg'
@@ -272,15 +295,7 @@ export default function Calculator() {
 								w='7rem'
 								colorScheme='red'
 								variant='solid'
-								onClick={() => {
-									toast({
-										title: 'Account created.',
-										description: "We've created your account for you.",
-										status: 'success',
-										duration: 3000,
-										isClosable: true
-									})
-								}}
+								onClick={onNext}
 							>
 								Submit
 							</Button>

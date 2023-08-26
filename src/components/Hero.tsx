@@ -1,5 +1,6 @@
 import React from 'react'
 import { Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react'
+import Link from 'next/link'
 
 export default function Hero() {
   return (
@@ -25,20 +26,16 @@ export default function Hero() {
             Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor
           </Text>
           <Stack direction={'row'}>
+            <Link href="/calculator">
             <Button
-              bg={'blue.400'}
+              bg={'#DEFE75'}
               rounded={'full'}
-              color={'white'}
-              _hover={{ bg: 'blue.500' }}>
-              Show me more
+              color={'black'}
+              _hover={{ bg: '#cdde99' }}
+              >
+              Calculate your impact
             </Button>
-            <Button
-              bg={'whiteAlpha.300'}
-              rounded={'full'}
-              color={'white'}
-              _hover={{ bg: 'whiteAlpha.500' }}>
-              Show me more
-            </Button>
+            </Link>
           </Stack>
         </Stack>
       </VStack>

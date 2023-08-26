@@ -1,4 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import { getAccount } from '@wagmi/core'
 import {
 	Heading,
 	Flex,
@@ -6,7 +7,9 @@ import {
 	Select,
 	FormControl,
 	FormLabel,
-	FormErrorMessage
+	FormErrorMessage,
+	Spinner,
+	Text
 } from '@chakra-ui/react'
 import countriesData from '../../pages/calculator/countries.json'
 import { CountryData } from '../calculator/Form1'
@@ -20,14 +23,16 @@ export interface Form2CreateInput {
 }
 interface Form2CreateProps {
 	onValidationComplete: (info: Form2CreateInput) => void // Define the prop type
+	loading: boolean
 }
 export interface Form2CreateRef {
 	validateAndSubmit: (callback: () => void) => void
 }
-const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreateProps> = (
-	{ onValidationComplete },
-	ref
-) => {
+const Form2Create: React.ForwardRefRenderFunction<
+	Form2CreateRef,
+	Form2CreateProps
+> = ({ onValidationComplete, loading }, ref) => {
+	const account = getAccount()
 	const [countries, setCountries] = useState<CountryData[]>(
 		countriesData.countries
 	)
@@ -37,11 +42,11 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 		webpage: '',
 		twitter: '',
 		youtube: '',
-		linkedin: '',
+		linkedin: ''
 	})
 	const [inputErrors, setInputErrors] = useState<Form2CreateInput>({
 		responsableName: '',
-		projectCountry: '',
+		projectCountry: ''
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
@@ -52,14 +57,16 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
 	const validateAndSubmit = (callback: () => void) => {
-		console.log(inputValues);
-		
 		let hasErrors = false
 		const newErrors: Form2CreateInput = {
 			responsableName: '',
-			projectCountry: '',
+			projectCountry: ''
 		}
-		Object.keys(inputValues).forEach(key => {
+		const mandatoryFields = [
+			'responsableName',
+			'projectCountry',
+		]
+		mandatoryFields.forEach(key => {
 			if (!inputValues[key as keyof Form2CreateInput]) {
 				newErrors[key as keyof Form2CreateInput] = 'Field is required'
 				hasErrors = true
@@ -67,8 +74,8 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 		})
 		setInputErrors(newErrors)
 		if (!hasErrors) {
-			onValidationComplete(inputValues);
-			callback();
+			onValidationComplete(inputValues)
+			callback()
 		}
 	}
 	useImperativeHandle(ref, () => ({
@@ -79,11 +86,18 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
 				Author(s)
 			</Heading>
+			{loading && (
+				<Flex align='center' justify='center' direction='column' mt='4'>
+					<Spinner color='blue.500' size='xl' mb='2' />
+					<Text fontSize='lg'>Loading new project...</Text>
+				</Flex>
+			)}
 			<FormControl mt='2%' isRequired isInvalid={!!inputErrors.responsableName}>
 				<FormLabel htmlFor='responsableName' fontWeight={'normal'}>
 					Main Responsable Name (or handle)
 				</FormLabel>
 				<Input
+					disabled={loading}
 					id='responsableName'
 					placeholder='Main responsable ...'
 					type='text'
@@ -94,34 +108,51 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 				/>
 				<FormErrorMessage>{inputErrors.responsableName}</FormErrorMessage>
 			</FormControl>
+			<FormControl mt='2%' >
+				<FormLabel htmlFor='wallet' fontWeight={'normal'}>
+					Main Responsable wallet
+				</FormLabel>
+				<Input
+					disabled={true}
+					id='wallet'
+					placeholder='No wallet connected ...'
+					type='text'
+					required
+					value={account.address}
+					onChange={handleInputChange}
+				/>
+				<FormErrorMessage>{inputErrors.responsableName}</FormErrorMessage>
+			</FormControl>
 			<FormControl mt='2%' isRequired isInvalid={!!inputErrors.projectCountry}>
-					<FormLabel htmlFor='projectCountry' fontWeight={'normal'}>
-						Country where the group is based
-					</FormLabel>
-					<Select
-						id='projectCountry'
-						name='projectCountry'
-						autoComplete='country'
-						placeholder='Pick country'
-						w='full'
-						rounded='md'
-						value={inputValues.projectCountry}
-						onChange={handleCountryChange}
-					>
-						{countries.map((country, index) => (
-							<option value={country.name} key={index + country.name}>
-								{country.name}
-							</option>
-						))}
-					</Select>
-					<FormErrorMessage>{inputErrors.projectCountry}</FormErrorMessage>
-				</FormControl>
+				<FormLabel htmlFor='projectCountry' fontWeight={'normal'}>
+					Country where the group is based
+				</FormLabel>
+				<Select
+					disabled={loading}
+					id='projectCountry'
+					name='projectCountry'
+					autoComplete='country'
+					placeholder='Pick country'
+					w='full'
+					rounded='md'
+					value={inputValues.projectCountry}
+					onChange={handleCountryChange}
+				>
+					{countries.map((country, index) => (
+						<option value={country.name} key={index + country.name}>
+							{country.name}
+						</option>
+					))}
+				</Select>
+				<FormErrorMessage>{inputErrors.projectCountry}</FormErrorMessage>
+			</FormControl>
 			<Flex mt='2%'>
 				<FormControl mr='2%'>
 					<FormLabel htmlFor='webpage' fontWeight={'normal'}>
 						Project Webpage URL
 					</FormLabel>
 					<Input
+						disabled={loading}
 						id='webpage'
 						placeholder='Web site ...'
 						type='text'
@@ -136,6 +167,7 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 						Project Twitter URL
 					</FormLabel>
 					<Input
+						disabled={loading}
 						id='twitter'
 						placeholder='Twitter ...'
 						type='text'
@@ -152,6 +184,7 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 						Project Youtube URL
 					</FormLabel>
 					<Input
+						disabled={loading}
 						id='youtube'
 						placeholder='Youtube ...'
 						type='text'
@@ -166,6 +199,7 @@ const Form2Create: React.ForwardRefRenderFunction<Form2CreateRef, Form2CreatePro
 						Project LinkedIn URL
 					</FormLabel>
 					<Input
+						disabled={loading}
 						id='linkedin'
 						placeholder='Linkedin ...'
 						type='text'

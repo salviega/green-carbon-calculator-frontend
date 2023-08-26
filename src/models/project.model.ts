@@ -2,6 +2,7 @@ import { CertificateDetails } from './certificate-details.model'
 import { EventDetails } from './event-details.model'
 
 export interface Project {
+	ownerWallet: string | undefined
 	name: string
 	description: string
 	responsableName: string

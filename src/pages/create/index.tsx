@@ -1,16 +1,13 @@
 import React, { useRef, useState } from 'react'
+import { getAccount } from '@wagmi/core'
 import { firebaseApi } from '../../../services/firebaseApi'
-import { storage, database } from '../../../firebase.config';
-import { ref as fireRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc } from 'firebase/firestore';
+import { storage } from '../../../firebase.config'
 import {
-	Progress,
-	Box,
-	ButtonGroup,
-	Button,
-	Heading,
-	Flex
-} from '@chakra-ui/react'
+	ref as fireRef,
+	uploadBytesResumable,
+	getDownloadURL
+} from 'firebase/storage'
+import { Progress, Box, ButtonGroup, Button, Flex } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
 import { Project } from '../../models/project.model'
 import Form1Create, {
@@ -32,14 +29,16 @@ export interface CreateprojectForm {
 }
 
 export default function Multistep() {
+	const account = getAccount()
 	const { createProject } = firebaseApi()
 	const toast = useToast()
 	const stepNumber = 2
-	let form2info : Form2CreateInput;
+	let form2info: Form2CreateInput
 	const form1CreateRef = useRef<Form1CreateRef>(null)
 	const form2CreateRef = useRef<Form2CreateRef>(null)
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(100 / stepNumber)
+	const [loading, setLoading] = useState(false)
 	const [formInfo, setFormInfo] = useState<CreateprojectForm>({
 		proyectName: '',
 		projectCountry: '',
@@ -47,11 +46,8 @@ export default function Multistep() {
 		category: '',
 		members: '',
 		logo: null,
-		banner: null,
+		banner: null
 	})
-	
-
-
 	const onSetInfoForm1 = (info: Form1CreateInput) => {
 		setFormInfo({
 			...formInfo,
@@ -64,7 +60,7 @@ export default function Multistep() {
 		})
 	}
 	const onSetInfoForm2 = (info: Form2CreateInput) => {
-		form2info = info;
+		form2info = info
 	}
 	const onNext = () => {
 		if (step === 1 && form1CreateRef.current) {
@@ -72,6 +68,8 @@ export default function Multistep() {
 				showNextForm()
 			})
 		} else if (step === 2 && form2CreateRef.current) {
+			console.log('2');
+			
 			form2CreateRef.current.validateAndSubmit(() => {
 				onCreateProject()
 			})
@@ -86,22 +84,31 @@ export default function Multistep() {
 		}
 	}
 	const onCreateProject = async () => {
+		console.log('submit?');
+		
+		if (!account?.address) {
+			toast({
+				title: 'Please connect your wallet first',
+				description: 'Please login.',
+				status: 'warning',
+				duration: 5000,
+				isClosable: true
+			})
+			return;
+		}
 		try {
-			console.log('Loading Creation');
-			
+			setLoading(true)
 			//upload logo & banner images to firebase
-			const images : File[] = [
-				formInfo.logo as File,
-				formInfo.banner as File,
-			]
-			const imgs : string[] | null = await uploadImages(images);
+			const images: File[] = [formInfo.logo as File, formInfo.banner as File]
+			const imgs: string[] | null = await uploadImages(images)
 
 			const newProject: Project = {
+				ownerWallet: account.address?.toString(),
 				name: formInfo.proyectName,
 				description: formInfo.proyectDescription,
 				responsableName: form2info.responsableName,
-				logo: imgs? imgs[0] : '', //url
-				banner: imgs? imgs[1] : '', //url
+				logo: imgs ? imgs[0] : '', //url
+				banner: imgs ? imgs[1] : '', //url
 				country: form2info.projectCountry,
 				events: [],
 				raisedTotal: 0,
@@ -115,7 +122,7 @@ export default function Multistep() {
 				certificates: []
 			}
 			const response = await createProject(newProject)
-			console.log(response);
+			console.log(response)
 			toast({
 				title: 'Account created.',
 				description: "We've created your account for you.",
@@ -123,9 +130,11 @@ export default function Multistep() {
 				duration: 3000,
 				isClosable: true
 			})
-			console.log('Project Done');
+			console.log('Project Done')
+
+			//TODO configure next step in the flow
 		} catch (error) {
-			console.log(error);
+			console.log(error)
 			toast({
 				title: 'Error creating project',
 				description: 'Please try again.',
@@ -133,25 +142,26 @@ export default function Multistep() {
 				duration: 5000,
 				isClosable: true
 			})
+			setLoading(false)
 		}
 	}
-	const uploadImages = async (files : File[]) : Promise<string[] | null> => {
+	const uploadImages = async (files: File[]): Promise<string[] | null> => {
 		try {
-			const urls: string[] = [];
-			const uploadPromises = Array.from(files).map(async (file) => {
+			const urls: string[] = []
+			const uploadPromises = Array.from(files).map(async file => {
 				try {
-					if (!file){
-						urls.push('');
-						return Promise.resolve();
-					} 
-					const fileRef = fireRef(storage, file.name);
-	
-					await uploadBytesResumable(fileRef, file);
-					
-					const fileURL = await getDownloadURL(fileRef);
-					urls.push(fileURL);
+					if (!file) {
+						urls.push('')
+						return Promise.resolve()
+					}
+					const fileRef = fireRef(storage, file.name)
+
+					await uploadBytesResumable(fileRef, file)
+
+					const fileURL = await getDownloadURL(fileRef)
+					urls.push(fileURL)
 				} catch (error) {
-					console.error("Error uploading image: ", error);
+					console.error('Error uploading image: ', error)
 					toast({
 						title: 'Error uploading the file',
 						description: 'Please try again.',
@@ -159,10 +169,11 @@ export default function Multistep() {
 						duration: 5000,
 						isClosable: true
 					})
+					setLoading(false)
 				}
-			});
-			await Promise.all(uploadPromises);
-    	return urls;
+			})
+			await Promise.all(uploadPromises)
+			return urls
 		} catch (error) {
 			console.log(error)
 			toast({
@@ -172,7 +183,8 @@ export default function Multistep() {
 				duration: 5000,
 				isClosable: true
 			})
-			return null;
+			setLoading(false)
+			return null
 		}
 	}
 	return (
@@ -203,6 +215,7 @@ export default function Multistep() {
 					<Form2Create
 						ref={form2CreateRef}
 						onValidationComplete={onSetInfoForm2}
+						loading={loading}
 					/>
 				)}
 				<ButtonGroup mt='5%' w='100%'>
@@ -218,6 +231,7 @@ export default function Multistep() {
 								variant='solid'
 								w='7rem'
 								mr='5%'
+								isLoading={loading}
 							>
 								Back
 							</Button>
@@ -227,6 +241,7 @@ export default function Multistep() {
 								onClick={onNext}
 								colorScheme='teal'
 								variant='outline'
+								isLoading={loading}
 							>
 								Next
 							</Button>
@@ -237,6 +252,7 @@ export default function Multistep() {
 								colorScheme='red'
 								variant='solid'
 								onClick={onNext}
+								isLoading={loading}
 							>
 								Create
 							</Button>

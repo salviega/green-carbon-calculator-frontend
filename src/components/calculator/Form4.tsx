@@ -86,7 +86,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
 						placeholder='Amount of snacks...'
 						type='number'
 						required
-						value={inputValues.meal_meat_amount}
+						value={inputValues.snacks_amount}
 						onChange={handleInputChange}
 					/>
 				</FormControl>
