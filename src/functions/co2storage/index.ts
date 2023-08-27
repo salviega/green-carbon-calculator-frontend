@@ -137,3 +137,58 @@ export async function addTemplate(): Promise<any> {
 	console.log(`Template created`)
 	return addTemplateResponse
 }
+
+export async function returnCertifiedEventsTotals(): Promise<[number, number]> {
+	let searchAssetsResponse = await fgStorage.searchAssets('Footprint')
+	if (searchAssetsResponse.error != null) {
+		console.error(searchAssetsResponse.error)
+		await new Promise((_, reject) => setTimeout(reject, 300))
+		process.exit(1)
+	}
+
+	const assetBlocks = []
+
+	for (const lastListedAsset of searchAssetsResponse.result.assets) {
+		if (lastListedAsset) {
+			try {
+				let getAssetResponse = await fgStorage.getAsset(lastListedAsset.block)
+				if (getAssetResponse.error != null) {
+					console.error(getAssetResponse.error)
+					await new Promise((_, reject) => setTimeout(reject, 300))
+					process.exit(1)
+				}
+
+				assetBlocks.push(getAssetResponse.result)
+			} catch (error) {
+				console.error(
+					`Error fetching asset for block: ${lastListedAsset.block}. Error: ${error}`
+				)
+				await new Promise((_, reject) => setTimeout(reject, 300))
+				process.exit(1)
+			}
+		}
+	}
+
+	let assetBlocksFiltered = assetBlocks.filter(
+		item =>
+			item.assetBlock.template ===
+			'bafyreiapqf3tek7fscgkv4kipt2nnpzfv2xvov36fambjermsjhm6cf5vm'
+	)
+
+	let totalCO2 = 0
+
+	for (const assetBlock of assetBlocksFiltered) {
+		const eventCO2 = assetBlock.asset.find((item: any) =>
+			item.hasOwnProperty('event_co2')
+		)
+		const eventCO2Value = eventCO2.event_co2.find(
+			(entry: any) => entry.name === 'co2_amount'
+		).value
+
+		totalCO2 += eventCO2Value
+	}
+
+	console.log('Total CO2:', totalCO2)
+	console.log('Total event certificates:', assetBlocksFiltered.length)
+	return [assetBlocksFiltered.length, totalCO2]
+}

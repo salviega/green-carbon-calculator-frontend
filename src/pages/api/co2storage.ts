@@ -1,4 +1,8 @@
-import { addAsset, addTemplate } from '../../functions/co2storage'
+import {
+	addAsset,
+	addTemplate,
+	returnCertifiedEventsTotals
+} from '../../functions/co2storage'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -17,14 +21,12 @@ export default async function handler(
 				}
 				break
 			case 'GET':
-				// if (req.query.type === 'getTemplate') {
-				// 	return getTemplate(req, res)
-				// }
+				console.log('req.query.type:', req.query.type)
+				if (req.query.type === 'getCertifiedEventsTotals') {
+					return getCertifiedEventsTotals(req, res)
+				}
 				// if (req.query.type === 'getAsset') {
 				// 	return getAsset(req, res)
-				// }
-				// if (req.query.type === 'authenticate') {
-				// 	return authenticate(req, res)
 				// }
 				break
 			default:
@@ -59,28 +61,21 @@ async function createTemplate(req: NextApiRequest, res: NextApiResponse) {
 	res.status(500).json({ message: 'Error creating template' })
 }
 
-// function getAsset(req, res) {
-// 	// Tu lógica para obtener un recurso aquí
-// 	res.status(200).json({ message: 'Asset fetched!' })
-// }
+async function getCertifiedEventsTotals(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	const [certifiedEventsTotal, CO2total] = await returnCertifiedEventsTotals()
 
-// async function authenticate(req: NextApiRequest, res: NextApiResponse) {
-// 	try {
-// 		let authResponse = await auth.authenticate()
+	if (certifiedEventsTotal && CO2total) {
+		res.status(200).json({ certifiedEventsTotal, CO2total })
+		return
+	}
 
-// 		if (authResponse.error != null) {
-// 			console.error(authResponse.error)
-// 			await new Promise(reject => setTimeout(reject, 300))
-// 			process.exit()
-// 		}
-
-// 		console.dir(authResponse.result, { depth: null })
-
-// 		res.status(200).json({ message: 'authenticated!' })
-// 	} catch (error) {
-// 		console.error(error)
-// 		res.status(500).json({ message: 'error creating authenticate' })
-// 	}
-// }
+	res.status(500).json({
+		message:
+			'Error fetching certificed events and CO2 total of the certificed events'
+	})
+}
 
 // const IPFSURL = `https://ipfs.io/ipfs/${CID}`
