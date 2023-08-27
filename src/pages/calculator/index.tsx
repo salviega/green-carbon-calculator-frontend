@@ -28,9 +28,10 @@ export default function Calculator() {
 	const form5Ref = useRef<Form5Ref>(null)
 	const form6Ref = useRef<Form6Ref>(null)
 	const toast = useToast()
-	const [calculated, setCalculated] = useState(false)
-	const [step, setStep] = useState(1)
-	const [progress, setProgress] = useState(100 / stepNumber)
+	const [calculated, setCalculated] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [step, setStep] = useState(1);
+	const [progress, setProgress] = useState(100 / stepNumber);
 	const [formInfo, setFormInfo] = useState<EventDetails>({
 		event_name: '',
 		event_duration: 0,
@@ -274,7 +275,7 @@ export default function Calculator() {
 				) : step === 5 ? (
 					<Form5 ref={form5Ref} onValidationComplete={onSetInfoForm5} />
 				) : (
-					<Form6 ref={form6Ref} onValidationComplete={onSetInfoForm6} />
+					<Form6 ref={form6Ref} onValidationComplete={onSetInfoForm6} loading={loading}/>
 				)}
 				<ButtonGroup mt='5%' w='100%'>
 					<Flex w='100%' justifyContent='space-between'>

@@ -8,12 +8,13 @@ export interface Form6Input {
 }
 interface Form6Props {
 	onValidationComplete: (info: Form6Input) => void // Define the prop type
+	loading: boolean
 }
 export interface Form6Ref {
 	validateAndSubmit: (callback: () => void) => void
 }
 const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
-	{ onValidationComplete },
+	{ onValidationComplete, loading },
 	ref
 ) => {
 	const [inputValues, setInputValues] = useState<Form6Input>({
