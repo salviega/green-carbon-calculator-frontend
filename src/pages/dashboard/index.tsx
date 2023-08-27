@@ -19,6 +19,7 @@ import {
   Avatar,
   HStack
 } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react'
 import { useColorMode , useColorModeValue} from '@chakra-ui/react'
 const Dashboard = () => {
   const bg = useColorModeValue('red.500', 'red.200')
@@ -149,10 +150,43 @@ const Dashboard = () => {
           					<GridItem
 						colSpan={6}
 						borderRadius='lg'
-						bg='gray.600'
 						rowSpan={1}
 					>
-            Historical
+            <Table variant="simple">
+  <TableCaption>Imperial to metric conversion factors</TableCaption>
+  <Thead>
+    <Tr>
+      <Th>ID</Th>
+      <Th>Event name</Th>
+      <Th isNumeric> Total CO2</Th>
+      <Th isNumeric>Mobility</Th>
+      <Th isNumeric>Accomodation</Th>
+      <Th isNumeric>Catering</Th>
+      <Th isNumeric>Energy</Th>
+      <Th isNumeric>Materials</Th>
+      <Th isNumeric>Transport</Th>
+      <Th isNumeric>Waste</Th>
+      <Th>Behaviour</Th>
+    </Tr>
+  </Thead>
+  <Tbody>
+    <Tr>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+    </Tr>
+    <Tr>
+      <Td>feet</Td>
+      <Td>centimetres (cm)</Td>
+      <Td isNumeric>30.48</Td>
+    </Tr>
+    <Tr>
+      <Td>yards</Td>
+      <Td>metres (m)</Td>
+      <Td isNumeric>0.91444</Td>
+    </Tr>
+  </Tbody>
+</Table>
           </GridItem>
 				</Grid>
 	)
