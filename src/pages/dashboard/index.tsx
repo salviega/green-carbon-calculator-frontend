@@ -1,27 +1,15 @@
 import React from 'react'
 import {
   Box,
-  Card,
-  CardBody,
   Grid,
   GridItem,
-  Image,
-  Stack,
-  Flex,
   Button,
   Text,
-  Circle,
-  VStack,
   Spacer,
-  useBreakpointValue,
-  CardHeader,
-  Heading,
-  Progress,
-  Avatar,
-  TableContainer,
   HStack
 } from '@chakra-ui/react'
 import OverviewPublic from '../../components/ProjectOverviewPublic'
+import OverviewPrivate from '../../components/ProjectOverviewPrivate'
 import EventDetails from '../../components/EventDetails'
 import EventTable from '../../components/EventTable'
 
@@ -34,14 +22,14 @@ const Dashboard = () => {
       templateRows='repeat(3, 1fr)'
       templateColumns='repeat(6, 1fr)'
       gap={4}
-      maxWidth={{base: '80%', lg: '65%'}}
+      maxWidth={{ base: '80%', lg: '65%' }}
       margin="2rem auto"
     >
       <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4">
-        <OverviewPublic />
+        <OverviewPrivate />
       </GridItem>
       <GridItem rowSpan={1} colSpan={2} borderRadius='lg' bg='gray.100'>
-        <Text> CO2 Amount</Text>
+        <OverviewPublic />
       </GridItem>
       <GridItem
         colSpan={3}
@@ -74,7 +62,7 @@ const Dashboard = () => {
         borderRadius='lg'
         rowSpan={1}
       >
-        <EventTable/>
+        <EventTable />
       </GridItem>
     </Grid>
   )
