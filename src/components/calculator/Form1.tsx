@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, { ChangeEvent, forwardRef, useImperativeHandle, useState } from 'react'
 import {
 	Heading,
 	Flex,
@@ -6,11 +6,14 @@ import {
 	Select,
 	FormControl,
 	FormLabel,
-	FormErrorMessage
+	FormErrorMessage,
+	Textarea,
+	FormHelperText
 } from '@chakra-ui/react'
 import countriesData from '../../pages/calculator/countries.json'
 export interface Form1Input {
 	eventName: string
+	eventDescription: string
 	duration: string
 	country: string
 	participants: string
@@ -37,6 +40,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 	)
 	const [inputValues, setInputValues] = useState<Form1Input>({
 		eventName: '',
+		eventDescription: '',
 		duration: '',
 		country: '',
 		participants: '',
@@ -46,6 +50,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 	})
 	const [inputErrors, setInputErrors] = useState<Form1Input>({
 		eventName: '',
+		eventDescription: '',
 		duration: '',
 		country: '',
 		participants: '',
@@ -53,11 +58,15 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 		heatedArea: '',
 		airConditionedArea: ''
 	})
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
-	const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleCountryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+		const { id, value } = e.target
+		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
+	}
+	const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const { id, value } = e.target
 		setInputValues(prevValues => ({ ...prevValues, [id]: value }))
 	}
@@ -65,6 +74,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 		let hasErrors = false
 		const newErrors: Form1Input = {
 			eventName: '',
+			eventDescription: '',
 			duration: '',
 			country: '',
 			participants: '',
@@ -111,6 +121,38 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 					value={inputValues.eventName}
 					onChange={handleInputChange}
 				/>
+			</FormControl>
+			<FormControl
+				id='eventDescription'
+				mt='2%'
+				isRequired
+				isInvalid={!!inputErrors.eventDescription}
+			>
+				<FormLabel
+					fontSize='sm'
+					fontWeight='md'
+					color='gray.700'
+					_dark={{
+						color: 'gray.50'
+					}}
+				>
+					Event Description
+				</FormLabel>
+				<Textarea
+					id='eventDescription'
+					placeholder='Description ...'
+					rows={3}
+					shadow='sm'
+					fontSize={{
+						sm: 'sm'
+					}}
+					maxLength={254}
+					required
+					value={inputValues.eventDescription}
+					onChange={handleTextAreaChange}
+				/>
+				<FormHelperText>Brief description for your event.</FormHelperText>
+				<FormErrorMessage>{inputErrors.eventDescription}</FormErrorMessage>
 			</FormControl>
 			<Flex mt='2%'>
 				<FormControl mr='2%' isRequired isInvalid={!!inputErrors.duration}>
