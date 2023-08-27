@@ -7,7 +7,8 @@ import {
   Text,
   useColorModeValue,
   Spacer,
-  HStack
+  HStack,
+  VStack
 } from '@chakra-ui/react'
 import OverviewPublic from '../../components/ProjectOverviewPublic'
 import OverviewPrivate from '../../components/ProjectOverviewPrivate'
@@ -59,11 +60,23 @@ const Dashboard = () => {
 
       <GridItem
         colSpan={3}
-        borderRadius='lg'
-        bg='gray.600'
         rowSpan={1}
+        borderRadius='lg' border="1px" borderColor="gray.200" p="4"
       >
-        Event Details
+      <Text fontWeight="semibold" pb="2"> Event details</Text>
+      <HStack>
+        <VStack align="start" width="40%">
+        <Text fontWeight="semibold" pb="2"> Amazon Windshields, Bolivia</Text>
+        <Text> Forest suppression and fragmentation cause the loss of many ecosystem services, such as water supply.</Text>
+        <Button variant="outline" size="sm">Certificate</Button>
+        </VStack>
+        <VStack width="60%">
+        <ResultsChart
+					co2_amount={results.co2_amount}
+					sections={results.sections}
+				/>
+        </VStack>
+      </HStack>
       </GridItem>
       <GridItem
         colSpan={6}
