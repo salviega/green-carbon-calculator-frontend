@@ -1,5 +1,6 @@
 import { Auth, FGStorage } from '@co2-storage/js-api'
 import { CertificateDetails } from '../../models/certificate-details.model'
+import { CO2STEMPLATE } from '../../constants/constants'
 
 const authType = 'pk'
 const ipfsNodeType = 'client'
@@ -35,8 +36,7 @@ export async function addAsset(asset: CertificateDetails): Promise<any> {
 
 	const assetElements = transform(asset)
 
-	const templateCID =
-		'bafyreiapqf3tek7fscgkv4kipt2nnpzfv2xvov36fambjermsjhm6cf5vm'
+	const templateCID = CO2STEMPLATE
 	const chainName = 'Footprint'
 	const assetName = `${asset.event_name}`
 	const assetDescription = `${asset.event_description}`
@@ -170,9 +170,7 @@ export async function returnCertifiedEventsTotals(): Promise<[number, number]> {
 	}
 
 	let assetBlocksFiltered = assetBlocks.filter(
-		item =>
-			item.assetBlock.template ===
-			'bafyreiapqf3tek7fscgkv4kipt2nnpzfv2xvov36fambjermsjhm6cf5vm'
+		item => item.assetBlock.template === CO2STEMPLATE
 	)
 
 	let totalCO2 = 0
