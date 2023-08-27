@@ -5,7 +5,7 @@ const customTheme = extendTheme({
     brand: {
       light: "#DEFE75",
       dark: "#035231",
-      lime: "D4FE48",
+      lime: "#D4FE48",
       newBlack: "#1E1E1E"
     },
   },

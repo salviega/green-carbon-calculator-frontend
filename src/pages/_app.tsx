@@ -53,9 +53,9 @@ export default function App({ Component, pageProps }) {
 				coolMode
 				modalSize='compact'
 				theme={darkTheme({
-					accentColor: '#2b6cb0',
-					accentColorForeground: 'white',
-					borderRadius: 'small',
+					accentColor: '#DEFE75',
+					accentColorForeground: '#035231',
+					borderRadius: 'medium',
 					fontStack: 'system',
 					overlayBlur: 'small'
 				})}

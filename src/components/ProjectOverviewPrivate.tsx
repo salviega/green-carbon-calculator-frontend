@@ -69,12 +69,12 @@ export default function OverviewPrivate() {
         <GridItem colSpan={2} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4">
 
           <VStack gap="0" align="start">
-            <HStack width="80%">
+            <HStack width="100%">
               <Text fontWeight="semibold" fontSize="lg" textColor="gray.700" mb="2"> Certified events</Text>
               <Spacer />
               <Text fontWeight="semibold" fontSize="lg" textColor="gray.500" mb="2"> 33%</Text>
             </HStack>
-            <Progress size='md' value={33} w="80%" borderRadius="lg" />
+            <Progress size='md' value={33} w="100%" borderRadius="lg" />
           </VStack>
         </GridItem>
       </Grid>

@@ -24,16 +24,16 @@ const Dashboard = () => {
   return (
     <Grid
       h='1000px'
-      templateRows='repeat(3, 1fr)'
+      templateRows='2fr 350px auto'
       templateColumns='repeat(6, 1fr)'
       gap={4}
       maxWidth={{ base: '80%', lg: '65%' }}
       margin="2rem auto"
     >
-      <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4">
-        <OverviewPrivate />
+      <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4" bg="white">
+        <OverviewPublic />
       </GridItem>
-      <GridItem rowSpan={1} colSpan={2} borderRadius='lg' border="1px" borderColor="gray.200" p="4">
+      <GridItem rowSpan={1} colSpan={2} borderRadius='lg' border="1px" borderColor="gray.200" p="4" bg="white">
       <Text fontWeight="semibold" pb="2"> CO2 Ammount</Text>
       <ResultsChart
 					co2_amount={results.co2_amount}
@@ -46,6 +46,7 @@ const Dashboard = () => {
         rowSpan={1}
         p="4"
         border="1px" borderColor="gray.200"
+        bg="white"
       >
         <HStack pb="4">
           <Text fontWeight="semibold" pb="2" textColor="gray.700"> Event List</Text>
@@ -53,7 +54,7 @@ const Dashboard = () => {
           <Button size="sm" textColor="gray.600">+ New event</Button>
         </HStack>
 
-        <Box gap="8" overflowY="auto" maxH="180px">
+        <Box gap="8" overflowY="auto" maxH="90%">
           <EventDetails />
         </Box>
       </GridItem>
@@ -64,13 +65,13 @@ const Dashboard = () => {
         borderRadius='lg' border="1px" borderColor="gray.200" p="4"
       >
       <Text fontWeight="semibold" pb="2"> Event details</Text>
-      <HStack>
-        <VStack align="start" width="40%">
+      <HStack align="start">
+        <VStack align="start" width="60%">
         <Text fontWeight="semibold" pb="2"> Amazon Windshields, Bolivia</Text>
         <Text> Forest suppression and fragmentation cause the loss of many ecosystem services, such as water supply.</Text>
         <Button variant="outline" size="sm">Certificate</Button>
         </VStack>
-        <VStack width="60%">
+        <VStack width="40%">
         <ResultsChart
 					co2_amount={results.co2_amount}
 					sections={results.sections}
@@ -82,6 +83,7 @@ const Dashboard = () => {
         colSpan={6}
         borderRadius='lg'
         rowSpan={1}
+        bg="white"
       >
         <EventTable />
       </GridItem>
@@ -98,7 +100,7 @@ const initValuesResults: EmissionDetails = {
 		Energy: 10,
 		Materials: 10,
 		Transport: 10,
-		Waste: 30
+		Waste: 25
 	}
 }
 
