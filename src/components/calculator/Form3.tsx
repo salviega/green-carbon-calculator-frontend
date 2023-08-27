@@ -22,9 +22,9 @@ const Form3: React.ForwardRefRenderFunction<Form3Ref, Form3Props> = (
 	ref
 ) => {
 	const [inputValues, setInputValues] = useState<Form3Input>({
-		overnight2_3Stars: '',
-		overnight4Stars: '',
-		overnight5Stars: '',
+		overnight2_3Stars: '0',
+		overnight4Stars: '0',
+		overnight5Stars: '0',
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target

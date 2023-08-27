@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
-import { Heading, Flex, Input, FormControl, FormLabel } from '@chakra-ui/react'
+import { Heading, Flex, Input, FormControl, FormLabel, Spinner, Text } from '@chakra-ui/react'
 export interface Form6Input {
 	transported_weight: string
 	transported_distance: string
@@ -8,19 +8,20 @@ export interface Form6Input {
 }
 interface Form6Props {
 	onValidationComplete: (info: Form6Input) => void // Define the prop type
+	loading: boolean
 }
 export interface Form6Ref {
 	validateAndSubmit: (callback: () => void) => void
 }
 const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
-	{ onValidationComplete },
+	{ onValidationComplete, loading },
 	ref
 ) => {
 	const [inputValues, setInputValues] = useState<Form6Input>({
-		transported_weight: '',
-		transported_distance: '',
-		garbage: '',
-		recycling: ''
+		transported_weight: '0',
+		transported_distance: '0',
+		garbage: '0',
+		recycling: '0',
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
@@ -38,6 +39,12 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
 				Energy & Material
 			</Heading>
+			{loading && (
+				<Flex align='center' justify='center' direction='column' mt='4'>
+					<Spinner color='blue.500' size='xl' mb='2' />
+					<Text fontSize='lg'>Loading new calculation...</Text>
+				</Flex>
+			)}
 			<Flex mt='2%'>
 				<FormControl mr='2%'>
 					<FormLabel htmlFor='transported_weight' fontWeight={'normal'}>
@@ -50,11 +57,12 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.transported_weight}
 						onChange={handleInputChange}
+						disabled={loading}
 					/>
 				</FormControl>
 				<FormControl mr='2%'>
 					<FormLabel htmlFor='transported_distance' fontWeight={'normal'}>
-					Average distance
+					Average distance (Km)
 					</FormLabel>
 					<Input
 						id='transported_distance'
@@ -63,6 +71,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.transported_distance}
 						onChange={handleInputChange}
+						disabled={loading}
 					/>
 				</FormControl>
 			</Flex>
@@ -78,6 +87,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.garbage}
 						onChange={handleInputChange}
+						disabled={loading}
 					/>
 				</FormControl>
 				<FormControl mr='2%'>
@@ -91,6 +101,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.recycling}
 						onChange={handleInputChange}
+						disabled={loading}
 					/>
 				</FormControl>
 			</Flex>
