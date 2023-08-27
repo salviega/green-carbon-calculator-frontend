@@ -12,6 +12,10 @@ import {
 	Heading,
 	Text
 } from '@chakra-ui/react'
+import { Contract, ethers } from 'ethers'
+import FootprintContractJson from '../../assets/contracts/Footprint.json'
+import { GreenCarbonCalculator as Footprint } from '../../../@types/typechain-types'
+
 import Form1, { Form1Input, Form1Ref } from '../../components/calculator/Form1'
 import Form2, { Form2Input, Form2Ref } from '../../components/calculator/Form2'
 import Form3, { Form3Input, Form3Ref } from '../../components/calculator/Form3'
@@ -337,14 +341,33 @@ export default function Calculator() {
 			})
 
 			const data = await response.json()
-			const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
-
-			//TODO send this to smart contract
-			//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
-			
 
 			if (response.ok) {
 				console.log('Asset creado:', data)
+
+				const CO2Total = data.event_co2.co2_amount
+				const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
+
+				//TODO send this to smart contract
+
+				// const ethereum = (window as any).ethereum
+
+				// const web3Provider: ethers.providers.Web3Provider =
+				// 	new ethers.providers.Web3Provider(ethereum)
+				// await web3Provider.send('eth_requestAccounts', [])
+				// const web3Signer: ethers.providers.JsonRpcSigner =
+				// 	web3Provider.getSigner()
+
+				// const contract = new Contract(
+				// 	FootprintContractJson.address,
+				// 	FootprintContractJson.abi,
+				// 	web3Signer
+				// ) as Footprint
+
+				// const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(CO2Total, IPFSURL) // Debe pasar CO2Total a la 18
+				// await mintTx.wait(1)
+				//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
+
 				return data
 			} else {
 				console.error('Error al crear template:', data.message)
