@@ -13,13 +13,30 @@ const fgStorage = new FGStorage({
 })
 
 export async function addAsset(asset: CertificateDetails): Promise<any> {
-	const assetElements = Object.entries(asset).map(([key, value]) => ({
-		name: key,
-		value: value
-	}))
+	const transform: any = (obj: CertificateDetails) => {
+		let result = []
+
+		for (let [key, value] of Object.entries(obj)) {
+			if (typeof value === 'object' && !Array.isArray(value)) {
+				result.push({
+					name: key,
+					value: transform(value)
+				})
+			} else {
+				result.push({
+					name: key,
+					value: value
+				})
+			}
+		}
+
+		return result
+	}
+
+	const assetElements = transform(asset)
 
 	const templateCID =
-		'bafyreichyxvuufpg7xdwgsmg4ni5ancwfd2rqzv22c7s34sqep73n3sp5m'
+		'bafyreiapqf3tek7fscgkv4kipt2nnpzfv2xvov36fambjermsjhm6cf5vm'
 	const chainName = 'Footprint'
 	const assetName = `${asset.event_name}`
 	const assetDescription = `${asset.event_description}`
@@ -66,6 +83,7 @@ export async function addTemplate(): Promise<any> {
 		event_name: { type: 'string' },
 		event_description: { type: 'string' },
 		event_duration: { type: 'number' },
+		event_co2: { type: 'json' },
 		country: { type: 'string' },
 		participants: { type: 'number' },
 		employees: { type: 'number' },
@@ -102,7 +120,7 @@ export async function addTemplate(): Promise<any> {
 		recycling: { type: 'string' }
 	}
 
-	const templateName: string = 'Footprint v2'
+	const templateName: string = 'Footprint v3'
 	const templateDescription: string =
 		'Template to compensate netzero certificate events'
 	const chainName: string = 'Footprint'

@@ -8,6 +8,18 @@ export interface CertificateDetails {
 	event_name: string
 	event_description: string
 	event_duration: number
+	event_co2: {
+		co2_amount: number
+		sections: {
+			Mobility: number
+			Accommodation: number
+			Catering: number
+			Energy: number
+			Materials: number
+			Transport: number
+			Waste: number
+		}
+	}
 	country: string
 	participants: number
 	employees: number

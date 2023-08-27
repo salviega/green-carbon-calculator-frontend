@@ -82,3 +82,5 @@ async function createTemplate(req: NextApiRequest, res: NextApiResponse) {
 // 		res.status(500).json({ message: 'error creating authenticate' })
 // 	}
 // }
+
+// const IPFSURL = `https://ipfs.io/ipfs/${CID}`
