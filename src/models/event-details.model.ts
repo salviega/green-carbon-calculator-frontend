@@ -1,5 +1,6 @@
 export interface EventDetails {
 	event_name: string
+	event_description: string
 	event_duration: number
 	country: string
 	participants: number
