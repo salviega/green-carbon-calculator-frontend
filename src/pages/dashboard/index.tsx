@@ -18,11 +18,12 @@ import {
   Heading,
   Progress,
   Avatar,
+  TableContainer,
   HStack
 } from '@chakra-ui/react'
-import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react'
 import OverviewPublic from '../../components/ProjectOverviewPublic'
 import EventDetails from '../../components/EventDetails'
+import EventTable from '../../components/EventTable'
 
 import { useColorMode, useColorModeValue } from '@chakra-ui/react'
 const Dashboard = () => {
@@ -33,7 +34,7 @@ const Dashboard = () => {
       templateRows='repeat(3, 1fr)'
       templateColumns='repeat(6, 1fr)'
       gap={4}
-      maxWidth="6xl"
+      maxWidth={{base: '80%', lg: '65%'}}
       margin="2rem auto"
     >
       <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4">
@@ -73,65 +74,7 @@ const Dashboard = () => {
         borderRadius='lg'
         rowSpan={1}
       >
-        <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Event name</Th>
-              <Th isNumeric> Total CO2</Th>
-              <Th isNumeric>Mobility</Th>
-              <Th isNumeric>Accomodation</Th>
-              <Th isNumeric>Catering</Th>
-              <Th isNumeric>Energy</Th>
-              <Th isNumeric>Materials</Th>
-              <Th isNumeric>Transport</Th>
-              <Th isNumeric>Waste</Th>
-              <Th>Behaviour</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-            </Tr>
-            <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-            </Tr>
-            <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-            </Tr>
-          </Tbody>
-        </Table>
+        <EventTable/>
       </GridItem>
     </Grid>
   )
