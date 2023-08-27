@@ -174,16 +174,40 @@ const Dashboard = () => {
       <Td>inches</Td>
       <Td>millimetres (mm)</Td>
       <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
     </Tr>
     <Tr>
-      <Td>feet</Td>
-      <Td>centimetres (cm)</Td>
-      <Td isNumeric>30.48</Td>
+    <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
     </Tr>
     <Tr>
-      <Td>yards</Td>
-      <Td>metres (m)</Td>
-      <Td isNumeric>0.91444</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
+      <Td isNumeric>25.4</Td>
+      <Td>inches</Td>
+      <Td>millimetres (mm)</Td>
     </Tr>
   </Tbody>
 </Table>
