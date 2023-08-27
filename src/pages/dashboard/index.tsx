@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Grid,
@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react'
 import OverviewPublic from '../../components/ProjectOverviewPublic'
 import OverviewPrivate from '../../components/ProjectOverviewPrivate'
+import EventList from '../../components/EventList'
 import EventDetails from '../../components/EventDetails'
 import EventTable from '../../components/EventTable'
 import ResultsChart from '../../components/charts/ResultsChart'
@@ -34,11 +35,11 @@ const Dashboard = () => {
         <OverviewPublic />
       </GridItem>
       <GridItem rowSpan={1} colSpan={2} borderRadius='lg' border="1px" borderColor="gray.200" p="4" bg="white">
-      <Text fontWeight="semibold" pb="2"> CO2 Ammount</Text>
-      <ResultsChart
-					co2_amount={results.co2_amount}
-					sections={results.sections}
-				/>
+        <Text fontWeight="semibold" pb="2"> CO2 Ammount</Text>
+        <ResultsChart
+          co2_amount={results.co2_amount}
+          sections={results.sections}
+        />
       </GridItem>
       <GridItem
         colSpan={3}
@@ -55,7 +56,7 @@ const Dashboard = () => {
         </HStack>
 
         <Box gap="8" overflowY="auto" maxH="90%">
-          <EventDetails />
+          <EventList />
         </Box>
       </GridItem>
 
@@ -64,20 +65,8 @@ const Dashboard = () => {
         rowSpan={1}
         borderRadius='lg' border="1px" borderColor="gray.200" p="4"
       >
-      <Text fontWeight="semibold" pb="2"> Event details</Text>
-      <HStack align="start">
-        <VStack align="start" width="60%">
-        <Text fontWeight="semibold" pb="2"> Amazon Windshields, Bolivia</Text>
-        <Text> Forest suppression and fragmentation cause the loss of many ecosystem services, such as water supply.</Text>
-        <Button variant="outline" size="sm">Certificate</Button>
-        </VStack>
-        <VStack width="40%">
-        <ResultsChart
-					co2_amount={results.co2_amount}
-					sections={results.sections}
-				/>
-        </VStack>
-      </HStack>
+        <Text fontWeight="semibold" pb="2"> Event details</Text>
+        <EventDetails />
       </GridItem>
       <GridItem
         colSpan={6}
@@ -92,16 +81,16 @@ const Dashboard = () => {
 }
 
 const initValuesResults: EmissionDetails = {
-	co2_amount: 0,
-	sections: {
-		Mobility: 10,
-		Accommodation: 10,
-		Catering: 10,
-		Energy: 10,
-		Materials: 10,
-		Transport: 10,
-		Waste: 25
-	}
+  co2_amount: 0,
+  sections: {
+    Mobility: 10,
+    Accommodation: 10,
+    Catering: 10,
+    Energy: 10,
+    Materials: 10,
+    Transport: 10,
+    Waste: 25
+  }
 }
 
 export default Dashboard

@@ -1,87 +1,46 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
-  Box,
   Button,
   Text,
-  Circle,
   VStack,
-  Spacer,
   HStack
 } from '@chakra-ui/react'
+import ResultsChart from './charts/ResultsChart'
+import { EmissionDetails } from '../models/emission-details.model'
+
 
 export default function EventDetails() {
+  const [results, setResults] = useState<EmissionDetails>(initValuesResults)
+
+
   return (
     <>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
+           <HStack align="start">
+        <VStack align="start" width="60%">
+        <Text fontWeight="semibold" pb="2"> Amazon Windshields, Bolivia</Text>
+        <Text> Forest suppression and fragmentation cause the loss of many ecosystem services, such as water supply.</Text>
+        <Button variant="outline" size="sm">Certificate</Button>
         </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
-      </HStack>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
+        <VStack width="40%">
+        <ResultsChart
+					co2_amount={results.co2_amount}
+					sections={results.sections}
+				/>
         </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
-      </HStack>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
-        </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
-      </HStack>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
-        </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
-      </HStack>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
-        </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
-      </HStack>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
-        </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
-      </HStack>
-      <HStack overflow='hidden' justify="space-between" pb="4">
-        <HStack>
-        <Circle size="36px" bg='gray.200' />
-        <VStack gap="0" align="start">
-          <Text textColor="gray.500" fontSize="sm">24/10/2023</Text>
-          <Text fontWeight="semibold" fontSize="md" textColor="gray.700"> Amazon Windshields, Bolivia</Text>
-        </VStack>
-        </HStack>
-        <Button variant="outline" size="sm">Edit</Button>
       </HStack>
     </>
   )
+}
+
+const initValuesResults: EmissionDetails = {
+	co2_amount: 0,
+	sections: {
+		Mobility: 10,
+		Accommodation: 10,
+		Catering: 10,
+		Energy: 10,
+		Materials: 10,
+		Transport: 10,
+		Waste: 25
+	}
 }

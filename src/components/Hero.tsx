@@ -27,14 +27,14 @@ export default function Hero() {
           </Text>
           <Stack direction={'row'}>
             <Link href="/calculator">
-            <Button
-              bg={'#DEFE75'}
-              rounded={'full'}
-              color={'black'}
-              _hover={{ bg: '#cdde99' }}
+              <Button
+                bg={'#DEFE75'}
+                rounded={'full'}
+                color={'black'}
+                _hover={{ bg: '#cdde99' }}
               >
-              Calculate your impact
-            </Button>
+                Calculate your impact
+              </Button>
             </Link>
           </Stack>
         </Stack>

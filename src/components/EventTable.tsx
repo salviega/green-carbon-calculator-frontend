@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/react'
 
 export default function EventTable() {
-	return (
-		<>
-            <TableContainer border="1px" borderColor="gray.200" p="4" borderRadius='lg' overflowY="auto">
+  return (
+    <>
+      <TableContainer border="1px" borderColor="gray.200" p="4" borderRadius='lg' overflowY="auto">
         <Table variant="simple" size="md">
           <Thead>
             <Tr>
@@ -89,7 +89,7 @@ export default function EventTable() {
               <Td>2</Td>
             </Tr>          </Tbody>
         </Table>
-        </TableContainer>
-		</>
-	)
+      </TableContainer>
+    </>
+  )
 }
