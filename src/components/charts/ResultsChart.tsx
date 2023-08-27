@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useColorMode, Box } from '@chakra-ui/react'
+import { EmissionDetails } from '../../models/emission-details.model';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
 	ssr: false
 })
 
-const LiveVisitsChart: React.FC = () => {
-	const [series, setSeries] = useState<number[]>([72, 56, 30, 20])
+const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : EmissionDetails) => {
+	const sectionValues = Object.values(sections);
+	const sectionKeys = Object.keys(sections);  
+	const [series, setSeries] = useState<number[]>(sectionValues);
+	const [keys, setKey] = useState<string[]>(sectionKeys);
 	const { colorMode } = useColorMode()
 
 	const labelColor = colorMode === 'dark' ? 'white' : 'black'
@@ -16,8 +20,8 @@ const LiveVisitsChart: React.FC = () => {
 		chart: {
 			type: 'donut'
 		},
-		labels: ['Energy', 'Mobility', 'Materials', 'Transport'],
-		colors: ['#3AB39A', '#F89211', '#39BBF3', '#757EF1'],
+		labels: keys,
+		colors: ['#3AB39A', '#F89211', '#39BBF3', '#757EF1', '#3AB39A', '#F89211', '#39BBF3'],
 		tooltip: {
 			y: {
 				formatter: function (val: number) {
@@ -30,7 +34,7 @@ const LiveVisitsChart: React.FC = () => {
 			position: 'bottom',
 			horizontalAlign: 'center',
 			labels: {
-				colors: [labelColor, labelColor, labelColor, labelColor]
+				colors: [labelColor, labelColor, labelColor, labelColor, labelColor, labelColor, labelColor]
 			}
 		},
 		responsive: [
@@ -59,7 +63,12 @@ const LiveVisitsChart: React.FC = () => {
 			}
 		}))
 	}, [colorMode])
+	useEffect(() => {
+		const sectionValues = Object.values(sections);
+  	const sectionKeys = Object.keys(sections); 
 
+	}, [sections])
+	
 	return (
 		<Box>
 			<Chart options={options} series={series} height='400' type='donut' />
@@ -67,4 +76,4 @@ const LiveVisitsChart: React.FC = () => {
 	)
 }
 
-export default LiveVisitsChart
+export default ResultsChart

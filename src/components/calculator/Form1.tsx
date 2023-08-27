@@ -15,8 +15,8 @@ export interface Form1Input {
 	country: string
 	participants: string
 	employees: string
-	heatedArea?: string
-	airConditionedArea?: string
+	heatedArea: string
+	airConditionedArea: string
 }
 interface Form1Props {
 	onValidationComplete: (info: Form1Input) => void // Define the prop type
@@ -49,7 +49,9 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 		duration: '',
 		country: '',
 		participants: '',
-		employees: ''
+		employees: '',
+		heatedArea: '',
+		airConditionedArea: ''
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
@@ -66,9 +68,18 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 			duration: '',
 			country: '',
 			participants: '',
-			employees: ''
+			employees: '',
+			heatedArea: '',
+			airConditionedArea: ''
 		}
-		Object.keys(inputValues).forEach(key => {
+		const mandatoryFields = [
+			'eventName',
+			'duration',
+			'country',
+			'participants',
+			'employees'
+		]
+		mandatoryFields.forEach(key => {
 			if (!inputValues[key as keyof Form1Input]) {
 				newErrors[key as keyof Form1Input] = 'Field is required'
 				hasErrors = true
@@ -142,7 +153,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 			<Flex mt='2%'>
 				<FormControl mr='2%' isRequired isInvalid={!!inputErrors.participants}>
 					<FormLabel htmlFor='participants' fontWeight={'normal'}>
-						Number Of Participants *
+						Number Of Participants
 					</FormLabel>
 					<Input
 						id='participants'

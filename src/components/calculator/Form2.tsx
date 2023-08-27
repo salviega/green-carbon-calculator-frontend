@@ -27,14 +27,14 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
 	ref
 ) => {
 	const [inputValues, setInputValues] = useState<Form2Input>({
-		peopleByCar: '',
-		distanceByCar: '',
-		peopleByPublicTransport: '',
-		distanceByPublicTransport: '',
-		shortHaulFlights: '',
-		mediumHaulFlights: '',
-		longHaulFlights: '',
-		percentageBusinessClass: '',
+		peopleByCar: '0',
+		distanceByCar: '0',
+		peopleByPublicTransport: '0',
+		distanceByPublicTransport: '0',
+		shortHaulFlights: '0',
+		mediumHaulFlights: '0',
+		longHaulFlights: '0',
+		percentageBusinessClass: '0',
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
