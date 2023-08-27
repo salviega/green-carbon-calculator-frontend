@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
   Box,
   Grid,
   GridItem,
   Button,
   Text,
+  useColorModeValue,
   Spacer,
   HStack
 } from '@chakra-ui/react'
@@ -12,9 +13,12 @@ import OverviewPublic from '../../components/ProjectOverviewPublic'
 import OverviewPrivate from '../../components/ProjectOverviewPrivate'
 import EventDetails from '../../components/EventDetails'
 import EventTable from '../../components/EventTable'
+import ResultsChart from '../../components/charts/ResultsChart'
+import { EmissionDetails } from '../../models/emission-details.model'
 
-import { useColorMode, useColorModeValue } from '@chakra-ui/react'
+
 const Dashboard = () => {
+  const [results, setResults] = useState<EmissionDetails>(initValuesResults)
   const bg = useColorModeValue('red.500', 'red.200')
   return (
     <Grid
@@ -28,8 +32,12 @@ const Dashboard = () => {
       <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4">
         <OverviewPrivate />
       </GridItem>
-      <GridItem rowSpan={1} colSpan={2} borderRadius='lg' bg='gray.100'>
-        <OverviewPublic />
+      <GridItem rowSpan={1} colSpan={2} borderRadius='lg' border="1px" borderColor="gray.200" p="4">
+      <Text fontWeight="semibold" pb="2"> CO2 Ammount</Text>
+      <ResultsChart
+					co2_amount={results.co2_amount}
+					sections={results.sections}
+				/>
       </GridItem>
       <GridItem
         colSpan={3}
@@ -66,6 +74,19 @@ const Dashboard = () => {
       </GridItem>
     </Grid>
   )
+}
+
+const initValuesResults: EmissionDetails = {
+	co2_amount: 0,
+	sections: {
+		Mobility: 10,
+		Accommodation: 10,
+		Catering: 10,
+		Energy: 10,
+		Materials: 10,
+		Transport: 10,
+		Waste: 30
+	}
 }
 
 export default Dashboard
