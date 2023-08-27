@@ -262,73 +262,96 @@ export default function Calculator() {
 		setCalculated(false)
 	}
 	const onCreateAsset = async () => {
-		try {
-			if (!account.address) {
-				toast({
-					title: 'Error Searching User.',
-					description: 'Pleaase connect your wallet.',
-					status: 'warning',
-					duration: 5000,
-					isClosable: false
-				})
-				return
-			}
-			const body: CertificateDetails = {
-				owner: account.address, // wallet
-				image:
-					'https://firebasestorage.googleapis.com/v0/b/footprint-1699b.appspot.com/o/TILE_1920x1080.jpg?alt=media&token=7f49d695-06b9-49b9-a2b1-e5b1817f8fd2', // ipfs image
-				project_id: nanoid(),
-				project_name: 'My project name',
-				project_description: 'My project desc',
-				event_id: nanoid(), // consecutivo
-				event_name: formInfo.event_name,
-				event_description: formInfo.event_description,
-				event_duration: formInfo.event_duration,
-				country: formInfo.country,
-				participants: formInfo.participants,
-				employees: formInfo.employees,
-				heated_area: formInfo.heated_area,
-				air_conditioned_area: formInfo.air_conditioned_area,
-				number_of_people_arriving_by_car:
-					formInfo.number_of_people_arriving_by_car,
-				average_distance_traveled_by_car:
-					formInfo.average_distance_traveled_by_car,
-				number_of_people_traveling_by_public_transport:
-					formInfo.number_of_people_traveling_by_public_transport,
-				short_haul_flights: formInfo.short_haul_flights,
-				medium_haul_flights: formInfo.medium_haul_flights,
-				long_haul_flights: formInfo.long_haul_flights,
-				percentage_business_class: formInfo.percentage_business_class,
-				over_night_stay_three_stars: formInfo.over_night_stay_three_stars,
-				over_night_stay_four_stars: formInfo.over_night_stay_four_stars,
-				over_night_stay_five_stars: formInfo.over_night_stay_five_stars,
-				meal_meat_amount: formInfo.meal_meat_amount,
-				meal_vegetarian_amount: formInfo.meal_vegetarian_amount,
-				snacks_amount: formInfo.snacks_amount,
-				soda_liters: formInfo.soda_liters,
-				coffee_cups: formInfo.coffee_cups,
-				tea_cups: formInfo.tea_cups,
-				wine_liters: formInfo.wine_liters,
-				beer_liters: formInfo.beer_liters,
-				spirits_liters: formInfo.spirits_liters,
-				power_consumption: formInfo.power_consumption,
-				printed_matter: formInfo.printed_matter,
-				plastics: formInfo.plastics,
-				recyclable_material: formInfo.recyclable_material,
-				plant_based_materials: formInfo.plant_based_materials,
-				event_stand_area: formInfo.event_stand_area,
-				transported_weight: formInfo.transported_weight,
-				transported_distance: formInfo.transported_distance,
-				garbage: formInfo.garbage,
-				recycling: formInfo.recycling
-			}
-			const result = await axios.post('/api/handler', {
-				type: 'createAsset',
-				event: body
+		if (!account.address) {
+			toast({
+				title: 'Error Searching User.',
+				description: 'Pleaase connect your wallet.',
+				status: 'warning',
+				duration: 5000,
+				isClosable: false
 			})
-			console.log(result);
+			return
+		}
+		const url = '/api/co2storage'
+		const certificate: CertificateDetails = {
+			owner: account.address, // wallet
+			image:
+				'https://firebasestorage.googleapis.com/v0/b/footprint-1699b.appspot.com/o/TILE_1920x1080.jpg?alt=media&token=7f49d695-06b9-49b9-a2b1-e5b1817f8fd2', // ipfs image
+			project_id: nanoid(),
+			project_name: 'My project name',
+			project_description: 'My project desc',
+			event_id: nanoid(), // consecutivo
+			event_name: formInfo.event_name,
+			event_description: formInfo.event_description,
+			event_duration: formInfo.event_duration,
+			event_co2: results,
+			country: formInfo.country,
+			participants: formInfo.participants,
+			employees: formInfo.employees,
+			heated_area: formInfo.heated_area,
+			air_conditioned_area: formInfo.air_conditioned_area,
+			number_of_people_arriving_by_car:
+				formInfo.number_of_people_arriving_by_car,
+			average_distance_traveled_by_car:
+				formInfo.average_distance_traveled_by_car,
+			number_of_people_traveling_by_public_transport:
+				formInfo.number_of_people_traveling_by_public_transport,
+			short_haul_flights: formInfo.short_haul_flights,
+			medium_haul_flights: formInfo.medium_haul_flights,
+			long_haul_flights: formInfo.long_haul_flights,
+			percentage_business_class: formInfo.percentage_business_class,
+			over_night_stay_three_stars: formInfo.over_night_stay_three_stars,
+			over_night_stay_four_stars: formInfo.over_night_stay_four_stars,
+			over_night_stay_five_stars: formInfo.over_night_stay_five_stars,
+			meal_meat_amount: formInfo.meal_meat_amount,
+			meal_vegetarian_amount: formInfo.meal_vegetarian_amount,
+			snacks_amount: formInfo.snacks_amount,
+			soda_liters: formInfo.soda_liters,
+			coffee_cups: formInfo.coffee_cups,
+			tea_cups: formInfo.tea_cups,
+			wine_liters: formInfo.wine_liters,
+			beer_liters: formInfo.beer_liters,
+			spirits_liters: formInfo.spirits_liters,
+			power_consumption: formInfo.power_consumption,
+			printed_matter: formInfo.printed_matter,
+			plastics: formInfo.plastics,
+			recyclable_material: formInfo.recyclable_material,
+			plant_based_materials: formInfo.plant_based_materials,
+			event_stand_area: formInfo.event_stand_area,
+			transported_weight: formInfo.transported_weight,
+			transported_distance: formInfo.transported_distance,
+			garbage: formInfo.garbage,
+			recycling: formInfo.recycling
+		}
+		const body = {
+			type: 'createAsset',
+			event: certificate
+		}
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			})
+
+			const data = await response.json()
+			const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
+
+			//TODO send this to smart contract
+			//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
+			
+
+			if (response.ok) {
+				console.log('Asset creado:', data)
+				return data
+			} else {
+				console.error('Error al crear template:', data.message)
+				throw new Error(data.message)
+			}
 		} catch (error) {
-			console.log(error)
+			console.error('Error en la petición:', error)
 		}
 	}
 	return !calculated ? (
@@ -472,7 +495,7 @@ export default function Calculator() {
 							w='12rem'
 							colorScheme='green'
 							variant='solid'
-							onClick={onNext}
+							onClick={onCreateAsset}
 						>
 							Create Project
 						</Button>
