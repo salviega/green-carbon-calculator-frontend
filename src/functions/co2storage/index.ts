@@ -1,4 +1,5 @@
 import { Auth, FGStorage } from '@co2-storage/js-api'
+import { CertificateDetails } from '../../models/certificate-details.model'
 
 const authType = 'pk'
 const ipfsNodeType = 'client'
@@ -11,11 +12,54 @@ const fgStorage = new FGStorage({
 	fgApiHost: fgApiUrl
 })
 
+export async function addAsset(asset: CertificateDetails): Promise<any> {
+	const assetElements = Object.entries(asset).map(([key, value]) => ({
+		name: key,
+		value: value
+	}))
+
+	const templateCID =
+		'bafyreichyxvuufpg7xdwgsmg4ni5ancwfd2rqzv22c7s34sqep73n3sp5m'
+	const chainName = 'Footprint'
+	const assetName = `${asset.event_name}`
+	const assetDescription = `${asset.event_description}`
+
+	const addAssetResponse: any = await fgStorage.addAsset(
+		assetElements,
+		{
+			parent: null,
+			name: assetName,
+			description: assetDescription,
+			template: templateCID,
+			filesUploadStart: () => {
+				console.log('Upload started')
+			},
+			filesUpload: async (bytes: any, p: any) => {
+				console.log(`${bytes} uploaded`)
+			},
+			filesUploadEnd: () => {
+				console.log('Upload finished')
+			},
+			createAssetStart: () => {
+				console.log('Creating asset')
+			},
+			createAssetEnd: () => {
+				console.log('Asset created')
+			}
+		},
+		chainName
+	)
+
+	console.log(`Asset created`)
+	return addAssetResponse
+}
+
 export async function addTemplate(): Promise<any> {
 	// Template parameters
 	const template = {
 		owner: { type: 'string' },
 		image: { type: 'string' },
+		project_id: { type: 'string' },
 		project_name: { type: 'string' },
 		project_description: { type: 'string' },
 		event_id: { type: 'string' },
@@ -58,7 +102,7 @@ export async function addTemplate(): Promise<any> {
 		recycling: { type: 'string' }
 	}
 
-	const templateName: string = 'Footprint'
+	const templateName: string = 'Footprint v2'
 	const templateDescription: string =
 		'Template to compensate netzero certificate events'
 	const chainName: string = 'Footprint'
@@ -72,5 +116,6 @@ export async function addTemplate(): Promise<any> {
 		chainName
 	)
 
+	console.log(`Template created`)
 	return addTemplateResponse
 }

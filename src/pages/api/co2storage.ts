@@ -1,4 +1,4 @@
-import { addTemplate } from '../../functions/co2storage'
+import { addAsset, addTemplate } from '../../functions/co2storage'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -12,9 +12,9 @@ export default async function handler(
 				if (req.body.type === 'createTemplate') {
 					return await createTemplate(req, res)
 				}
-				// if (req.body.type === 'createAsset') {
-				// 	return createAsset(req, res)
-				// }
+				if (req.body.type === 'createAsset') {
+					return createAsset(req, res)
+				}
 				break
 			case 'GET':
 				// if (req.query.type === 'getTemplate') {
@@ -37,6 +37,33 @@ export default async function handler(
 	}
 }
 
+async function createAsset(req: NextApiRequest, res: NextApiResponse) {
+	const newAsset: any = await addAsset(req.body.event)
+
+	if (newAsset) {
+		res.status(200).json({ message: 'Asset created!', data: newAsset })
+		return
+	}
+
+	res.status(500).json({ message: 'Error creating asset' })
+}
+
+async function createTemplate(req: NextApiRequest, res: NextApiResponse) {
+	const newTemplate: any = await addTemplate()
+
+	if (newTemplate) {
+		res.status(200).json({ message: 'Template created!', data: newTemplate })
+		return
+	}
+
+	res.status(500).json({ message: 'Error creating template' })
+}
+
+// function getAsset(req, res) {
+// 	// Tu lógica para obtener un recurso aquí
+// 	res.status(200).json({ message: 'Asset fetched!' })
+// }
+
 // async function authenticate(req: NextApiRequest, res: NextApiResponse) {
 // 	try {
 // 		let authResponse = await auth.authenticate()
@@ -54,25 +81,4 @@ export default async function handler(
 // 		console.error(error)
 // 		res.status(500).json({ message: 'error creating authenticate' })
 // 	}
-// }
-
-async function createTemplate(req: NextApiRequest, res: NextApiResponse) {
-	const newTemplate: any = await addTemplate()
-
-	if (newTemplate) {
-		res.status(200).json({ message: 'Template created!', data: newTemplate })
-		return
-	}
-
-	res.status(500).json({ message: 'Error creating template' })
-}
-
-// function createAsset(req, res) {
-// 	// Tu lógica para crear un recurso aquí
-// 	res.status(200).json({ message: 'Asset created!' })
-// }
-
-// function getAsset(req, res) {
-// 	// Tu lógica para obtener un recurso aquí
-// 	res.status(200).json({ message: 'Asset fetched!' })
 // }
