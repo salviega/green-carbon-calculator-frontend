@@ -89,8 +89,54 @@ const Dashboard = () => {
 						borderRadius='lg'
 						bg='gray.100'
 						rowSpan={1}
+            p="4"
 					>
             Event List
+            <Box gap="8" overflowY="auto" maxH="250px">
+              <HStack>
+            <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+            <VStack gap="0" align="start">
+              <Text>24/10/2023</Text>
+              <Text fontWeight="bold" fontSize="lg"> Amazon Windshields, Bolivia</Text>
+            </VStack>
+            </HStack>
+            <HStack>
+            <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+            <VStack gap="0" align="start">
+              <Text>24/10/2023</Text>
+              <Text fontWeight="bold" fontSize="lg"> Amazon Windshields, Bolivia</Text>
+            </VStack>
+            </HStack>
+            <HStack>
+            <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+            <VStack gap="0" align="start">
+              <Text>24/10/2023</Text>
+              <Text fontWeight="bold" fontSize="lg"> Amazon Windshields, Bolivia</Text>
+            </VStack>
+            </HStack>
+            <HStack>
+            <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+            <VStack gap="0" align="start">
+              <Text>24/10/2023</Text>
+              <Text fontWeight="bold" fontSize="lg"> Amazon Windshields, Bolivia</Text>
+            </VStack>
+            </HStack>
+            <HStack>
+            <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+            <VStack gap="0" align="start">
+              <Text>24/10/2023</Text>
+              <Text fontWeight="bold" fontSize="lg"> Amazon Windshields, Bolivia</Text>
+            </VStack>
+            </HStack>
+            <HStack>
+            <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+            <VStack gap="0" align="start">
+              <Text>24/10/2023</Text>
+              <Text fontWeight="bold" fontSize="lg"> Amazon Windshields, Bolivia</Text>
+            </VStack>
+            </HStack>
+            </Box>
+
           </GridItem>
           					<GridItem
 						colSpan={3}
