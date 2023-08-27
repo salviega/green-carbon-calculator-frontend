@@ -1,363 +1,192 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { getAccount } from '@wagmi/core'
+import { firebaseApi } from '../../../services/firebaseApi'
+import { storage } from '../../../firebase.config'
 import {
-	Progress,
-	Box,
-	ButtonGroup,
-	Button,
-	Heading,
-	Flex,
-	FormControl,
-	GridItem,
-	FormLabel,
-	Input,
-	Select,
-	SimpleGrid,
-	InputLeftAddon,
-	InputGroup,
-	Textarea,
-	FormHelperText,
-	InputRightElement
-} from '@chakra-ui/react'
-
+	ref as fireRef,
+	uploadBytesResumable,
+	getDownloadURL
+} from 'firebase/storage'
+import { Progress, Box, ButtonGroup, Button, Flex } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
-
-const Form1 = () => {
-	const [show, setShow] = useState(false)
-	const handleClick = () => setShow(!show)
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-				Project Details
-			</Heading>
-			<FormControl mt='2%'>
-				<FormLabel htmlFor='name' fontWeight={'normal'}>
-					Project Name
-				</FormLabel>
-				<Input id='name' type='text' />
-			</FormControl>
-			<Flex mt='2%'>
-				<FormControl mr='2%'>
-					<FormLabel htmlFor='budget' fontWeight={'normal'}>
-						Budget (USD)
-					</FormLabel>
-					<Input id='budget' placeholder='Budget ...' type='number' />
-				</FormControl>
-				<FormControl>
-					<FormLabel htmlFor='category' fontWeight={'normal'}>
-						Category
-					</FormLabel>
-					<Select
-						id='category'
-						name='category'
-						autoComplete='category'
-						placeholder='Pick category'
-						focusBorderColor='brand.400'
-						w='full'
-						rounded='md'
-					>
-						<option>Category 1</option>
-						<option>Category 2</option>
-						<option>Category 3</option>
-					</Select>
-				</FormControl>
-			</Flex>
-			<FormControl id='email' mt='2%'>
-				<FormLabel
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Project Description
-				</FormLabel>
-				<Textarea
-					placeholder='Description ...'
-					rows={3}
-					shadow='sm'
-					focusBorderColor='brand.400'
-					fontSize={{
-						sm: 'sm'
-					}}
-				/>
-				<FormHelperText>Brief description for your project.</FormHelperText>
-			</FormControl>
-			<FormControl mt='2%'>
-				<FormLabel
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Website
-				</FormLabel>
-				<InputGroup>
-					<InputLeftAddon
-						bg='gray.50'
-						_dark={{
-							bg: 'gray.800'
-						}}
-						color='gray.500'
-						rounded='md'
-					>
-						http://
-					</InputLeftAddon>
-					<Input
-						type='tel'
-						placeholder='www.example.com'
-						focusBorderColor='brand.400'
-						rounded='md'
-					/>
-				</InputGroup>
-			</FormControl>
-		</div>
-	)
-}
-
-const Form2 = () => {
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-				User Details
-			</Heading>
-			<FormControl as={GridItem} colSpan={[6, 3]}>
-				<FormLabel
-					htmlFor='country'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-				>
-					Country / Region
-				</FormLabel>
-				<Select
-					id='country'
-					name='country'
-					autoComplete='country'
-					placeholder='Select option'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				>
-					<option>United States</option>
-					<option>Canada</option>
-					<option>Mexico</option>
-				</Select>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={6}>
-				<FormLabel
-					htmlFor='street_address'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					Street address
-				</FormLabel>
-				<Input
-					type='text'
-					name='street_address'
-					id='street_address'
-					autoComplete='street-address'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-				<FormLabel
-					htmlFor='city'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					City
-				</FormLabel>
-				<Input
-					type='text'
-					name='city'
-					id='city'
-					autoComplete='city'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormLabel
-					htmlFor='state'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					State / Province
-				</FormLabel>
-				<Input
-					type='text'
-					name='state'
-					id='state'
-					autoComplete='state'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormLabel
-					htmlFor='postal_code'
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
-					mt='2%'
-				>
-					ZIP / Postal
-				</FormLabel>
-				<Input
-					type='text'
-					name='postal_code'
-					id='postal_code'
-					autoComplete='postal-code'
-					focusBorderColor='brand.400'
-					shadow='sm'
-					size='sm'
-					w='full'
-					rounded='md'
-				/>
-			</FormControl>
-			<FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-				<FormControl mt='2%'>
-					<FormLabel
-						htmlFor='postal_code'
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-						mt='2%'
-					>
-						Email Address
-					</FormLabel>
-					<Input
-						type='text'
-						name='postal_code'
-						id='postal_code'
-						autoComplete='postal-code'
-						focusBorderColor='brand.400'
-						shadow='sm'
-						size='sm'
-						w='full'
-						rounded='md'
-					/>
-					<FormHelperText>We&apos;ll never share your email.</FormHelperText>
-				</FormControl>
-			</FormControl>
-		</div>
-	)
-}
-
-const Form3 = () => {
-	return (
-		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal'>
-				Additional Information
-			</Heading>
-			<SimpleGrid columns={1} spacing={6}>
-				<FormControl as={GridItem} colSpan={[3, 2]}>
-					<FormLabel
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-					>
-						Website
-					</FormLabel>
-					<InputGroup size='sm'>
-						<InputLeftAddon
-							bg='gray.50'
-							_dark={{
-								bg: 'gray.800'
-							}}
-							color='gray.500'
-							rounded='md'
-						>
-							http://
-						</InputLeftAddon>
-						<Input
-							type='tel'
-							placeholder='www.example.com'
-							focusBorderColor='brand.400'
-							rounded='md'
-						/>
-					</InputGroup>
-				</FormControl>
-
-				<FormControl id='email' mt={1}>
-					<FormLabel
-						fontSize='sm'
-						fontWeight='md'
-						color='gray.700'
-						_dark={{
-							color: 'gray.50'
-						}}
-					>
-						About
-					</FormLabel>
-					<Textarea
-						placeholder='you@example.com'
-						rows={3}
-						shadow='sm'
-						focusBorderColor='brand.400'
-						fontSize={{
-							sm: 'sm'
-						}}
-					/>
-					<FormHelperText>
-						Brief description for your profile. URLs are hyperlinked.
-					</FormHelperText>
-				</FormControl>
-			</SimpleGrid>
-		</div>
-	)
+import { Project } from '../../models/project.model'
+import Form1Create, {
+	Form1CreateInput,
+	Form1CreateRef
+} from '../../components/create/Form1Create'
+import Form2Create, {
+	Form2CreateInput,
+	Form2CreateRef
+} from '../../components/create/Form2Create'
+export interface CreateprojectForm {
+	proyectName: string
+	projectCountry: string
+	proyectDescription: string
+	category: string
+	members: string
+	logo?: File | string | null | undefined
+	banner?: File | string | null | undefined
 }
 
 export default function Multistep() {
+	const account = getAccount()
+	const { createProject } = firebaseApi()
 	const toast = useToast()
+	const stepNumber = 2
+	let form2info: Form2CreateInput
+	const form1CreateRef = useRef<Form1CreateRef>(null)
+	const form2CreateRef = useRef<Form2CreateRef>(null)
 	const [step, setStep] = useState(1)
-	const [progress, setProgress] = useState(33.33)
+	const [progress, setProgress] = useState(100 / stepNumber)
+	const [loading, setLoading] = useState(false)
+	const [formInfo, setFormInfo] = useState<CreateprojectForm>({
+		proyectName: '',
+		projectCountry: '',
+		proyectDescription: '',
+		category: '',
+		members: '',
+		logo: null,
+		banner: null
+	})
+	const onSetInfoForm1 = (info: Form1CreateInput) => {
+		setFormInfo({
+			...formInfo,
+			proyectName: info.proyectName,
+			proyectDescription: info.proyectDescription,
+			category: info.category,
+			members: info.members,
+			logo: info.logo,
+			banner: info.banner
+		})
+	}
+	const onSetInfoForm2 = (info: Form2CreateInput) => {
+		form2info = info
+	}
+	const onNext = () => {
+		if (step === 1 && form1CreateRef.current) {
+			form1CreateRef.current.validateAndSubmit(() => {
+				showNextForm()
+			})
+		} else if (step === 2 && form2CreateRef.current) {
+			console.log('2');
+			
+			form2CreateRef.current.validateAndSubmit(() => {
+				onCreateProject()
+			})
+		}
+	}
+	const showNextForm = () => {
+		setStep(step + 1)
+		if (step === stepNumber + 1) {
+			setProgress(100)
+		} else {
+			setProgress(progress + 100 / stepNumber + 1)
+		}
+	}
+	const onCreateProject = async () => {
+		console.log('submit?');
+		
+		if (!account?.address) {
+			toast({
+				title: 'Please connect your wallet first',
+				description: 'Please login.',
+				status: 'warning',
+				duration: 5000,
+				isClosable: true
+			})
+			return;
+		}
+		try {
+			setLoading(true)
+			//upload logo & banner images to firebase
+			const images: File[] = [formInfo.logo as File, formInfo.banner as File]
+			const imgs: string[] | null = await uploadImages(images)
 
+			const newProject: Project = {
+				ownerWallet: account.address?.toString(),
+				name: formInfo.proyectName,
+				description: formInfo.proyectDescription,
+				responsableName: form2info.responsableName,
+				logo: imgs ? imgs[0] : '', //url
+				banner: imgs ? imgs[1] : '', //url
+				country: form2info.projectCountry,
+				events: [],
+				raisedTotal: 0,
+				eventTotal: 0,
+				socialNetwors: {
+					webpage: form2info.webpage,
+					twitter: form2info.twitter,
+					youtube: form2info.youtube,
+					linkedin: form2info.linkedin
+				},
+				certificates: []
+			}
+			const response = await createProject(newProject)
+			console.log(response)
+			toast({
+				title: 'Account created.',
+				description: "We've created your account for you.",
+				status: 'success',
+				duration: 3000,
+				isClosable: true
+			})
+			console.log('Project Done')
+
+			//TODO configure next step in the flow
+		} catch (error) {
+			console.log(error)
+			toast({
+				title: 'Error creating project',
+				description: 'Please try again.',
+				status: 'error',
+				duration: 5000,
+				isClosable: true
+			})
+			setLoading(false)
+		}
+	}
+	const uploadImages = async (files: File[]): Promise<string[] | null> => {
+		try {
+			const urls: string[] = []
+			const uploadPromises = Array.from(files).map(async file => {
+				try {
+					if (!file) {
+						urls.push('')
+						return Promise.resolve()
+					}
+					const fileRef = fireRef(storage, file.name)
+
+					await uploadBytesResumable(fileRef, file)
+
+					const fileURL = await getDownloadURL(fileRef)
+					urls.push(fileURL)
+				} catch (error) {
+					console.error('Error uploading image: ', error)
+					toast({
+						title: 'Error uploading the file',
+						description: 'Please try again.',
+						status: 'error',
+						duration: 5000,
+						isClosable: true
+					})
+					setLoading(false)
+				}
+			})
+			await Promise.all(uploadPromises)
+			return urls
+		} catch (error) {
+			console.log(error)
+			toast({
+				title: 'Error uploading the file',
+				description: 'Please try again.',
+				status: 'error',
+				duration: 5000,
+				isClosable: true
+			})
+			setLoading(false)
+			return null
+		}
+	}
 	return (
 		<div>
 			<Box
@@ -376,56 +205,56 @@ export default function Multistep() {
 					mx='5%'
 					isAnimated
 				></Progress>
-				{step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+				{}
+				{step === 1 ? (
+					<Form1Create
+						ref={form1CreateRef}
+						onValidationComplete={onSetInfoForm1}
+					/>
+				) : (
+					<Form2Create
+						ref={form2CreateRef}
+						onValidationComplete={onSetInfoForm2}
+						loading={loading}
+					/>
+				)}
 				<ButtonGroup mt='5%' w='100%'>
 					<Flex w='100%' justifyContent='space-between'>
 						<Flex>
 							<Button
 								onClick={() => {
 									setStep(step - 1)
-									setProgress(progress - 33.33)
+									setProgress(progress - 100 / stepNumber)
 								}}
 								isDisabled={step === 1}
 								colorScheme='teal'
 								variant='solid'
 								w='7rem'
 								mr='5%'
+								isLoading={loading}
 							>
 								Back
 							</Button>
 							<Button
 								w='7rem'
-								isDisabled={step === 3}
-								onClick={() => {
-									setStep(step + 1)
-									if (step === 3) {
-										setProgress(100)
-									} else {
-										setProgress(progress + 33.33)
-									}
-								}}
+								isDisabled={step === stepNumber}
+								onClick={onNext}
 								colorScheme='teal'
 								variant='outline'
+								isLoading={loading}
 							>
 								Next
 							</Button>
 						</Flex>
-						{step === 3 ? (
+						{step === stepNumber ? (
 							<Button
 								w='7rem'
 								colorScheme='red'
 								variant='solid'
-								onClick={() => {
-									toast({
-										title: 'Account created.',
-										description: "We've created your account for you.",
-										status: 'success',
-										duration: 3000,
-										isClosable: true
-									})
-								}}
+								onClick={onNext}
+								isLoading={loading}
 							>
-								Submit
+								Create
 							</Button>
 						) : null}
 					</Flex>

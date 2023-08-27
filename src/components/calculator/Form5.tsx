@@ -19,12 +19,12 @@ const Form5: React.ForwardRefRenderFunction<Form5Ref, Form5Props> = (
 	ref
 ) => {
 	const [inputValues, setInputValues] = useState<Form5Input>({
-		power_consumption: '',
-		printed_matter: '',
-		plastics: '',
-		recyclable_material: '',
-		plant_based_materials: '',
-		event_stand_area: ''
+		power_consumption: '0',
+		printed_matter: '0',
+		plastics: '0',
+		recyclable_material: '0',
+		plant_based_materials: '0',
+		event_stand_area: '0',
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target

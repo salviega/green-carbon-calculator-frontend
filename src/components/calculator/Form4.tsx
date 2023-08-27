@@ -22,15 +22,15 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
 	ref
 ) => {
 	const [inputValues, setInputValues] = useState<Form4Input>({
-		meal_meat_amount: '',
-		meal_vegetarian_amount: '',
-		snacks_amount: '',
-		soda_liters: '',
-		coffee_cups: '',
-		tea_cups: '',
-		wine_liters: '',
-		beer_liters: '',
-		spirits_liters: ''
+		meal_meat_amount: '0',
+		meal_vegetarian_amount: '0',
+		snacks_amount: '0',
+		soda_liters: '0',
+		coffee_cups: '0',
+		tea_cups: '0',
+		wine_liters: '0',
+		beer_liters: '0',
+		spirits_liters: '0',
 	})
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target
@@ -86,7 +86,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
 						placeholder='Amount of snacks...'
 						type='number'
 						required
-						value={inputValues.meal_meat_amount}
+						value={inputValues.snacks_amount}
 						onChange={handleInputChange}
 					/>
 				</FormControl>

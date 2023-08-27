@@ -2,14 +2,17 @@ import { CertificateDetails } from './certificate-details.model'
 import { EventDetails } from './event-details.model'
 
 export interface Project {
+	ownerWallet: string | undefined
 	name: string
-	descripcion: string
-	logo: string //base64
-	banner: string //base64
+	description: string
+	responsableName: string
+	logo?: string //firebase storage url
+	banner?: string //firebase storage url
+	country : string
 	events: Event[]
 	raisedTotal: number
 	eventTotal: number
-	socialNetwors: string[]
+	socialNetwors: SocialMedia
 	certificates?: CertificateDetails[]
 }
 
@@ -18,4 +21,10 @@ export interface Event {
 	description: string
 	date: string
 	details?: EventDetails
+}
+interface SocialMedia {
+	webpage?: string
+	twitter?: string
+	youtube?: string
+	linkedin?: string
 }
