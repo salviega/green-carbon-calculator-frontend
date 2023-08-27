@@ -379,16 +379,12 @@ export default function Calculator() {
 	}
 	return !calculated ? (
 		<div>
-			<Heading as='h1' textAlign='center' my={5}>
-				Footprint Calculator
-			</Heading>
 			<Box
 				borderWidth='1px'
 				rounded='lg'
-				shadow='1px 1px 3px rgba(0,0,0,0.3)'
 				maxWidth={800}
 				p={6}
-				m='10px auto'
+				m='40px auto'
 				as='form'
 			>
 				<Progress
@@ -397,6 +393,7 @@ export default function Calculator() {
 					mb='5%'
 					mx='5%'
 					isAnimated
+          borderRadius="lg"
 				></Progress>
 				{step === 1 ? (
 					<Form1 ref={form1Ref} onValidationComplete={onSetInfoForm1} />
@@ -415,17 +412,13 @@ export default function Calculator() {
 						loading={loading}
 					/>
 				)}
-				<ButtonGroup mt='5%' w='100%'>
-					<Flex w='100%' justifyContent='space-between'>
-						<Flex>
+				<ButtonGroup mt='5%' w='100%' justifyContent="flex-end">
 							<Button
 								onClick={() => {
 									setStep(step - 1)
 									setProgress(progress - 100 / stepNumber)
 								}}
 								isDisabled={step === 1}
-								colorScheme='teal'
-								variant='solid'
 								w='7rem'
 								mr='5%'
 								isLoading={loading}
@@ -437,12 +430,11 @@ export default function Calculator() {
 								isDisabled={step === stepNumber}
 								onClick={onNext}
 								colorScheme='teal'
-								variant='outline'
+								variant='primary'
 								isLoading={loading}
 							>
 								Next
 							</Button>
-						</Flex>
 						{step === stepNumber ? (
 							<Button
 								w='7rem'
@@ -454,7 +446,6 @@ export default function Calculator() {
 								Submit
 							</Button>
 						) : null}
-					</Flex>
 				</ButtonGroup>
 			</Box>
 		</div>

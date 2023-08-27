@@ -106,11 +106,11 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 	}))
 	return (
 		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
+			<Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
 				General
 			</Heading>
 			<FormControl mt='2%' isRequired isInvalid={!!inputErrors.eventName}>
-				<FormLabel htmlFor='eventName' fontWeight={'normal'}>
+				<FormLabel htmlFor='eventName' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Event Name
 				</FormLabel>
 				<Input
@@ -120,6 +120,8 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 					required
 					value={inputValues.eventName}
 					onChange={handleInputChange}
+          textColor="gray.600"
+          focusBorderColor="brand.dark"
 				/>
 			</FormControl>
 			<FormControl
@@ -129,18 +131,14 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 				isInvalid={!!inputErrors.eventDescription}
 			>
 				<FormLabel
-					fontSize='sm'
-					fontWeight='md'
-					color='gray.700'
-					_dark={{
-						color: 'gray.50'
-					}}
+					fontSize='md'
+					textColor="gray.500" fontWeight='medium'
 				>
 					Event Description
 				</FormLabel>
 				<Textarea
 					id='eventDescription'
-					placeholder='Description ...'
+					placeholder='Brief description for your event.'
 					rows={3}
 					shadow='sm'
 					fontSize={{
@@ -150,13 +148,15 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 					required
 					value={inputValues.eventDescription}
 					onChange={handleTextAreaChange}
+          textColor="gray.600"
+          resize="none"
+          focusBorderColor="brand.dark"
 				/>
-				<FormHelperText>Brief description for your event.</FormHelperText>
 				<FormErrorMessage>{inputErrors.eventDescription}</FormErrorMessage>
 			</FormControl>
 			<Flex mt='2%'>
 				<FormControl mr='2%' isRequired isInvalid={!!inputErrors.duration}>
-					<FormLabel htmlFor='duration' fontWeight={'normal'}>
+					<FormLabel htmlFor='duration' textColor="gray.500" fontWeight='medium' fontSize='md'>
 						Duration (Days)
 					</FormLabel>
 					<Input
@@ -166,11 +166,13 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						required
 						value={inputValues.duration}
 						onChange={handleInputChange}
+            textColor="gray.600"
+            focusBorderColor="brand.dark"
 					/>
 					<FormErrorMessage>{inputErrors.duration}</FormErrorMessage>
 				</FormControl>
 				<FormControl isRequired isInvalid={!!inputErrors.country}>
-					<FormLabel htmlFor='country' fontWeight={'normal'}>
+					<FormLabel htmlFor='country' textColor="gray.500" fontWeight='medium' fontSize='md'>
 						Country
 					</FormLabel>
 					<Select
@@ -182,6 +184,8 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						rounded='md'
 						value={inputValues.country}
 						onChange={handleCountryChange}
+            textColor="gray.600"
+            focusBorderColor="brand.dark"
 					>
 						{countries.map((country, index) => (
 							<option value={country.name} key={index + country.name}>
@@ -194,7 +198,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 			</Flex>
 			<Flex mt='2%'>
 				<FormControl mr='2%' isRequired isInvalid={!!inputErrors.participants}>
-					<FormLabel htmlFor='participants' fontWeight={'normal'}>
+					<FormLabel htmlFor='participants' textColor="gray.500" fontWeight='medium' fontSize='md'>
 						Number Of Participants
 					</FormLabel>
 					<Input
@@ -204,11 +208,13 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						required
 						value={inputValues.participants}
 						onChange={handleInputChange}
+            textColor="gray.600"
+            focusBorderColor="brand.dark"
 					/>
 					<FormErrorMessage>{inputErrors.participants}</FormErrorMessage>
 				</FormControl>
 				<FormControl isRequired isInvalid={!!inputErrors.employees}>
-					<FormLabel htmlFor='employees' fontWeight={'normal'}>
+					<FormLabel htmlFor='employees' textColor="gray.500" fontWeight='medium' fontSize='md'>
 						Number Of Employees
 					</FormLabel>
 					<Input
@@ -218,13 +224,15 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						required
 						value={inputValues.employees}
 						onChange={handleInputChange}
+            textColor="gray.600"
+            focusBorderColor="brand.dark"
 					/>
 					<FormErrorMessage>{inputErrors.employees}</FormErrorMessage>
 				</FormControl>
 			</Flex>
 			<Flex mt='2%'>
 				<FormControl mr='2%'>
-					<FormLabel htmlFor='heatedArea' fontWeight={'normal'}>
+					<FormLabel htmlFor='heatedArea' textColor="gray.500" fontWeight='medium' fontSize='md'>
 						Heated area (m2)
 					</FormLabel>
 					<Input
@@ -233,10 +241,12 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						type='number'
 						value={inputValues.heatedArea}
 						onChange={handleInputChange}
+            textColor="gray.600"
+            focusBorderColor="brand.dark"
 					/>
 				</FormControl>
 				<FormControl>
-					<FormLabel htmlFor='airConditionedArea' fontWeight={'normal'}>
+					<FormLabel htmlFor='airConditionedArea' textColor="gray.500" fontWeight='medium' fontSize='md'>
 						Air conditioned area (m2)
 					</FormLabel>
 					<Input
@@ -245,6 +255,8 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
 						type='number'
 						value={inputValues.airConditionedArea}
 						onChange={handleInputChange}
+            textColor="gray.600"
+            focusBorderColor="brand.dark"
 					/>
 				</FormControl>
 			</Flex>
