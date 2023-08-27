@@ -12,6 +12,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { ChakraProvider } from '@chakra-ui/react'
 // import Layout from '@/components/Layout'
 import Layout from '../components/Layout'
+import customTheme from '../theme/theme.js'
 
 const { chains, publicClient } = configureChains(
 	[
@@ -59,7 +60,7 @@ export default function App({ Component, pageProps }) {
 					overlayBlur: 'small'
 				})}
 			>
-				<ChakraProvider>
+				<ChakraProvider theme={customTheme}>
           <Layout>
 					  <Component {...pageProps} />
           </Layout>
