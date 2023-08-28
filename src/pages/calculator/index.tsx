@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { Contract, ethers } from 'ethers'
 import FootprintContractJson from '../../assets/contracts/Footprint.json'
-import { GreenCarbonCalculator as Footprint } from '../../../@types/typechain-types'
+import { Footprint } from '../../../@types/typechain-types/Footprint'
 
 import Form1, { Form1Input, Form1Ref } from '../../components/calculator/Form1'
 import Form2, { Form2Input, Form2Ref } from '../../components/calculator/Form2'
