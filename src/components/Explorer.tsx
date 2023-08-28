@@ -37,6 +37,22 @@ export default function Explorer() {
           <Text textColor="white" fontSize="lg">Engage with your community and highlight your ongoing commitment to the environment. Amplify your positive impact by adding more events and continuously offsetting carbon emissions.</Text>
         </Flex>
       </SimpleGrid>
+      <SimpleGrid columns={2} spacing={10} marginTop="36" marginBottom="12" >
+      <VStack align="start">
+      <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
+      <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">There's a blind spot in the funding process. Let's make environmental a part of the conversation.</Text>
+      </VStack>
+      <VStack align="star" justify="center" ml="32" gap="16">
+        <VStack align="start">
+      <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">3.8M</Text>
+      <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> CARBON TONS</Text>
+        </VStack>
+        <VStack align="start">
+      <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">3,715</Text>
+      <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> PROJECTS RAISED FUNDS</Text>
+        </VStack>
+      </VStack>
+      </SimpleGrid>
 		</>
 	)
 }
