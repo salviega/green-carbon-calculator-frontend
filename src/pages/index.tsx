@@ -3,7 +3,7 @@ import React from 'react'
 import Explorer from '../components/Explorer'
 
 const metadata = {
-	title: 'Green Carbon Calculator',
+	title: 'Footprint',
 	description: 'Decentralized calculator'
 }
 

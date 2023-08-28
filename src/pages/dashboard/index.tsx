@@ -8,7 +8,6 @@ import {
   useColorModeValue,
   Spacer,
   HStack,
-  VStack
 } from '@chakra-ui/react'
 import OverviewPublic from '../../components/ProjectOverviewPublic'
 import OverviewPrivate from '../../components/ProjectOverviewPrivate'
@@ -17,12 +16,24 @@ import EventDetails from '../../components/EventDetails'
 import EventTable from '../../components/EventTable'
 import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
+import Head from 'next/head'
 
+const metadata = {
+	title: 'Footprint',
+	description: 'Decentralized calculator'
+}
 
 const Dashboard = () => {
   const [results, setResults] = useState<EmissionDetails>(initValuesResults)
   const bg = useColorModeValue('red.500', 'red.200')
   return (
+    <>
+    <Head>
+    <title>{metadata.title}</title>
+    <meta name='description' content={metadata.description} />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link rel='icon' href='/favicon.ico' />
+  </Head>
     <Grid
       h='1000px'
       templateRows='2fr 350px auto'
@@ -77,6 +88,7 @@ const Dashboard = () => {
         <EventTable />
       </GridItem>
     </Grid>
+    </>
   )
 }
 
