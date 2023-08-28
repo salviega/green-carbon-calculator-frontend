@@ -9,6 +9,7 @@ import {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -17,12 +18,15 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface GreenCarbonCalculatorInterface extends utils.Interface {
-  contractName: "GreenCarbonCalculator";
+export interface FootprintInterface extends utils.Interface {
+  contractName: "Footprint";
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "balances(address)": FunctionFragment;
+    "charity(address)": FunctionFragment;
+    "crowfunding(address)": FunctionFragment;
+    "donate(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "mintNetZeroCertificate(uint256,string)": FunctionFragment;
@@ -45,6 +49,12 @@ export interface GreenCarbonCalculatorInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "balances", values: [string]): string;
+  encodeFunctionData(functionFragment: "charity", values: [string]): string;
+  encodeFunctionData(functionFragment: "crowfunding", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "donate",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
@@ -96,6 +106,12 @@ export interface GreenCarbonCalculatorInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "charity", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "crowfunding",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "donate", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -170,13 +186,13 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface GreenCarbonCalculator extends BaseContract {
-  contractName: "GreenCarbonCalculator";
+export interface Footprint extends BaseContract {
+  contractName: "Footprint";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: GreenCarbonCalculatorInterface;
+  interface: FootprintInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -207,6 +223,15 @@ export interface GreenCarbonCalculator extends BaseContract {
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    charity(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    crowfunding(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    donate(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -294,6 +319,15 @@ export interface GreenCarbonCalculator extends BaseContract {
 
   balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  charity(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  crowfunding(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  donate(
+    _tokenId: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -373,6 +407,12 @@ export interface GreenCarbonCalculator extends BaseContract {
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    charity(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    crowfunding(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    donate(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -488,6 +528,15 @@ export interface GreenCarbonCalculator extends BaseContract {
 
     balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    charity(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    crowfunding(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    donate(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -579,6 +628,21 @@ export interface GreenCarbonCalculator extends BaseContract {
     balances(
       arg0: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    charity(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    crowfunding(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    donate(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     getApproved(
