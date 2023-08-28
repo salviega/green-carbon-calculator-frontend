@@ -36,7 +36,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 	}))
 	return (
 		<div>
-			<Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
+			<Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
 				Energy & Material
 			</Heading>
 			{loading && (
@@ -47,7 +47,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 			)}
 			<Flex mt='2%'>
 				<FormControl mr='2%'>
-					<FormLabel htmlFor='transported_weight' fontWeight={'normal'}>
+					<FormLabel htmlFor='transported_weight' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Transported weight (Ton)
 					</FormLabel>
 					<Input
@@ -57,11 +57,13 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.transported_weight}
 						onChange={handleInputChange}
+                      textColor="gray.600"
+          focusBorderColor="brand.dark"
 						disabled={loading}
 					/>
 				</FormControl>
 				<FormControl mr='2%'>
-					<FormLabel htmlFor='transported_distance' fontWeight={'normal'}>
+					<FormLabel htmlFor='transported_distance' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Average distance (Km)
 					</FormLabel>
 					<Input
@@ -71,13 +73,15 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.transported_distance}
 						onChange={handleInputChange}
+                      textColor="gray.600"
+          focusBorderColor="brand.dark"
 						disabled={loading}
 					/>
 				</FormControl>
 			</Flex>
 			<Flex mt='2%'>
 				<FormControl mr='2%'>
-					<FormLabel htmlFor='garbage' fontWeight={'normal'}>
+					<FormLabel htmlFor='garbage' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Residual waste (Kg)
 					</FormLabel>
 					<Input
@@ -87,11 +91,13 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.garbage}
 						onChange={handleInputChange}
+                      textColor="gray.600"
+          focusBorderColor="brand.dark"
 						disabled={loading}
 					/>
 				</FormControl>
 				<FormControl mr='2%'>
-					<FormLabel htmlFor='recycling' fontWeight={'normal'}>
+					<FormLabel htmlFor='recycling' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Recycling (Kg)
 					</FormLabel>
 					<Input
@@ -101,6 +107,8 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 						required
 						value={inputValues.recycling}
 						onChange={handleInputChange}
+                      textColor="gray.600"
+          focusBorderColor="brand.dark"
 						disabled={loading}
 					/>
 				</FormControl>

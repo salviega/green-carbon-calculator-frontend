@@ -391,7 +391,6 @@ export default function Calculator() {
 					hasStripe
 					value={progress}
 					mb='5%'
-					mx='5%'
 					isAnimated
           borderRadius="lg"
 				></Progress>
@@ -425,25 +424,25 @@ export default function Calculator() {
 							>
 								Back
 							</Button>
+              {step !== stepNumber ? (
 							<Button
 								w='7rem'
 								isDisabled={step === stepNumber}
 								onClick={onNext}
-								colorScheme='teal'
 								variant='primary'
 								isLoading={loading}
 							>
 								Next
 							</Button>
+               ) : null}
 						{step === stepNumber ? (
 							<Button
 								w='7rem'
-								colorScheme='red'
-								variant='solid'
+								variant='darkie'
 								onClick={onNext}
 								isLoading={loading}
 							>
-								Submit
+								Calculate
 							</Button>
 						) : null}
 				</ButtonGroup>
