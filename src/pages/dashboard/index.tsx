@@ -29,7 +29,7 @@ const Dashboard = () => {
   const router = useRouter();
   const [results, setResults] = useState<EmissionDetails>(initValuesResults)
   const bg = useColorModeValue('red.500', 'red.200')
-  const {  getProject, getProjectById } = firebaseApi()
+  const {   getProjectById } = firebaseApi()
   useEffect(() => {
     console.log(router.query.id);
     if(router.query.id)
