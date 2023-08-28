@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Stack, Flex,Spacer, Button, Text, VStack, useBreakpointValue, Box, HStack, Image,SimpleGrid } from '@chakra-ui/react'
 import Hero from './Hero'
 import ProyectsSection from './ProyectsSection'
+import Link from 'next/link'
 
 export default function Explorer() {
 	return (
@@ -37,7 +38,7 @@ export default function Explorer() {
           <Text textColor="white" fontSize="lg">Engage with your community and highlight your ongoing commitment to the environment. Amplify your positive impact by adding more events and continuously offsetting carbon emissions.</Text>
         </Flex>
       </SimpleGrid>
-      <SimpleGrid columns={2} spacing={10} marginTop="36" marginBottom="12" >
+      <SimpleGrid columns={2} spacing={10} marginTop="36" marginBottom="48" >
       <VStack align="start">
       <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
       <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">There's a blind spot in the funding process. Let's make environmental a part of the conversation.</Text>
@@ -53,6 +54,30 @@ export default function Explorer() {
         </VStack>
       </VStack>
       </SimpleGrid>
+      <Flex bg="brand.fuchsia" width="100%" borderRadius="3xl" p="12" align="start" flexDirection="column"   backgroundImage={
+        '/images/cta.jpg'
+      }
+      backgroundSize="cover"
+      backgroundPosition={'bottom right'} mb="36">
+      <Text
+            color='white'
+            fontWeight={800}
+            lineHeight={1.2}
+            fontSize={useBreakpointValue({ base: '3xl', md: '7xl' })}
+            textTransform="uppercase" w="70%">
+            Public Goods are only good when they’re green.
+          </Text>
+            <Link href="/calculator">
+              <Button
+                bg={'#DEFE75'}
+                color={'black'}
+                _hover={{ bg: '#cdde99' }}
+                mt="6"
+              >
+                Calculate your impact
+              </Button>
+            </Link>
+      </Flex>
 		</>
 	)
 }

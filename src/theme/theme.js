@@ -6,7 +6,8 @@ const customTheme = extendTheme({
       light: "#DEFE75",
       dark: "#035231",
       lime: "#D4FE48",
-      newBlack: "#1E1E1E"
+      newBlack: "#1E1E1E",
+      fuchsia: "#9936E8"
     },
   },
   components: {
