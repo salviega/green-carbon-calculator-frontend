@@ -70,7 +70,7 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
         </FormControl>
         <FormControl mr='2%'>
           <FormLabel htmlFor='distanceByCar' textColor="gray.500" fontWeight='medium' fontSize='md'>
-            Average distance travelled (car)
+            Average distance travelled (km per car)
           </FormLabel>
           <Input
             id='distanceByCar'
@@ -102,7 +102,7 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
         </FormControl>
         <FormControl mr='2%'>
           <FormLabel htmlFor='distanceByPublicTransport' textColor="gray.500" fontWeight='medium' fontSize='md'>
-            Average distance travelled (public transport)
+            Avg distance travelled public transport (km)
           </FormLabel>
           <Input
             id='distanceByPublicTransport'

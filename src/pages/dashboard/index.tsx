@@ -61,7 +61,7 @@ const Dashboard = () => {
       margin="2rem auto"
     >
       <GridItem colSpan={{base:6, md:4}} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4" bg="white">
-        <OverviewPublic />
+        <OverviewPrivate />
       </GridItem>
       <GridItem rowSpan={1} colSpan={{base:6, md:2}} borderRadius='lg' border="1px" borderColor="gray.200" p="4" bg="white">
         <Text fontWeight="semibold" pb="2"> CO2 Ammount</Text>
