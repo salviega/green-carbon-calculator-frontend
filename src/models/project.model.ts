@@ -2,6 +2,7 @@ import { CertificateDetails } from './certificate-details.model'
 import { EventDetails } from './event-details.model'
 
 export interface Project {
+	project_id: string
 	ownerWallet: string | undefined
 	name: string
 	description: string
@@ -14,12 +15,13 @@ export interface Project {
 	eventTotal: number
 	socialNetwors: SocialMedia
 	certificates?: CertificateDetails[]
+	goal: number
+	totalContributors: number
 }
 
 export interface Event {
 	name: string
 	description: string
-	date: string
 	details?: EventDetails
 }
 interface SocialMedia {

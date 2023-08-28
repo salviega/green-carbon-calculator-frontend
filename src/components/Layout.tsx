@@ -18,12 +18,16 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Link from 'next/link'
 
 const Links = ['dashboard', 'discovery']
-
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+interface NavLinkProps {
+  children: React.ReactNode;
+}
+const Layout : React.FC<LayoutProps> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   // const { colorMode, toggleColorMode } = useColorMode()
-  const NavLink = props => {
-    const { children } = props
+  const NavLink :  React.FC<NavLinkProps> = ({ children }) => {
     return (
       <Box
         as='a'
@@ -37,7 +41,7 @@ const Layout = ({ children }) => {
         }}
         color="white"
         fontWeight="semibold"
-        href={children}
+        href={children as string}
       >
         {children}
       </Box>

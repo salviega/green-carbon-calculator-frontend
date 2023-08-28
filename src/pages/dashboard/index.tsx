@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   SimpleGrid,
@@ -17,6 +17,8 @@ import EventTable from '../../components/EventTable'
 import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { firebaseApi } from '../../../services/firebaseApi'
 
 const metadata = {
 	title: 'Footprint',
@@ -24,8 +26,24 @@ const metadata = {
 }
 
 const Dashboard = () => {
+  const router = useRouter();
   const [results, setResults] = useState<EmissionDetails>(initValuesResults)
   const bg = useColorModeValue('red.500', 'red.200')
+  const {  getProject, getProjectById } = firebaseApi()
+  useEffect(() => {
+    console.log(router.query.id);
+    if(router.query.id)
+      readInfo(router.query.id as string);
+  }, [router.query.id])
+  const readInfo = async (id: string) => {
+    try {
+      const info = await getProjectById(id);
+      console.log(info);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
     <Head>

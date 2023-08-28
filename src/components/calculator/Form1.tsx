@@ -127,8 +127,6 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
       <FormControl
         id='eventDescription'
         mt='2%'
-        isRequired
-        isInvalid={!!inputErrors.eventDescription}
       >
         <FormLabel
           fontSize='md'
@@ -152,7 +150,6 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
           resize="none"
           focusBorderColor="brand.dark"
         />
-        <FormErrorMessage>{inputErrors.eventDescription}</FormErrorMessage>
       </FormControl>
       <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%' isRequired isInvalid={!!inputErrors.duration}>

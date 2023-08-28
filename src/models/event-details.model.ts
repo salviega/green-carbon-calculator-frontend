@@ -1,4 +1,5 @@
 export interface EventDetails {
+	event_id?: string
 	event_name: string
 	event_description: string
 	event_duration: number

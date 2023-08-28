@@ -18,6 +18,11 @@ import Form2Create, {
 	Form2CreateInput,
 	Form2CreateRef
 } from '../../components/create/Form2Create'
+import { EventDetails } from '@/models/event-details.model'
+import { EmissionDetails } from '@/models/emission-details.model'
+import { initFormInfo } from '../calculator'
+import { nanoid } from 'nanoid'
+import { useRouter } from 'next/router'
 export interface CreateprojectForm {
 	proyectName: string
 	projectCountry: string
@@ -27,8 +32,12 @@ export interface CreateprojectForm {
 	logo?: File | string | null | undefined
 	banner?: File | string | null | undefined
 }
-
-export default function Multistep() {
+interface FormProps {
+	eventData?: EventDetails
+	results?: EmissionDetails
+}
+export default function CreateForm(props: FormProps) {
+	const router = useRouter();
 	const account = getAccount()
 	const { createProject } = firebaseApi()
 	const toast = useToast()
@@ -39,6 +48,12 @@ export default function Multistep() {
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(100 / stepNumber)
 	const [loading, setLoading] = useState(false)
+	const [eventInfo, setEventInfo] = useState<EventDetails | null>(
+		props.eventData || null
+	)
+	const [emissionsInfo, setEmissionsInfo] = useState<EmissionDetails | null>(
+		props.results || null
+	)
 	const [formInfo, setFormInfo] = useState<CreateprojectForm>({
 		proyectName: '',
 		projectCountry: '',
@@ -68,8 +83,8 @@ export default function Multistep() {
 				showNextForm()
 			})
 		} else if (step === 2 && form2CreateRef.current) {
-			console.log('2');
-			
+			console.log('2')
+
 			form2CreateRef.current.validateAndSubmit(() => {
 				onCreateProject()
 			})
@@ -84,8 +99,8 @@ export default function Multistep() {
 		}
 	}
 	const onCreateProject = async () => {
-		console.log('submit?');
-		
+		console.log('submit?')
+
 		if (!account?.address) {
 			toast({
 				title: 'Please connect your wallet first',
@@ -94,7 +109,7 @@ export default function Multistep() {
 				duration: 5000,
 				isClosable: true
 			})
-			return;
+			return
 		}
 		try {
 			setLoading(true)
@@ -103,6 +118,7 @@ export default function Multistep() {
 			const imgs: string[] | null = await uploadImages(images)
 
 			const newProject: Project = {
+				project_id: nanoid(),
 				ownerWallet: account.address?.toString(),
 				name: formInfo.proyectName,
 				description: formInfo.proyectDescription,
@@ -110,7 +126,13 @@ export default function Multistep() {
 				logo: imgs ? imgs[0] : '', //url
 				banner: imgs ? imgs[1] : '', //url
 				country: form2info.projectCountry,
-				events: [],
+				events: [
+					{
+						name: eventInfo?.event_name ?? '',
+						description: eventInfo?.event_description ?? '',
+						details: eventInfo ?? initFormInfo
+					}
+				],
 				raisedTotal: 0,
 				eventTotal: 0,
 				socialNetwors: {
@@ -119,20 +141,21 @@ export default function Multistep() {
 					youtube: form2info.youtube,
 					linkedin: form2info.linkedin
 				},
-				certificates: []
+				certificates: [],
+				goal: 0,
+				totalContributors: 0
 			}
 			const response = await createProject(newProject)
 			console.log(response)
 			toast({
-				title: 'Account created.',
-				description: "We've created your account for you.",
+				title: 'Project created.',
+				description: "We've created your project.",
 				status: 'success',
-				duration: 3000,
+				duration: 5000,
 				isClosable: true
 			})
 			console.log('Project Done')
-
-			//TODO configure next step in the flow
+			router.push(`/dashboard?id=${newProject.project_id}`);
 		} catch (error) {
 			console.log(error)
 			toast({

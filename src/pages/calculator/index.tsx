@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import router, { useRouter } from 'next/router'
 import { getAccount } from '@wagmi/core'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
@@ -26,9 +27,11 @@ import { EventDetails } from '../../models/event-details.model'
 import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
 import { CertificateDetails } from '../../models/certificate-details.model'
+import CreateForm from '../create'
 export default function Calculator() {
 	const account = getAccount()
 	const toast = useToast()
+	const router = useRouter();
 	const stepNumber = 6
 	let form6info: Form6Input
 	const form1Ref = useRef<Form1Ref>(null)
@@ -37,12 +40,13 @@ export default function Calculator() {
 	const form4Ref = useRef<Form4Ref>(null)
 	const form5Ref = useRef<Form5Ref>(null)
 	const form6Ref = useRef<Form6Ref>(null)
-	const [calculated, setCalculated] = useState(false)
-	const [loading, setLoading] = useState(false)
-	const [results, setResults] = useState<EmissionDetails>(initValuesResults)
-	const [step, setStep] = useState(1)
-	const [progress, setProgress] = useState(100 / stepNumber)
-	const [formInfo, setFormInfo] = useState<EventDetails>(initFormInfo)
+	const [calculated, setCalculated] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [onCreate, setOnCreate] = useState(false);
+	const [results, setResults] = useState<EmissionDetails>(initValuesResults);
+	const [step, setStep] = useState(1);
+	const [progress, setProgress] = useState(100 / stepNumber);
+	const [formInfo, setFormInfo] = useState<EventDetails>(initFormInfo);
 	const onNext = () => {
 		if (step === 1 && form1Ref.current) {
 			form1Ref.current.validateAndSubmit(() => {
@@ -83,6 +87,7 @@ export default function Calculator() {
 		setFormInfo({
 			...formInfo,
 			event_duration: parseInt(info.duration),
+			event_description: info.eventDescription,
 			country: info.country,
 			participants: parseInt(info.participants),
 			employees: parseInt(info.employees),
@@ -176,6 +181,7 @@ export default function Calculator() {
 		try {
 			setLoading(true)
 			const body: EventDetails = {
+				event_id: nanoid(),
 				event_name: formInfo.event_name,
 				event_description: formInfo.event_description,
 				event_duration: formInfo.event_duration,
@@ -220,7 +226,8 @@ export default function Calculator() {
 				garbage: form6info.garbage,
 				recycling: form6info.recycling
 			}
-			setFormInfo(body)
+			//Rewrites the event information into formInfo const
+			setFormInfo(body);
 			const headers = {
 				'Content-Type': 'application/json'
 			}
@@ -228,13 +235,13 @@ export default function Calculator() {
 			const response = await axios.post(scrapperUrl, body, { headers: headers })
 			console.log(response)
 			toast({
-				title: 'Account created.',
-				description: "We've created your account for you.",
+				title: 'Event calculated.',
+				description: "We've finished calculating the impact.",
 				status: 'success',
-				duration: 3000,
+				duration: 5000,
 				isClosable: true
 			})
-			showResults(response.data)
+			showResults(response.data);
 		} catch (error) {
 			console.log(error)
 			toast({
@@ -265,6 +272,7 @@ export default function Calculator() {
 		setProgress(100 / stepNumber)
 		setCalculated(false)
 	}
+	//TODO this must be done after create the project
 	const onCreateAsset = async () => {
 		if (!account.address) {
 			toast({
@@ -350,20 +358,19 @@ export default function Calculator() {
 
 				//TODO send this to smart contract
 
-				// const ethereum = (window as any).ethereum
+				const ethereum = (window as any).ethereum
 
-				// const web3Provider: ethers.providers.Web3Provider =
-				// 	new ethers.providers.Web3Provider(ethereum)
-				// await web3Provider.send('eth_requestAccounts', [])
-				// const web3Signer: ethers.providers.JsonRpcSigner =
-				// 	web3Provider.getSigner()
+				const web3Provider: ethers.providers.Web3Provider =
+					new ethers.providers.Web3Provider(ethereum)
+				await web3Provider.send('eth_requestAccounts', [])
+				const web3Signer: ethers.providers.JsonRpcSigner =
+					web3Provider.getSigner()
 
-				// const contract = new Contract(
-				// 	FootprintContractJson.address,
-				// 	FootprintContractJson.abi,
-				// 	web3Signer
-				// ) as Footprint
-
+				const contract = new Contract(
+					FootprintContractJson.address,
+					FootprintContractJson.abi,
+					web3Signer
+				) as Footprint
 				// const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(CO2Total, IPFSURL) // Debe pasar CO2Total a la 18
 				// await mintTx.wait(1)
 				//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
@@ -377,6 +384,13 @@ export default function Calculator() {
 			console.error('Error en la petición:', error)
 		}
 	}
+
+	if(onCreate){
+		return (
+			<CreateForm eventData={formInfo} results={results}/>
+		)
+	}
+
 	return !calculated ? (
 		<div>
 			<Box
@@ -482,8 +496,7 @@ export default function Calculator() {
 						<Flex>
 							<Button
 								onClick={() => {
-									setStep(step - 1)
-									setProgress(progress - 100 / stepNumber)
+									router.push('/');
 								}}
 								colorScheme='teal'
 								variant='solid'
@@ -508,7 +521,7 @@ export default function Calculator() {
 							w='12rem'
 							colorScheme='green'
 							variant='solid'
-							onClick={onCreateAsset}
+							onClick={() => setOnCreate(true)}
 						>
 							Create Project
 						</Button>
@@ -531,7 +544,7 @@ const initValuesResults: EmissionDetails = {
 		Waste: 0
 	}
 }
-const initFormInfo: EventDetails = {
+export const initFormInfo: EventDetails = {
 	event_name: '',
 	event_description: '',
 	event_duration: 0,
