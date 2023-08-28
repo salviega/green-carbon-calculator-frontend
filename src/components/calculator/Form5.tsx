@@ -42,7 +42,7 @@ const Form5: React.ForwardRefRenderFunction<Form5Ref, Form5Props> = (
       <Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
         Energy & Material
       </Heading>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='power_consumption' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Power consumption (kWh)
@@ -72,7 +72,7 @@ const Form5: React.ForwardRefRenderFunction<Form5Ref, Form5Props> = (
             focusBorderColor="brand.dark" />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='plastics' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Plastics (Kg)
@@ -102,7 +102,7 @@ const Form5: React.ForwardRefRenderFunction<Form5Ref, Form5Props> = (
             focusBorderColor="brand.dark" />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='plant_based_materials' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Wood, carton, paper and plant-based materials (Kg)

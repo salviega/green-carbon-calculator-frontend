@@ -42,7 +42,7 @@ const Form3: React.ForwardRefRenderFunction<Form3Ref, Form3Props> = (
       <Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
         Accommodation
       </Heading>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='overnight2_3Stars' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Number of overnight stays in 2-3 star hotels
@@ -70,7 +70,7 @@ const Form3: React.ForwardRefRenderFunction<Form3Ref, Form3Props> = (
             focusBorderColor="brand.dark" />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='overnight5Stars' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Number of overnight stays in 5 star hotels

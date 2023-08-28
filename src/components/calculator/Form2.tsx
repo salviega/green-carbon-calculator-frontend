@@ -52,7 +52,7 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
       <Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
         Mobility
       </Heading>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='peopleByCar' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Number of people arriving by car
@@ -84,7 +84,7 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='peopleByPublicTransport' textColor="gray.500" fontWeight='medium' fontSize='md'>
             # of persons travelling by public transport
@@ -116,7 +116,7 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='shortHaulFlights' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Number of short-haul flights (up to 3h)
@@ -148,7 +148,7 @@ const Form2: React.ForwardRefRenderFunction<Form2Ref, Form2Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='longHaulFlights' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Number of long-haul flights (more than 6h)

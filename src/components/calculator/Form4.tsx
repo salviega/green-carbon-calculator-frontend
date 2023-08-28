@@ -48,7 +48,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
       <Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
         Catering
       </Heading>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='meal_meat_amount' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Amount of meals, not vegetarian
@@ -80,7 +80,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='snacks_amount' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Amount of snacks
@@ -112,7 +112,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='coffee_cups' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Coffee (Cups)
@@ -144,7 +144,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='wine_liters' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Wine (Liters)
@@ -176,7 +176,7 @@ const Form4: React.ForwardRefRenderFunction<Form4Ref, Form4Props> = (
           />
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='spirits_liters' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Spirits (Liters)

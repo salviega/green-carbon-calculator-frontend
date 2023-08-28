@@ -154,7 +154,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
         />
         <FormErrorMessage>{inputErrors.eventDescription}</FormErrorMessage>
       </FormControl>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%' isRequired isInvalid={!!inputErrors.duration}>
           <FormLabel htmlFor='duration' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Duration (Days)
@@ -196,7 +196,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
           <FormErrorMessage>{inputErrors.country}</FormErrorMessage>
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%' isRequired isInvalid={!!inputErrors.participants}>
           <FormLabel htmlFor='participants' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Number Of Participants
@@ -230,7 +230,7 @@ const Form1: React.ForwardRefRenderFunction<Form1Ref, Form1Props> = (
           <FormErrorMessage>{inputErrors.employees}</FormErrorMessage>
         </FormControl>
       </Flex>
-      <Flex mt='2%'>
+      <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='heatedArea' textColor="gray.500" fontWeight='medium' fontSize='md'>
             Heated area (m2)

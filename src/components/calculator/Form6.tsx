@@ -45,7 +45,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 					<Text fontSize='lg'>Loading new calculation...</Text>
 				</Flex>
 			)}
-			<Flex mt='2%'>
+			<Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
 				<FormControl mr='2%'>
 					<FormLabel htmlFor='transported_weight' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Transported weight (Ton)
@@ -79,7 +79,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 					/>
 				</FormControl>
 			</Flex>
-			<Flex mt='2%'>
+			<Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
 				<FormControl mr='2%'>
 					<FormLabel htmlFor='garbage' textColor="gray.500" fontWeight='medium' fontSize='md'>
 					Residual waste (Kg)
