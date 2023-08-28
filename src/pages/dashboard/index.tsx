@@ -32,7 +32,7 @@ const Dashboard = () => {
     <title>{metadata.title}</title>
     <meta name='description' content={metadata.description} />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <link rel='icon' href='/favicon.ico' />
+    <link rel="icon" href="/Images/favicon.ico" sizes="any" />
   </Head>
     <Grid
       h='1000px'
