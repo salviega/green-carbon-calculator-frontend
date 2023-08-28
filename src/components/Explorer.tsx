@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Stack, Flex,Spacer, Button, Text, VStack, useBreakpointValue, Box, HStack, Image,SimpleGrid, GridItem } from '@chakra-ui/react'
 import Hero from './Hero'
-import ProyectsSection from './ProyectsSection'
+import ProjectsSection from './ProjectsSection'
 import Link from 'next/link'
 
 export default function Explorer() {
@@ -9,7 +9,7 @@ export default function Explorer() {
 		<>
 			<Hero/>
       <Text as="h2" fontSize="5xl" marginY="12" fontWeight="bold" textColor="brand.newBlack">Top projects</Text>
-			<ProyectsSection/>
+			<ProjectsSection/>
       <Text as="h2" fontSize="5xl" marginTop="48" marginBottom="12" textAlign="center" fontWeight="bold" textColor="brand.newBlack">How it works</Text>
       <SimpleGrid columns={3} spacing={10} bg="brand.dark" width="100%" height="600px" borderRadius="3xl" p="8">
         <Flex flexDirection="column">

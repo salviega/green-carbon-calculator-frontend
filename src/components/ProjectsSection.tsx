@@ -1,7 +1,7 @@
 import React from 'react'
 import { SimpleGrid } from '@chakra-ui/react';
 import ProyectCard from './ProyectCard';
-const ProyectsSection = () => {
+const ProjectsSection = () => {
   const cardArray = Array.from({ length: 6 }, (_, index) => index);
   return (
     <SimpleGrid columns={3} spacing={5}>
@@ -10,4 +10,4 @@ const ProyectsSection = () => {
   )
 }
 
-export default ProyectsSection
+export default ProjectsSection
