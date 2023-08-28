@@ -5,29 +5,29 @@ import Link from 'next/link'
 export default function Hero() {
   return (
     <Flex
-      h='600px'
+      minH='600px'
       borderRadius="3xl"
       margin="10px auto"
       backgroundImage={
         '/images/hero.jpg'
       }
       backgroundSize={'cover'}
-      backgroundPosition={'center left'}
+      backgroundPosition={{base: "100%", md: "left top"}}
       align="center"
       w="100%">
-      <Flex w="100%">
+      <Flex w="100%"  flexDirection={{base:'column', md: 'row'}}>
       <VStack
         justify={'start'}
         justifyItems="start"
         align="start"
         px={useBreakpointValue({ base: 4, md: 8 })}
-        w="70%">
+        w={{ base: '100%', md: '70%' }}>
         <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
           <Text
             color='brand.light'
             fontWeight={800}
             lineHeight={1.2}
-            fontSize={useBreakpointValue({ base: '3xl', md: "6xl", lg: "5rem" })}>
+            fontSize={useBreakpointValue({ base: '5xl', md: "6xl", lg: "5rem" })}>
             MEASURE & REDUCE YOUR IMPACT
           </Text>
           <Text textColor="white" fontWeight="medium" fontSize="lg">Turn your passion for impact into tangible action for environmental change. Calculate your project's carbon footprint and offset it directly with tokenized carbon credits.</Text>
@@ -42,7 +42,7 @@ export default function Hero() {
             </Link>
         </Stack>
       </VStack>
-      <Flex align="center" justify="center">
+      <Flex align="center" justify="center" display={{ base: 'none', md: 'flex' }}>
       <Box bg='brand.newBlack' opacity="90%" px="4" maxH="md" py="6" width="300px" justifyContent="center" borderRadius="lg" border="1px" borderColor="whiteAlpha.200">
       <Image
         objectFit='cover'

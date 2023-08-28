@@ -35,6 +35,8 @@ const Layout = ({ children }) => {
         transitionDuration: "0.2s",
         transitionTimingFunction: "ease-in-out",
         }}
+        color="white"
+        fontWeight="semibold"
         href={children}
       >
         {children}
@@ -43,7 +45,7 @@ const Layout = ({ children }) => {
   }
   return (
     <>
-      <Box bg={useColorModeValue('brand.newBlack', 'gray.900')} px={4} maxWidth={{ base: '80%', md:'85%', lg: '80%' }} margin="10px auto" borderRadius="2xl">
+      <Box bg={useColorModeValue('brand.newBlack', 'gray.900')} px={4} maxWidth={{ base: '95%', md:'85%', lg: '80%' }} margin="10px auto" borderRadius="2xl">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -51,6 +53,14 @@ const Layout = ({ children }) => {
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
             onClick={isOpen ? onClose : onOpen}
+            color="white"
+            bg="brand.darkie"
+            opacity="90%"
+            _hover= {{
+              transitionDuration: "0.2s",
+              transitionTimingFunction: "ease-in-out",
+              transform: "scale(1.05)",
+            }}
           />
           <HStack spacing={2} alignItems={'center'}>
           <Link href="/">
@@ -62,7 +72,7 @@ const Layout = ({ children }) => {
             />
             </Link>
             <Link href="/">
-            <Text fontSize="xl" fontWeight="bold" color="white">Footprint</Text>
+            <Text   display={{ base: 'none', md: 'flex' }} fontSize={{ base: 'md', md:'xl' }} fontWeight="bold" color="white">Footprint</Text>
             </Link>
             <HStack
               as={'nav'}
@@ -102,7 +112,7 @@ const Layout = ({ children }) => {
           </Box>
         ) : null}
       </Box>
-      <Box maxWidth={{ base: '80%', md:'85%', lg: '80%' }} margin="10px auto">{children}</Box>
+      <Box maxWidth={{ base: '95%', md:'85%', lg: '80%' }} margin="10px auto">{children}</Box>
     </>
   )
 }
