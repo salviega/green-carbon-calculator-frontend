@@ -39,14 +39,14 @@ export default function Explorer() {
         </Flex>
       </SimpleGrid>
       <SimpleGrid columns={[1, 2, 2]}  spacing={10} marginTop="36" marginBottom="48" >
-      <GridItem colSpan={2}>
+      <GridItem colSpan={1}>
       <VStack align="start">
       <Text fontSize="xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
       <Text as="h2" fontSize={{base:'4xl', md:'6xl'}} fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">There's a blind spot in the funding process. Let's make environmental a part of the conversation.</Text>
       </VStack>
       </GridItem>
-      <GridItem colSpan={1}>
-      <VStack align="star" justify="center" gap="16">
+      <GridItem colSpan={1} alignSelf="center">
+      <VStack align="start" justify="center" gap="16">
         <VStack align="start">
       <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">3.8M</Text>
       <Text fontSize={{base:'xl', md:'2xl'}}  fontWeight="medium" textColor="brand.newBlack"> CARBON TONS</Text>
