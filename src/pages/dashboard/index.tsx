@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   Box,
-  Grid,
+  SimpleGrid,
   GridItem,
   Button,
   Text,
@@ -34,18 +34,18 @@ const Dashboard = () => {
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <link rel="icon" href="/Images/favicon.ico" sizes="any" />
   </Head>
-    <Grid
+    <SimpleGrid
       h='1000px'
       templateRows='2fr 350px auto'
-      templateColumns='repeat(6, 1fr)'
+      columns={[1, null, 6]}
       gap={4}
       width="100%"
       margin="2rem auto"
     >
-      <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4" bg="white">
+      <GridItem colSpan={{base:6, md:4}} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4" bg="white">
         <OverviewPublic />
       </GridItem>
-      <GridItem rowSpan={1} colSpan={2} borderRadius='lg' border="1px" borderColor="gray.200" p="4" bg="white">
+      <GridItem rowSpan={1} colSpan={{base:6, md:2}} borderRadius='lg' border="1px" borderColor="gray.200" p="4" bg="white">
         <Text fontWeight="semibold" pb="2"> CO2 Ammount</Text>
         <ResultsChart
           co2_amount={results.co2_amount}
@@ -53,7 +53,7 @@ const Dashboard = () => {
         />
       </GridItem>
       <GridItem
-        colSpan={3}
+        colSpan={{base:6, md:3}}
         borderRadius='lg'
         rowSpan={1}
         p="4"
@@ -72,7 +72,7 @@ const Dashboard = () => {
       </GridItem>
 
       <GridItem
-        colSpan={3}
+        colSpan={{base:6, md:3}}
         rowSpan={1}
         borderRadius='lg' border="1px" borderColor="gray.200" p="4"
       >
@@ -87,7 +87,7 @@ const Dashboard = () => {
       >
         <EventTable />
       </GridItem>
-    </Grid>
+    </SimpleGrid>
     </>
   )
 }
