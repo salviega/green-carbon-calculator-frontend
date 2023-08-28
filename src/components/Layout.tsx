@@ -41,7 +41,7 @@ const Layout = ({ children }) => {
   }
   return (
     <>
-      <Box bg={useColorModeValue('brand.newBlack', 'gray.900')} px={4} maxWidth={{ base: '80%', lg: '65%' }} margin="10px auto" borderRadius="2xl">
+      <Box bg={useColorModeValue('brand.newBlack', 'gray.900')} px={4} maxWidth={{ base: '80%', lg: '75%' }} margin="10px auto" borderRadius="2xl">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -96,7 +96,7 @@ const Layout = ({ children }) => {
           </Box>
         ) : null}
       </Box>
-      <Box>{children}</Box>
+      <Box maxWidth={{ base: '80%', lg: '75%' }} margin="10px auto">{children}</Box>
     </>
   )
 }

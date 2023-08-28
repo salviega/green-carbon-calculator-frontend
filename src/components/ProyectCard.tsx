@@ -4,10 +4,13 @@ import {
   Flex,
   Avatar,
   IconButton,
+  VStack,
   Button,
   Card,
   CardHeader,
   Heading,
+  HStack,
+  Stack,
   CardBody,
   CardFooter,
   Text,
@@ -17,49 +20,53 @@ import { ExternalLinkIcon, StarIcon } from '@chakra-ui/icons'
 
 const ProyectCard = () => {
   return (
-    <Card maxW='md'>
+    <Card maxW='sm' borderRadius="3xl">
       <CardHeader>
-        <Flex >
-          <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-            <Box>
-              <Heading size='sm'>Segun Adebayo</Heading>
-              <Text>Creator, Chakra UI</Text>
-            </Box>
-          </Flex>
-          <IconButton
-            variant='ghost'
-            colorScheme='gray'
-            aria-label='See menu'
-            icon={<ExternalLinkIcon />}
-          />
-        </Flex>
+      <Flex
+        h={'250px'}
+        backgroundImage={
+          'url(https://source.unsplash.com/g3PyXO4A0yc)'
+        }
+        backgroundSize={'cover'}
+        borderRadius='lg'
+        pos="relative"
+      >
+        <HStack pos="absolute" bottom="2" left="2">
+          <Avatar name='T P' src='https://bit.ly/tioluwani-kolawole' size="sm" />
+          <Text textColor="white" fontWeight="bold" fontSize="2xl">
+            Tropic project</Text>
+        </HStack>
+      </Flex>
       </CardHeader>
       <CardBody>
-        <Text>
-          With Chakra UI, I wanted to sync the speed of development with the
-          speed of design. I wanted the developer to be just as excited as the
-          designer to create a screen.
-        </Text>
+      <Stack align='start' w="full">
+          <Text
+            fontWeight={700}
+            lineHeight={1.2}
+            fontSize='xl'
+          >
+Tropic Project          </Text>
+          <Text textColor="gray.500">Reforest all the amazonian </Text>
+        </Stack>
       </CardBody>
-      <Image
-        objectFit='cover'
-        src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-        alt='Chakra UI'
-      />
-
       <CardFooter
         justify='left'
         flexWrap='wrap'
-        sx={{
-          '& > button': {
-            minW: '136px'
-          }
-        }}
       >
-        <Button flex='1' variant='ghost' leftIcon={<StarIcon />}>
-          Like
-        </Button>
+        <Flex justifyContent="space-between" width="100%">
+          <VStack gap="1">
+            <Text fontSize="xs" textColor="gray.400" fontWeight="semibold">Total Raised</Text>
+            <Text fontSize="xl" textColor="gray.700" fontWeight="bold">$150,4K</Text>
+          </VStack>
+          <VStack gap="1">
+            <Text fontSize="xs" textColor="gray.400" fontWeight="semibold">Goals</Text>
+            <Text fontSize="xl" textColor="gray.700" fontWeight="bold">$200K</Text>
+          </VStack>
+          <VStack gap="1">
+            <Text fontSize="xs" textColor="gray.400" fontWeight="semibold">Left</Text>
+            <Text fontSize="xl" textColor="gray.700" fontWeight="bold">$49,6K</Text>
+          </VStack>
+        </Flex>
       </CardFooter>
     </Card>
   )
