@@ -44,7 +44,6 @@ const customTheme = extendTheme({
           color: "white",
           size: "lg",
           _hover: {
-            bg: "brand.lime",
             transitionDuration: "0.2s",
             transitionTimingFunction: "ease-in-out",
             transform: "scale(1.05)",
@@ -59,7 +58,6 @@ const customTheme = extendTheme({
           _hover: {
             shadow: "md",
             transitionDuration: "0.2s",
-            color: "brand.primary.default",
             transitionTimingFunction: "ease-in-out",
             transform: "scale(1.05)",
           },

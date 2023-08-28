@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Link from 'next/link'
 
 const Links = ['dashboard', 'discovery']
 
@@ -28,10 +29,11 @@ const Layout = ({ children }) => {
         as='a'
         px={2}
         py={1}
-        rounded={'md'}
         _hover={{
           textDecoration: 'none',
-          bg: useColorModeValue('gray.200', 'gray.700')
+        color: "brand.light",
+        transitionDuration: "0.2s",
+        transitionTimingFunction: "ease-in-out",
         }}
         href={children}
       >
@@ -41,7 +43,7 @@ const Layout = ({ children }) => {
   }
   return (
     <>
-      <Box bg={useColorModeValue('brand.newBlack', 'gray.900')} px={4} maxWidth={{ base: '80%', lg: '75%' }} margin="10px auto" borderRadius="2xl">
+      <Box bg={useColorModeValue('brand.newBlack', 'gray.900')} px={4} maxWidth={{ base: '80%', md:'85%', lg: '80%' }} margin="10px auto" borderRadius="2xl">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -51,13 +53,17 @@ const Layout = ({ children }) => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={2} alignItems={'center'}>
+          <Link href="/">
             <Image
               src='/images/logo.png'
               width={30}
               height={30}
               alt='Picture of the author'
             />
+            </Link>
+            <Link href="/">
             <Text fontSize="xl" fontWeight="bold" color="white">Footprint</Text>
+            </Link>
             <HStack
               as={'nav'}
               spacing={4}
@@ -96,7 +102,7 @@ const Layout = ({ children }) => {
           </Box>
         ) : null}
       </Box>
-      <Box maxWidth={{ base: '80%', lg: '75%' }} margin="10px auto">{children}</Box>
+      <Box maxWidth={{ base: '80%', md:'85%', lg: '80%' }} margin="10px auto">{children}</Box>
     </>
   )
 }

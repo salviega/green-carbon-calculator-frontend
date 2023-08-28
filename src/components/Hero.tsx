@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function Hero() {
   return (
     <Flex
-      h='700px'
+      h='600px'
       borderRadius="3xl"
       margin="10px auto"
       backgroundImage={
@@ -19,6 +19,7 @@ export default function Hero() {
       <VStack
         justify={'start'}
         justifyItems="start"
+        align="start"
         px={useBreakpointValue({ base: 4, md: 8 })}
         w="70%">
         <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
@@ -26,7 +27,7 @@ export default function Hero() {
             color='brand.light'
             fontWeight={800}
             lineHeight={1.2}
-            fontSize={useBreakpointValue({ base: '3xl', md: '7xl' })}>
+            fontSize={useBreakpointValue({ base: '3xl', md: "6xl", lg: "5rem" })}>
             MEASURE & REDUCE YOUR IMPACT
           </Text>
           <Text textColor="white" fontWeight="medium" fontSize="lg">Turn your passion for impact into tangible action for environmental change. Calculate your project's carbon footprint and offset it directly with tokenized carbon credits.</Text>

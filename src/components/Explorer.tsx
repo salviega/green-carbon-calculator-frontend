@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Stack, Flex,Spacer, Button, Text, VStack, useBreakpointValue, Box, HStack, Image,SimpleGrid } from '@chakra-ui/react'
+import { Stack, Flex,Spacer, Button, Text, VStack, useBreakpointValue, Box, HStack, Image,SimpleGrid, GridItem } from '@chakra-ui/react'
 import Hero from './Hero'
 import ProyectsSection from './ProyectsSection'
 import Link from 'next/link'
@@ -38,12 +38,15 @@ export default function Explorer() {
           <Text textColor="white" fontSize="lg">Engage with your community and highlight your ongoing commitment to the environment. Amplify your positive impact by adding more events and continuously offsetting carbon emissions.</Text>
         </Flex>
       </SimpleGrid>
-      <SimpleGrid columns={2} spacing={10} marginTop="36" marginBottom="48" >
+      <SimpleGrid columns={3} spacing={10} marginTop="36" marginBottom="48" >
+      <GridItem colSpan={2}>
       <VStack align="start">
-      <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
+      <Text fontSize="xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
       <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">There's a blind spot in the funding process. Let's make environmental a part of the conversation.</Text>
       </VStack>
-      <VStack align="star" justify="center" ml="32" gap="16">
+      </GridItem>
+      <GridItem colSpan={1}>
+      <VStack align="star" justify="center" gap="16">
         <VStack align="start">
       <Text as="h2" fontSize="6xl" fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">3.8M</Text>
       <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> CARBON TONS</Text>
@@ -53,6 +56,7 @@ export default function Explorer() {
       <Text fontSize="2xl"  fontWeight="medium" textColor="brand.newBlack"> PROJECTS RAISED FUNDS</Text>
         </VStack>
       </VStack>
+      </GridItem>
       </SimpleGrid>
       <Flex bg="brand.fuchsia" width="100%" borderRadius="3xl" p="12" align="start" flexDirection="column"   backgroundImage={
         '/images/cta.jpg'

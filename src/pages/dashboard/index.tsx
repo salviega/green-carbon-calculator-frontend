@@ -28,7 +28,7 @@ const Dashboard = () => {
       templateRows='2fr 350px auto'
       templateColumns='repeat(6, 1fr)'
       gap={4}
-      maxWidth={{ base: '80%', lg: '65%' }}
+      width="100%"
       margin="2rem auto"
     >
       <GridItem colSpan={4} borderRadius='lg' rowSpan={1} border="1px" borderColor="gray.200" p="4" bg="white">
