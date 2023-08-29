@@ -55,7 +55,7 @@ const Dashboard = () => {
 				setLoading(false)
 				calculateTotalEmissions(info)
 				setEventOnDetail(info.events[0])
-        checkOwner(info);
+				checkOwner(info)
 			} else router.push('/')
 		} catch (error) {
 			console.log(error)
@@ -95,17 +95,17 @@ const Dashboard = () => {
 		console.log(totales)
 		setEmissionSummary(totales)
 	}
-  const checkOwner = (info: Project) => {
-    if(account?.address){
-      if(account.address as string === info.ownerWallet){
-        setOwner(true)
-      } else {
-        setOwner(false) 
-      }
-    }else {
-      setOwner(false)
-    }
-  }
+	const checkOwner = (info: Project) => {
+		if (account?.address) {
+			if ((account.address as string) === info.ownerWallet) {
+				setOwner(true)
+			} else {
+				setOwner(false)
+			}
+		} else {
+			setOwner(false)
+		}
+	}
 	return !loading ? (
 		<>
 			<Head>
@@ -132,7 +132,7 @@ const Dashboard = () => {
 						p='4'
 						bg='white'
 					>
-						<OverviewPublic project={projectInfo} owner={owner}/>
+						<OverviewPublic project={projectInfo} owner={owner} />
 						<OverviewPrivate project={projectInfo} />
 					</GridItem>
 				)}
@@ -171,19 +171,21 @@ const Dashboard = () => {
 							Event List
 						</Text>
 						<Spacer />
-						{owner && <Button size='sm' textColor='gray.600'>
-							+ New event
-						</Button>}
+						{owner && (
+							<Button size='sm' textColor='gray.600'>
+								+ New event
+							</Button>
+						)}
 					</HStack>
 
 					{projectInfo?.events && (
 						<Box gap='8' overflowY='auto' maxH='90%'>
-							<EventList events={projectInfo?.events} owner={owner}/>
+							<EventList events={projectInfo?.events} owner={owner} />
 						</Box>
 					)}
 				</GridItem>
 
-				{eventOnDetail && (
+				{eventOnDetail && projectInfo && (
 					<GridItem
 						colSpan={{ base: 6, md: 3 }}
 						rowSpan={1}
@@ -196,12 +198,16 @@ const Dashboard = () => {
 							{' '}
 							Event details
 						</Text>
-						<EventDetails event={eventOnDetail} owner={owner} />
+						<EventDetails
+							event={eventOnDetail}
+							owner={owner}
+							projectInfo={projectInfo}
+						/>
 					</GridItem>
 				)}
 				{projectInfo?.events && (
 					<GridItem colSpan={6} borderRadius='lg' rowSpan={1} bg='white'>
-						<EventTable events={projectInfo?.events} owner={owner}/>
+						<EventTable events={projectInfo?.events} owner={owner} />
 					</GridItem>
 				)}
 			</SimpleGrid>
