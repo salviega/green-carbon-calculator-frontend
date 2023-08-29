@@ -88,7 +88,7 @@ const Form2Create: React.ForwardRefRenderFunction<
       </Heading>
       {loading && (
         <Flex align='center' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
-          <Spinner color='brand.light' size='xl' mb='2' />
+          <Spinner color='brand.dark' size='xl' mb='2' />
           <Text fontSize='lg' textColor="gray.500" fontWeight='medium'>Loading new project...</Text>
         </Flex>
       )}
