@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Flex, Button, Text, VStack, useBreakpointValue, Box, HStack, Image } from '@chakra-ui/react'
+import { Stack, Flex, Button, Text, VStack, useBreakpointValue, Box, HStack, Image, Spacer } from '@chakra-ui/react'
 import Link from 'next/link'
 
 export default function Hero() {
@@ -46,13 +46,16 @@ export default function Hero() {
           <Box bg='brand.newBlack' opacity="90%" px="4" maxH="md" py="6" width="300px" justifyContent="center" borderRadius="lg" border="1px" borderColor="whiteAlpha.200">
             <Image
               objectFit='cover'
-              src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+              src='/Images/nft.jpg'
               alt='Chakra UI'
               borderRadius="lg"
             />
             <VStack align="start">
+              <HStack>
               <Text textColor="white" fontWeight="bold" fontSize="xl">Apollo II</Text>
+              <Spacer/>
               <Text textColor="white" fontSize="md" fontWeight="semibold">3,4 T CO2</Text>
+              </HStack>
               <Text textColor="gray.100" fontSize="sm">For a greener tomorrow! This NFT represents a tokenized carbon offset and stands as your pledge towards the environment. </Text>
             </VStack>
           </Box>

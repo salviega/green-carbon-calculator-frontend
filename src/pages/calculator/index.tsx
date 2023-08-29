@@ -390,7 +390,7 @@ export default function Calculator() {
     )
   }
 
-  return calculated ? (
+  return !calculated ? (
     <div>
       <Box
         borderWidth='1px'
