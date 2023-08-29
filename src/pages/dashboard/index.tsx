@@ -34,7 +34,7 @@ const Dashboard = () => {
 	const bg = useColorModeValue('red.500', 'red.200')
 	const { getProjectById } = firebaseApi()
 	const [projectInfo, setProjectInfo] = useState<Project | null>(null)
-  const [eventOnDetail, setEventOnDetail] = useState<Event | null>(null)
+	const [eventOnDetail, setEventOnDetail] = useState<Event | null>(null)
 	const [loading, setLoading] = useState(true)
 	const [emissionSummary, setEmissionSummary] =
 		useState<EmissionDetails | null>(null)
@@ -50,7 +50,7 @@ const Dashboard = () => {
 				setProjectInfo(info)
 				setLoading(false)
 				calculateTotalEmissions(info)
-        setEventOnDetail(info.events[0])
+				setEventOnDetail(info.events[0])
 			} else router.push('/')
 		} catch (error) {
 			console.log(error)
@@ -167,23 +167,27 @@ const Dashboard = () => {
 					)}
 				</GridItem>
 
-				{eventOnDetail && <GridItem
-					colSpan={{ base: 6, md: 3 }}
-					rowSpan={1}
-					borderRadius='lg'
-					border='1px'
-					borderColor='gray.200'
-					p='4'
-				>
-					<Text fontWeight='semibold' pb='2'>
-						{' '}
-						Event details
-					</Text>
-					<EventDetails event={eventOnDetail}/>
-				</GridItem>}
-				<GridItem colSpan={6} borderRadius='lg' rowSpan={1} bg='white'>
-					<EventTable />
-				</GridItem>
+				{eventOnDetail && (
+					<GridItem
+						colSpan={{ base: 6, md: 3 }}
+						rowSpan={1}
+						borderRadius='lg'
+						border='1px'
+						borderColor='gray.200'
+						p='4'
+					>
+						<Text fontWeight='semibold' pb='2'>
+							{' '}
+							Event details
+						</Text>
+						<EventDetails event={eventOnDetail} />
+					</GridItem>
+				)}
+				{projectInfo?.events && (
+					<GridItem colSpan={6} borderRadius='lg' rowSpan={1} bg='white'>
+						<EventTable events={projectInfo?.events} />
+					</GridItem>
+				)}
 			</SimpleGrid>
 		</>
 	) : (
