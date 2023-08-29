@@ -214,8 +214,8 @@ const Dashboard = () => {
 		</>
 	) : (
 		<Flex align='center' justify='center' direction='column' mt='4'>
-			<Spinner color='blue.500' size='xl' mb='2' />
-			<Text fontSize='lg'>Loading project data...</Text>
+			<Spinner color='brand.dark' size='xl' mb='2' />
+			<Text fontSize='lg' textColor="gray.500" fontWeight='medium'>Loading project data...</Text>
 		</Flex>
 	)
 }

@@ -16,6 +16,7 @@ import {
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Link from 'next/link'
+import Footer from './Footer';
 
 const Links = ['dashboard', 'discovery']
 interface LayoutProps {
@@ -117,6 +118,7 @@ const Layout : React.FC<LayoutProps> = ({ children }) => {
         ) : null}
       </Box>
       <Box maxWidth={{ base: '95%', md:'85%', lg: '80%' }} margin="10px auto">{children}</Box>
+      <Footer />
     </>
   )
 }
