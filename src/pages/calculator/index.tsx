@@ -181,7 +181,6 @@ export default function Calculator() {
 		try {
 			setLoading(true)
 			const body: EventDetails = {
-				event_id: nanoid(),
 				event_name: formInfo.event_name,
 				event_description: formInfo.event_description,
 				event_duration: formInfo.event_duration,
@@ -532,7 +531,7 @@ export default function Calculator() {
 	)
 }
 
-const initValuesResults: EmissionDetails = {
+export const initValuesResults: EmissionDetails = {
 	co2_amount: 0,
 	sections: {
 		Mobility: 0,

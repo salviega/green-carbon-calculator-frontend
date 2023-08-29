@@ -1,4 +1,5 @@
 import { CertificateDetails } from './certificate-details.model'
+import { EmissionDetails } from './emission-details.model'
 import { EventDetails } from './event-details.model'
 
 export interface Project {
@@ -12,17 +13,20 @@ export interface Project {
 	country : string
 	events: Event[]
 	raisedTotal: number
-	eventTotal: number
 	socialNetwors: SocialMedia
-	certificates?: CertificateDetails[]
+	certificates: CertificateDetails[]
 	goal: number
 	totalContributors: number
+	totalToraise: number
 }
 
 export interface Event {
+	event_id: string
+	isCertified: boolean
 	name: string
 	description: string
 	details?: EventDetails
+	emissionDetails: EmissionDetails
 }
 interface SocialMedia {
 	webpage?: string

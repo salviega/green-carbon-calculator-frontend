@@ -20,7 +20,7 @@ import Form2Create, {
 } from '../../components/create/Form2Create'
 import { EventDetails } from '@/models/event-details.model'
 import { EmissionDetails } from '@/models/emission-details.model'
-import { initFormInfo } from '../calculator'
+import { initFormInfo, initValuesResults } from '../calculator'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/router'
 export interface CreateprojectForm {
@@ -42,6 +42,7 @@ export default function CreateForm(props: FormProps) {
 	const { createProject } = firebaseApi()
 	const toast = useToast()
 	const stepNumber = 2
+	const costPerTon = 10
 	let form2info: Form2CreateInput
 	const form1CreateRef = useRef<Form1CreateRef>(null)
 	const form2CreateRef = useRef<Form2CreateRef>(null)
@@ -128,13 +129,15 @@ export default function CreateForm(props: FormProps) {
 				country: form2info.projectCountry,
 				events: [
 					{
+						event_id: nanoid(),
+						isCertified: false,
 						name: eventInfo?.event_name ?? '',
 						description: eventInfo?.event_description ?? '',
-						details: eventInfo ?? initFormInfo
+						details: eventInfo ?? initFormInfo,
+						emissionDetails: emissionsInfo ?? initValuesResults
 					}
 				],
 				raisedTotal: 0,
-				eventTotal: 0,
 				socialNetwors: {
 					webpage: form2info.webpage,
 					twitter: form2info.twitter,
@@ -143,7 +146,8 @@ export default function CreateForm(props: FormProps) {
 				},
 				certificates: [],
 				goal: 0,
-				totalContributors: 0
+				totalContributors: 0,
+				totalToraise: emissionsInfo?.co2_amount ?? 0,
 			}
 			const response = await createProject(newProject)
 			console.log(response)
