@@ -44,6 +44,18 @@ export function firebaseApi() {
     const doc = item.docs[0];
     return { id: doc.id, ...doc.data() } as unknown as Project;
   };
+  const getProjectsByOwnerAddress = async (address: string): Promise<Project[]> => {
+    const item = await getDocs(
+      query(projectsCollectionRef, where("ownerWallet", "==", address))
+    );
+
+    if (item.docs.length === 0) {
+      console.log(`No projects with ownerAddress "${address}" found`);
+      return [];
+    }
+
+    return item.docs.map((doc) => ({ id: doc.id, ...doc.data() } as unknown as Project));
+  };
   const createProject = async (project: Project) => {
     return await addDoc(projectsCollectionRef, project);
   };
@@ -51,6 +63,7 @@ export function firebaseApi() {
   return {
     createProject,
     getProject,
-    getProjectById
+    getProjectById, 
+    getProjectsByOwnerAddress
   };
 }

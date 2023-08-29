@@ -35,7 +35,7 @@ export default function Explorer() {
               height={300}
               alt='Picture of the author' mb="6"/>
           <Text textColor="brand.light" fontWeight="bold" textTransform="uppercase" fontSize="2xl" >3. Showcase Your Commitment</Text>
-          <Text textColor="white" fontSize="lg">Engage with your community and highlight your ongoing commitment to the environment. Amplify your positive impact by adding more events and continuously offsetting carbon emissions.</Text>
+          <Text textColor="white" fontSize="lg">{'Engage with your community and highlight your ongoing commitment to the environment. Amplify your positive impact by adding more events and continuously offsetting carbon emissions.'}</Text>
         </Flex>
       </SimpleGrid>
       <Box mt={48}>
@@ -52,7 +52,7 @@ export default function Explorer() {
       <GridItem colSpan={1}>
       <VStack align="start">
       <Text fontSize="xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
-      <Text as="h2" fontSize={{base:'4xl', md:'6xl'}} fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">There's a blind spot in the funding process. Let's make environmental a part of the conversation.</Text>
+      <Text as="h2" fontSize={{base:'4xl', md:'6xl'}} fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">{"There's a blind spot in the funding process. Let's make environmental a part of the conversation."}</Text>
       </VStack>
       </GridItem>
       <GridItem colSpan={1} alignSelf="center">
@@ -79,7 +79,7 @@ export default function Explorer() {
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '3xl', md: '7xl' })}
             textTransform="uppercase" w={{base:'90%', md:'70%'}}>
-            Public Goods are only good when they’re green.
+            {"Public Goods are only good when they're green."}
           </Text>
             <Link href="/calculator">
               <Button
