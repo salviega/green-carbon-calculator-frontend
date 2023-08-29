@@ -41,8 +41,8 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 			</Heading>
 			{loading && (
 				<Flex align='center' justify='center' direction='column' mt='4'>
-					<Spinner color='blue.500' size='xl' mb='2' />
-					<Text fontSize='lg'>Loading new calculation...</Text>
+					<Spinner color='brand.dark' size='xl' mb='2' />
+					<Text fontSize='lg' textColor="gray.500" fontWeight='medium'>Loading new calculation...</Text>
 				</Flex>
 			)}
 			<Flex mt='2%' flexDirection={{base:"column", md:'row'}}>

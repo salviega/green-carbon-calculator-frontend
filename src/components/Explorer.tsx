@@ -38,6 +38,16 @@ export default function Explorer() {
           <Text textColor="white" fontSize="lg">Engage with your community and highlight your ongoing commitment to the environment. Amplify your positive impact by adding more events and continuously offsetting carbon emissions.</Text>
         </Flex>
       </SimpleGrid>
+      <Box mt={48}>
+        <Text as="h2" fontSize="5xl" marginY="12" fontWeight="bold" textColor="brand.newBlack">Powered by</Text>
+      <SimpleGrid minChildWidth='80px' spacing='40px'>
+        <Image src={'/Images/celo.png'} alt='celo logo' h={24} w={36} fit="contain"/>
+        <Image src={'/Images/toucan.png'} alt='celo logo' h={24} w={36} fit="contain"/>
+        <Image src={'/Images/gitcoin.png'} alt='celo logo' h={24} w={36} fit="contain"/>
+        <Image src={'/Images/filecoin.png'} alt='celo logo' h={24} w={36} fit="contain"/>
+        <Image src={'/Images/balcahau.png'} alt='celo logo' h={24} w={36} fit="contain"/>
+      </SimpleGrid>
+      </Box>
       <SimpleGrid columns={[1, 2, 2]}  spacing={10} marginTop="36" marginBottom="48" >
       <GridItem colSpan={1}>
       <VStack align="start">
