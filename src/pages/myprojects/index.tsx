@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react'
 import Projectsection from '../../components/ProjectsSection'
 import Head from 'next/head'
+import { firebaseApi } from '../../../services/firebaseApi'
 
 const metadata = {
 	title: 'Footprint',
@@ -24,11 +25,17 @@ const metadata = {
 
 const MyProjects = () => {
 	const account = getAccount()
+	const { getProjectsByOwnerAddress } = firebaseApi()
   const [isConnected, setIsConnected] = useState(false)
 	useEffect(() => {
     setIsConnected(account.isConnected)
+    if(isConnected) {
+      readProjects();
+    }
   }, [account.isConnected])
-
+  const readProjects = async () => {
+    
+  }
 	return (
 		<>
 			<Head>
