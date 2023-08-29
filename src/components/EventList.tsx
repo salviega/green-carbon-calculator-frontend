@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Text, Circle, VStack, HStack } from '@chakra-ui/react'
 import { Event } from '@/models/project.model'
-interface EventListProps {
+export interface EventListProps {
 	events: Event[]
 }
 export default function EventList({ events }: EventListProps) {
