@@ -5,7 +5,9 @@ import {
 	Flex,
 	Spacer,
 	Button,
+  Container,
 	Text,
+  Center,
 	VStack,
 	useBreakpointValue,
 	Box,
@@ -17,6 +19,8 @@ import {
 import Projectsection from '../../components/ProjectsSection'
 import Head from 'next/head'
 import { firebaseApi } from '../../../services/firebaseApi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+
 
 const metadata = {
 	title: 'Footprint',
@@ -51,8 +55,15 @@ const MyProjects = () => {
 			</>
 			:
 			<>
-
-				Please connect your wallet
+        <Container>
+        <Center h="800px" w='100%'>
+        <VStack>
+        <Text fontSize="5xl" fontWeight="bold" textColor="brand.newBlack">We don't bite🥹</Text>
+        <Text fontSize="lg"  textColor="gray.600" mb='4'>Please connect your wallet to see all your awesome projects🌴</Text>
+        <ConnectButton />
+        </VStack>
+        </Center>
+        </Container>
 			</>}
 		</>
 	)
