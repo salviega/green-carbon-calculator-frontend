@@ -18,6 +18,7 @@ import {
 	useToast
 } from '@chakra-ui/react'
 import ResultsChart from './charts/ResultsChart'
+import ResultsDonut from './charts/ResultsDonut'
 import { EmissionDetails } from '../models/emission-details.model'
 import { Event, Project } from '@/models/project.model'
 import { CertificateDetails } from '@/models/certificate-details.model'
@@ -201,7 +202,7 @@ export default function EventDetails({
 										direction='column'
 										mt='4'
 									>
-										<Spinner color='blue.500' size='xl' mb='2' />
+										<Spinner color='brand.dark' size='xl' mb='2' />
 										<Text fontSize='lg' textAlign={'center'}>
 											{bodyPurchase}
 										</Text>
@@ -213,14 +214,14 @@ export default function EventDetails({
 						{!loading && (
 							<ModalFooter>
 								<Button
-									colorScheme='blue'
 									mr={3}
 									disabled={loading}
 									onClick={onStartPurchase}
+                  variant='darkie'
 								>
 									Purchase
 								</Button>
-								<Button onClick={onClose} disabled={loading}>
+								<Button onClick={onClose} disabled={loading} colorScheme='red' variant='solid'>
 									Cancel
 								</Button>
 							</ModalFooter>
@@ -232,36 +233,36 @@ export default function EventDetails({
 	}
 	return (
 		<>
-			<HStack align='start'>
-				<VStack align='start' width='60%'>
-					<Text fontWeight='semibold' pb='2'>
+			<Flex align='start' flexDirection={{base:'column', md:'row'}}>
+				<VStack align='start' width={{base:'100%', md: '40%'}}>
+					<Text fontWeight="semibold" fontSize="lg" textColor="gray.700" pb='2'>
 						{' '}
 						{event.name}
 					</Text>
-					<Text> {event.description}</Text>
+					<Text textColor="gray.500"> {event.description}</Text>
 					{event.isCertified && (
-						<Button variant='outline' size='sm'>
+						<Button variant='primary' size='sm'>
 							Show Certificate
 						</Button>
 					)}
 					{owner && !event.isCertified && (
 						<Button
-							variant='solid'
+							variant='primary'
 							size='sm'
-							bg={'brand.light'}
 							onClick={() => setIsOpen(true)}
+              mt="6"
 						>
 							Purchase Certificate
 						</Button>
 					)}
 				</VStack>
-				<VStack width='40%'>
+				<VStack width={{base:'100%', md: '60%'}}>
 					<ResultsChart
 						co2_amount={event.emissionDetails.co2_amount}
 						sections={event.emissionDetails.sections}
 					/>
 				</VStack>
-			</HStack>
+			</Flex>
 			{isOpen && <ModalPurchase />}
 		</>
 	)

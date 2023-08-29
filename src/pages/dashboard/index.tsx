@@ -129,7 +129,7 @@ const Dashboard = () => {
 						rowSpan={1}
 						border='1px'
 						borderColor='gray.200'
-						p='4'
+						p='8'
 						bg='white'
 					>
 						<OverviewPublic project={projectInfo} owner={owner} />
@@ -142,7 +142,7 @@ const Dashboard = () => {
 					borderRadius='lg'
 					border='1px'
 					borderColor='gray.200'
-					p='4'
+					p='8'
 					bg='white'
 				>
 					<Text fontWeight='semibold' pb='2'>
@@ -160,7 +160,7 @@ const Dashboard = () => {
 					colSpan={{ base: 6, md: 3 }}
 					borderRadius='lg'
 					rowSpan={1}
-					p='4'
+					p='8'
 					border='1px'
 					borderColor='gray.200'
 					bg='white'
@@ -192,7 +192,8 @@ const Dashboard = () => {
 						borderRadius='lg'
 						border='1px'
 						borderColor='gray.200'
-						p='4'
+						p='8'
+            bg="white"
 					>
 						<Text fontWeight='semibold' pb='2'>
 							{' '}
