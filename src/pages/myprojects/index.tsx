@@ -34,7 +34,7 @@ const MyProjects = () => {
     }
   }, [account.isConnected])
   const readProjects = async () => {
-    
+
   }
 	return (
 		<>
@@ -46,11 +46,12 @@ const MyProjects = () => {
 			</Head>
 			{isConnected ?
 			<>
+        <Text as="h2" fontSize="5xl" marginY="12" fontWeight="bold" textColor="brand.newBlack">My projects</Text>
 				<Projectsection />
 			</>
 			:
 			<>
-				
+
 				Please connect your wallet
 			</>}
 		</>
