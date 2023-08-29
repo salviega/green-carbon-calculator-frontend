@@ -16,7 +16,7 @@ import { MdEventAvailable } from 'react-icons/md'
 import { PiUsers } from 'react-icons/pi'
 import { ProjectProps } from './ProjectOverviewPublic'
 
-export default function OverviewPrivate({ project }: ProjectProps) {
+export default function OverviewPrivate({ project, owner }: ProjectProps) {
   let sliderValue = 0;
   if(project.certificates.length > 0 && project.events.length > 0) {
     sliderValue = ((project.certificates.length)/(project.events.length))*100;

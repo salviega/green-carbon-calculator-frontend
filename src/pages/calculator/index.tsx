@@ -287,7 +287,7 @@ export default function Calculator() {
 		const certificate: CertificateDetails = {
 			owner: account.address, // wallet
 			image:
-				'https://firebasestorage.googleapis.com/v0/b/footprint-1699b.appspot.com/o/TILE_1920x1080.jpg?alt=media&token=7f49d695-06b9-49b9-a2b1-e5b1817f8fd2', // ipfs image
+				'', // ipfs image
 			project_id: nanoid(),
 			project_name: 'My project name',
 			project_description: 'My project desc',

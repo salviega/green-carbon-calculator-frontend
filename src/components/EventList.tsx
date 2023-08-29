@@ -3,8 +3,9 @@ import { Button, Text, Circle, VStack, HStack } from '@chakra-ui/react'
 import { Event } from '@/models/project.model'
 export interface EventListProps {
 	events: Event[]
+	owner: boolean
 }
-export default function EventList({ events }: EventListProps) {
+export default function EventList({ events, owner }: EventListProps) {
 	return (
 		<>
 			{events.map((event) => {
@@ -23,9 +24,9 @@ export default function EventList({ events }: EventListProps) {
 						<Button variant='solid' colorScheme='teal' size='sm'>
 							View
 						</Button>
-            <Button variant='solid' size='sm' colorScheme='orange'>
+            {owner&& <Button variant='solid' size='sm' colorScheme='orange'>
 							Delete
-						</Button>
+						</Button>}
 					</HStack>
 				)
 			})}

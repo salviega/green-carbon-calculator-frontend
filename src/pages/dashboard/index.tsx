@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { firebaseApi } from '../../../services/firebaseApi'
+import { getAccount } from '@wagmi/core'
 import {
 	Box,
 	SimpleGrid,
@@ -19,8 +22,7 @@ import EventTable from '../../components/EventTable'
 import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { firebaseApi } from '../../../services/firebaseApi'
+
 import { Project, Event } from '@/models/project.model'
 
 const metadata = {
@@ -30,12 +32,14 @@ const metadata = {
 
 const Dashboard = () => {
 	const router = useRouter()
+	const account = getAccount()
 	const [results, setResults] = useState<EmissionDetails>(initValuesResults)
 	const bg = useColorModeValue('red.500', 'red.200')
 	const { getProjectById } = firebaseApi()
 	const [projectInfo, setProjectInfo] = useState<Project | null>(null)
 	const [eventOnDetail, setEventOnDetail] = useState<Event | null>(null)
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState<boolean>(true)
+	const [owner, setOwner] = useState<boolean>(false)
 	const [emissionSummary, setEmissionSummary] =
 		useState<EmissionDetails | null>(null)
 	useEffect(() => {
@@ -51,6 +55,7 @@ const Dashboard = () => {
 				setLoading(false)
 				calculateTotalEmissions(info)
 				setEventOnDetail(info.events[0])
+        checkOwner(info);
 			} else router.push('/')
 		} catch (error) {
 			console.log(error)
@@ -90,6 +95,17 @@ const Dashboard = () => {
 		console.log(totales)
 		setEmissionSummary(totales)
 	}
+  const checkOwner = (info: Project) => {
+    if(account?.address){
+      if(account.address as string === info.ownerWallet){
+        setOwner(true)
+      } else {
+        setOwner(false) 
+      }
+    }else {
+      setOwner(false)
+    }
+  }
 	return !loading ? (
 		<>
 			<Head>
@@ -116,7 +132,7 @@ const Dashboard = () => {
 						p='4'
 						bg='white'
 					>
-						<OverviewPublic project={projectInfo} />
+						<OverviewPublic project={projectInfo} owner={owner}/>
 						<OverviewPrivate project={projectInfo} />
 					</GridItem>
 				)}
@@ -155,14 +171,14 @@ const Dashboard = () => {
 							Event List
 						</Text>
 						<Spacer />
-						<Button size='sm' textColor='gray.600'>
+						{owner && <Button size='sm' textColor='gray.600'>
 							+ New event
-						</Button>
+						</Button>}
 					</HStack>
 
 					{projectInfo?.events && (
 						<Box gap='8' overflowY='auto' maxH='90%'>
-							<EventList events={projectInfo?.events} />
+							<EventList events={projectInfo?.events} owner={owner}/>
 						</Box>
 					)}
 				</GridItem>
@@ -180,12 +196,12 @@ const Dashboard = () => {
 							{' '}
 							Event details
 						</Text>
-						<EventDetails event={eventOnDetail} />
+						<EventDetails event={eventOnDetail} owner={owner} />
 					</GridItem>
 				)}
 				{projectInfo?.events && (
 					<GridItem colSpan={6} borderRadius='lg' rowSpan={1} bg='white'>
-						<EventTable events={projectInfo?.events} />
+						<EventTable events={projectInfo?.events} owner={owner}/>
 					</GridItem>
 				)}
 			</SimpleGrid>

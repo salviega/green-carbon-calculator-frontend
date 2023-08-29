@@ -13,8 +13,9 @@ import {
 import { Project } from '@/models/project.model'
 export interface ProjectProps {
 	project: Project
+	owner?: boolean
 }
-export default function OverviewPublic({ project }: ProjectProps) {
+export default function OverviewPublic({ project, owner }: ProjectProps) {
   const sliderValue = project.raisedTotal === 0 ? 0 : ((project.raisedTotal)/(project.totalToraise))*100;
   
 	return (
@@ -55,9 +56,10 @@ export default function OverviewPublic({ project }: ProjectProps) {
 					<Spacer />
 					<Spacer />
 					<Spacer />
+					{!owner && 
 					<Button w='200px' variant='darkie'>
 						Donate
-					</Button>
+					</Button>}
 				</Stack>
 			</HStack>
 		</>
