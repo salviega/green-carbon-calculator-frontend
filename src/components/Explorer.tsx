@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Stack, Flex,Spacer, Button, Text, VStack, useBreakpointValue, Box, HStack, Image,SimpleGrid, GridItem } from '@chakra-ui/react'
 import Hero from './Hero'
 import ProjectsSection from './ProjectsSection'
+import Footer from './Footer'
 import Link from 'next/link'
 
 export default function Explorer() {
@@ -52,7 +53,7 @@ export default function Explorer() {
       <GridItem colSpan={1}>
       <VStack align="start">
       <Text fontSize="xl"  fontWeight="medium" textColor="brand.newBlack"> Total offsets</Text>
-      <Text as="h2" fontSize={{base:'4xl', md:'6xl'}} fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">{"There's a blind spot in the funding process. Let's make environmental a part of the conversation."}</Text>
+      <Text as="h2" fontSize={{base:'4xl', md:'6xl'}} fontWeight="bold" textColor="brand.newBlack" lineHeight="1" textTransform="uppercase">{"Every offset counts. Together, we create lasting change."}</Text>
       </VStack>
       </GridItem>
       <GridItem colSpan={1} alignSelf="center">
@@ -79,7 +80,7 @@ export default function Explorer() {
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '3xl', md: '7xl' })}
             textTransform="uppercase" w={{base:'90%', md:'70%'}}>
-            {"Public Goods are only good when they're green."}
+            {"PUBLIC GOODS ARE ONLY GOOD WHEN GREEN."}
           </Text>
             <Link href="/calculator">
               <Button
@@ -92,6 +93,7 @@ export default function Explorer() {
               </Button>
             </Link>
       </Flex>
+      <Footer/>
 		</>
 	)
 }

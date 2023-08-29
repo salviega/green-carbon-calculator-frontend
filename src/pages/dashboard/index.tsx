@@ -211,6 +211,7 @@ const Dashboard = () => {
 					</GridItem>
 				)}
 			</SimpleGrid>
+
 		</>
 	) : (
 		<Flex align='center' justify='center' direction='column' mt='4'>
