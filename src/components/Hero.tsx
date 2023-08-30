@@ -19,6 +19,7 @@ export default function Hero() {
 			minH='700px'
 			borderRadius='3xl'
 			margin='10px auto'
+			bg={'brand.newBlack'}
 			backgroundImage={'/images/hero.jpg'}
 			backgroundSize={'cover'}
 			backgroundPosition={{ base: '100%', md: 'left top' }}
