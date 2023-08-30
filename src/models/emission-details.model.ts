@@ -1,5 +1,3 @@
-import { EventDetails } from './event-details.model'
-
 export interface EmissionDetails {
 	co2_amount: number
 	sections: {
