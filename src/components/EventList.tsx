@@ -24,12 +24,9 @@ export default function EventList({ events, owner }: EventListProps) {
 								</Text>
 							</VStack>
 						</HStack>
-						<Button variant='outline' size='sm'>
+						<Button variant='outline' size='sm' mr='1%'>
 							View
 						</Button>
-            {owner&& <Button variant='solid' size='sm' colorScheme='red'>
-							Delete
-						</Button>}
 					</HStack>
 				)
 			})}

@@ -43,6 +43,7 @@ export default function EventDetails({
 	const [finished, setFinished] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [purchase, setPurchase] = useState<boolean>(false)
+	const [purchased, setPurchased] = useState<boolean>(false)
 	const [metadata, setMetadata] = useState<any | null>(null)
 	const [certificateInfo, setCertificateInfo] = useState<CertificateDetails | null>(null)
 	const [titlePurchase, setTitlePurchase] = useState<string>(
@@ -66,7 +67,7 @@ export default function EventDetails({
 			const url = '/api/co2storage'
 			const certificate: CertificateDetails = {
 				owner: projectInfo?.ownerWallet ?? (account.address as string), // wallet
-				image: '', //TODO include ipfs image
+				image: 'https://emerald-personal-constrictor-170.mypinata.cloud/ipfs/QmV6aG6rHjfsUcYur1McNzze2xZ2vKsReSpAkBpJV19ejs', //TODO include ipfs image
 				project_id: projectInfo.project_id,
 				project_name: projectInfo.name,
 				project_description: projectInfo.description,
@@ -163,11 +164,13 @@ export default function EventDetails({
 	const onPay = async () => {
 		console.log(metadata);
 		console.log(metadata.data.result.assetBlock.cid);
-
+		setPurchased(true)
+		setTitlePurchase('Interacting with smart contract ...')
 		try {
 			if(!certificateInfo) {
 				setLoading(false)
 				setPurchase(false)
+				setPurchased(false)
 				toast({
 					title: 'Error Purchasing Certificate.',
 					description: 'Error fetching certificate data.',
@@ -209,8 +212,11 @@ export default function EventDetails({
 			});
 		} catch (error) {
 			console.log(error)
+			setLoading(false)
+			setPurchase(false)
+			setPurchased(false)
 			toast({
-				title: 'Error Creating Metadata.',
+				title: 'Error Connecting with smart contract.',
 				description: 'Please try again.',
 				status: 'warning',
 				duration: 5000,
@@ -300,9 +306,9 @@ export default function EventDetails({
 						<Text fontSize='m' textColor='gray.500' fontWeight='medium' mt='5%'>
 							{'Please click on pay button to execute the transaction'}
 						</Text>
-						<Button variant='primary' size='sm' mt='2%' onClick={onPay}>
+						{!purchased && <Button variant='primary' size='sm' mt='2%' onClick={onPay}>
 							Purchase certificate
-						</Button>
+						</Button>}
 					</>
 				)}
 			</Flex>
