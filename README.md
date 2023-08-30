@@ -44,6 +44,8 @@ yarn dev
 
 [gitguti](https://github.com/gitguti)
 
-[sheva323](https://github.com/sheva323)
+[RookieCol](https://github.com/RookieCol)
 
 [salviega](https://github.com/salviega)
+
+[sheva323](https://github.com/sheva323)
