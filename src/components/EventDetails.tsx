@@ -37,7 +37,7 @@ interface EventDetailProps {
 export default function EventDetails({
   event,
   owner,
-  projectInfo
+  projectInfo,
 }: EventDetailProps) {
   const { updateProject } = firebaseApi()
   const account = getAccount()

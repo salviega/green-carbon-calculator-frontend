@@ -396,6 +396,7 @@ export default function Calculator(props: CalculatorProps) {
 					mt={2}
 				></Flex>
 				<ButtonGroup mt='5%' w='100%' justifyContent='flex-end'>
+					{!props.isInternal &&
 					<Button
 						onClick={() => {
 							router.push('/')
@@ -404,7 +405,7 @@ export default function Calculator(props: CalculatorProps) {
 						isLoading={loading}
 					>
 						Go Home
-					</Button>
+					</Button>}
 					<Button
 						w='12rem'
 						onClick={onRecalculate}
