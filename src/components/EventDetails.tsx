@@ -59,7 +59,11 @@ export default function EventDetails({
 	const onClose = () => {
 		setIsOpen(false)
 	}
-
+	useEffect(() => {
+		console.log('new event is ', event);
+		
+	}, [event])
+	
 	const onStartPurchase = async () => {
 		try {
 			setIsOpen(false)
@@ -238,14 +242,14 @@ export default function EventDetails({
 			eventItem.isCertified = true
 			eventItem.creationTx = hash
 			eventItem.nftId = nftId
-			projectInfo.totalToraise += eventItem.emissionDetails.co2_amount * 10
+			projectInfo.totalToraise += (eventItem.emissionDetails.co2_amount * 10)
 		} else {
 			console.log('not encountered the event')
 			projectInfo.events.push(event)
 			projectInfo.events[projectInfo.events.length - 1].isCertified = true
 			projectInfo.events[projectInfo.events.length - 1].creationTx = hash
 			projectInfo.events[projectInfo.events.length - 1].nftId = nftId
-			projectInfo.totalToraise += event.emissionDetails.co2_amount * 10
+			projectInfo.totalToraise += (event.emissionDetails.co2_amount * 10)
 		}
 		if(certificateInfo) projectInfo.certificates.push(certificateInfo)
 		const update = await updateProject(projectInfo)
@@ -440,12 +444,13 @@ export default function EventDetails({
 						</Button>
 					)}
 				</VStack>
+				{event && 
 				<VStack width={{ base: '100%', md: '60%' }}>
 					<ResultsChart
 						co2_amount={event.emissionDetails.co2_amount}
 						sections={event.emissionDetails.sections}
 					/>
-				</VStack>
+				</VStack>}
 			</Flex>
 			{isOpen && <ModalPurchase />}
 			{finished && <ModalInfo />}

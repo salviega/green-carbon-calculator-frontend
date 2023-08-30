@@ -195,12 +195,12 @@ const Form1Create: React.ForwardRefRenderFunction<
             textColor="gray.600"
             focusBorderColor="brand.dark"
           >
-            <option value={'publicGoods'}>{'Public Goods'}</option>
-            <option value={'refi'}>{'reFi'}</option>
-            <option value={'defi'}>{'deFi'}</option>
-            <option value={'education'}>{'Education'}</option>
-            <option value={'dao'}>{'DAO'}</option>
-            <option value={'nft'}>{'NFTs'}</option>
+            <option value={'Web3 Open Source Software'}>{'Web3 Open Source Software'}</option>
+            <option value={'Ethereum Infrastructure'}>{'Ethereum Infrastructure'}</option>
+            <option value={'Community and Education'}>{'Community and Education'}</option>
+            <option value={'Climate Solutions'}>{'Climate Solutions'}</option>
+            <option value={'DeSci'}>{'DeSci'}</option>
+            <option value={'Other Public Goods'}>{'Other Public Goods'}</option>
           </Select>
           <FormErrorMessage>{inputErrors.category}</FormErrorMessage>
         </FormControl>
