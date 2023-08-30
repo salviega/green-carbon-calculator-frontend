@@ -21,6 +21,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface FootprintInterface extends utils.Interface {
   contractName: "Footprint";
   functions: {
+    "_tokenIdCounter()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "balances(address)": FunctionFragment;
@@ -43,6 +44,10 @@ export interface FootprintInterface extends utils.Interface {
     "withdraw()": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "_tokenIdCounter",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "approve",
     values: [string, BigNumberish]
@@ -103,6 +108,10 @@ export interface FootprintInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "_tokenIdCounter",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
@@ -157,11 +166,13 @@ export interface FootprintInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "Minted(address,uint256,string)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -178,6 +189,13 @@ export type ApprovalForAllEvent = TypedEvent<
 >;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
+
+export type MintedEvent = TypedEvent<
+  [string, BigNumber, string],
+  { _to: string; _tokenId: BigNumber; _uri: string }
+>;
+
+export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber],
@@ -214,6 +232,10 @@ export interface Footprint extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    _tokenIdCounter(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { _value: BigNumber }>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -309,6 +331,8 @@ export interface Footprint extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  _tokenIdCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
   approve(
     to: string,
     tokenId: BigNumberish,
@@ -398,6 +422,8 @@ export interface Footprint extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    _tokenIdCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -505,6 +531,17 @@ export interface Footprint extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
+    "Minted(address,uint256,string)"(
+      _to?: string | null,
+      _tokenId?: BigNumberish | null,
+      _uri?: null
+    ): MintedEventFilter;
+    Minted(
+      _to?: string | null,
+      _tokenId?: BigNumberish | null,
+      _uri?: null
+    ): MintedEventFilter;
+
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -518,6 +555,8 @@ export interface Footprint extends BaseContract {
   };
 
   estimateGas: {
+    _tokenIdCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -614,6 +653,8 @@ export interface Footprint extends BaseContract {
   };
 
   populateTransaction: {
+    _tokenIdCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
