@@ -66,8 +66,10 @@ const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : Emiss
 	useEffect(() => {
 		const sectionValues = Object.values(sections);
   	const sectionKeys = Object.keys(sections);
-
-	}, [sections])
+		
+		setSeries(sectionValues)
+		
+	}, [sections, co2_amount])
 
 	return (
 		<Box>

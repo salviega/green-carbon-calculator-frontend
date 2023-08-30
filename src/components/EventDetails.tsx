@@ -60,7 +60,11 @@ export default function EventDetails({
 	const onClose = () => {
 		setIsOpen(false)
 	}
-
+	useEffect(() => {
+		console.log('new event is ', event);
+		
+	}, [event])
+	
 	const onStartPurchase = async () => {
 		try {
 			setIsOpen(false)
@@ -441,12 +445,13 @@ export default function EventDetails({
 						</Button>
 					)}
 				</VStack>
+				{event && 
 				<VStack width={{ base: '100%', md: '60%' }}>
 					<ResultsChart
 						co2_amount={event.emissionDetails.co2_amount}
 						sections={event.emissionDetails.sections}
 					/>
-				</VStack>
+				</VStack>}
 			</Flex>
 			{isOpen && <ModalPurchase />}
 			{finished && <ModalInfo />}

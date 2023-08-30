@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Stack, Flex,Spacer, Button, Text, VStack, useBreakpointValue, Box, HStack, Image,SimpleGrid, GridItem } from '@chakra-ui/react'
 import Hero from './Hero'
-import ProjectsSection from './ProjectsSection'
+import ProjectsSection, { SectionType } from './ProjectsSection'
 import Footer from './Footer'
 import Link from 'next/link'
 
@@ -10,7 +10,7 @@ export default function Explorer() {
 		<>
 			<Hero/>
       <Text as="h2" fontSize="5xl" marginY="12" fontWeight="bold" textColor="brand.newBlack">Top projects</Text>
-			<ProjectsSection/>
+			<ProjectsSection type={SectionType.GENERAL}/>
       <Text as="h2" fontSize="5xl" marginTop="48" marginBottom="12" textAlign="center" fontWeight="bold" textColor="brand.newBlack">How it works</Text>
       <SimpleGrid columns={[1, 2, 3]} spacing={10} bg="brand.dark" width="100%" minH="600px" borderRadius="3xl" p="8">
         <Flex flexDirection="column">

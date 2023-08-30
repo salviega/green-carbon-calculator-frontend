@@ -37,7 +37,7 @@ const Form6: React.ForwardRefRenderFunction<Form6Ref, Form6Props> = (
 	return (
 		<div>
 			<Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' mb='2%'>
-				Energy & Material
+				{"Transport & Waste"}
 			</Heading>
 			{loading && (
 				<Flex align='center' justify='center' direction='column' mt='4'>

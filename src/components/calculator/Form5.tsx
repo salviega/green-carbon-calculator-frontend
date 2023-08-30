@@ -105,7 +105,7 @@ const Form5: React.ForwardRefRenderFunction<Form5Ref, Form5Props> = (
       <Flex mt='2%' flexDirection={{base:"column", md:'row'}}>
         <FormControl mr='2%'>
           <FormLabel htmlFor='plant_based_materials' textColor="gray.500" fontWeight='medium' fontSize='md'>
-            Wood, carton, paper and plant-based materials (Kg)
+            Wood, carton, paper and plant-based (Kg)
           </FormLabel>
           <Input
             id='plant_based_materials'
@@ -122,7 +122,6 @@ const Form5: React.ForwardRefRenderFunction<Form5Ref, Form5Props> = (
             Area of the stand (m2)
           </FormLabel>
           <Input
-            mt='6.5%'
             id='event_stand_area'
             placeholder='Area of the stand ...'
             type='number'
