@@ -34,7 +34,8 @@ import { Project, Event } from '@/models/project.model'
 import { BigNumber, Contract, ethers } from 'ethers'
 import ProjectCertificate from '@/components/ProjectCertificate'
 import Calculator from '../calculator'
-
+import { EventDetails as EventDetailsModel } from '@/models/event-details.model'
+import { nanoid } from 'nanoid'
 const metadata = {
   title: 'Footprint',
   description: 'Decentralized calculator'
@@ -45,7 +46,7 @@ const Dashboard = () => {
 	const account = getAccount()
 	const [results, setResults] = useState<EmissionDetails>(initValuesResults)
 	const bg = useColorModeValue('red.500', 'red.200')
-	const { getProjectById } = firebaseApi()
+	const { getProjectById, updateProject } = firebaseApi()
 	const [projectInfo, setProjectInfo] = useState<Project | null>(null)
 	const [eventOnDetail, setEventOnDetail] = useState<Event | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
@@ -133,6 +134,25 @@ const Dashboard = () => {
 			console.log(error);
 		}
 	}
+	const onCreateEvent = async (event: EventDetailsModel, results: EmissionDetails) => {
+		console.log('starting new event')
+		console.log(event);
+		console.log(results);
+		console.log(projectInfo);
+		
+		const newEvent : Event = {
+			event_id: nanoid(),
+			isCertified: false,
+			name: event.event_name,
+			description: event.event_description,
+			details: event,
+			emissionDetails: results,
+		}
+		projectInfo?.events.push(newEvent);
+		console.log(projectInfo);
+		const update = await updateProject(projectInfo)
+		console.log('event updated')
+	}
 	const ModalCreateEvent = () => {
 		return (
 			<>
@@ -142,10 +162,10 @@ const Dashboard = () => {
 						backdropFilter='blur(10px) hue-rotate(90deg)'
 					/>
 					<ModalContent>
-						<ModalHeader>Create Event</ModalHeader>
+						<ModalHeader>Create & Calculate New Event</ModalHeader>
 						<ModalCloseButton />
 						<ModalBody>
-							<Calculator isInternal={true}/>
+							<Calculator isInternal={true} onCreateEvent={onCreateEvent}/>
 						</ModalBody>
 					</ModalContent>
 				</Modal>
