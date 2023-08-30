@@ -256,7 +256,7 @@ const Dashboard = () => {
 					>
 						<Text fontWeight='semibold' pb='2'>
 							{' '}
-							CO2 Ammount
+							CO2 Amount
 						</Text>
 						{emissionSummary && (
 							<>
