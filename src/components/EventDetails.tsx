@@ -25,6 +25,7 @@ import { nanoid } from 'nanoid'
 import { getAccount } from '@wagmi/core'
 import FootprintContractJson from '../assets/contracts/Footprint.json'
 import { Footprint } from '../../@types/typechain-types/Footprint'
+import {firebaseApi} from '../../services/firebaseApi'
 interface EventDetailProps {
 	event: Event
 	owner: boolean
@@ -35,10 +36,15 @@ export default function EventDetails({
 	owner,
 	projectInfo
 }: EventDetailProps) {
+  const { updateProject } = firebaseApi()
 	const account = getAccount()
 	const toast = useToast()
 	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [finished, setFinished] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(false)
+	const [purchase, setPurchase] = useState<boolean>(false)
+	const [metadata, setMetadata] = useState<any | null>(null)
+	const [certificateInfo, setCertificateInfo] = useState<CertificateDetails | null>(null)
 	const [titlePurchase, setTitlePurchase] = useState<string>(
 		'Preparing Certificate'
 	)
@@ -51,9 +57,14 @@ export default function EventDetails({
 
 	const onStartPurchase = async () => {
 		try {
+			projectInfo.country = 'Colombia'
+			const update = await updateProject(projectInfo)
+			console.log(update);
+			
+			return;
+			setIsOpen(false)
 			setLoading(true)
-			console.log(projectInfo)
-
+			setTitlePurchase('Creating Metadata ...')
 			console.log(projectInfo?.ownerWallet)
 			console.log(account.address)
 
@@ -111,56 +122,65 @@ export default function EventDetails({
 				garbage: event.details?.garbage ?? '0',
 				recycling: event.details?.recycling ?? '0'
 			}
+			setCertificateInfo(certificate)
 			const body = {
 				type: 'createAsset',
 				event: certificate
 			}
-			try {
-				const response = await fetch(url, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(body)
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			})
+
+			const data = await response.json()
+			
+			if (response.ok) {
+				console.log('Asset created:', data)
+				setMetadata(data)
+				setTitlePurchase('Purchasing ...')
+				setPurchase(true)
+				// const CO2Total = certificate.event_co2.co2_amount
+				// const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
+
+				// const ethereum = (window as any).ethereum
+
+				// const web3Provider: ethers.providers.Web3Provider =
+				// 	new ethers.providers.Web3Provider(ethereum)
+				// await web3Provider.send('eth_requestAccounts', [])
+				// const web3Signer: ethers.providers.JsonRpcSigner =
+				// 	web3Provider.getSigner()
+
+				// const contract = new Contract(
+				// 	FootprintContractJson.address,
+				// 	FootprintContractJson.abi,
+				// 	web3Signer
+				// ) as Footprint
+				// const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(
+				// 	CO2Total,
+				// 	IPFSURL
+				// ) // Debe pasar CO2Total a la 18
+				// console.log(mintNetZeroCertificateTX)
+				// setLoading(false)
+				// //await mintTx.wait(1)
+				// //mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
+			} else {
+				console.error('Error al crear template:', data.message)
+				setLoading(false)
+				toast({
+					title: 'Error creating metadata.',
+					description: data.message,
+					status: 'warning',
+					duration: 5000,
+					isClosable: false
 				})
-
-				const data = await response.json()
-
-				if (response.ok) {
-					console.log('Asset created:', data)
-					const CO2Total = certificate.event_co2.co2_amount
-					const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
-
-					const ethereum = (window as any).ethereum
-
-					const web3Provider: ethers.providers.Web3Provider =
-						new ethers.providers.Web3Provider(ethereum)
-					await web3Provider.send('eth_requestAccounts', [])
-					const web3Signer: ethers.providers.JsonRpcSigner =
-						web3Provider.getSigner()
-
-					const contract = new Contract(
-						FootprintContractJson.address,
-						FootprintContractJson.abi,
-						web3Signer
-					) as Footprint
-					const mintNetZeroCertificateTX =
-						await contract.mintNetZeroCertificate(CO2Total, IPFSURL) // Debe pasar CO2Total a la 18
-					console.log(mintNetZeroCertificateTX)
-					setLoading(false)
-					//await mintTx.wait(1)
-					//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
-				} else {
-					console.error('Error al crear template:', data.message)
-					throw new Error(data.message)
-				}
-			} catch (error) {
-				console.error('Error en la petición:', error)
 			}
 		} catch (error) {
 			toast({
 				title: 'Error Purchasing Certificate.',
-				description: 'Pleaase try again.',
+				description: 'Please try again.',
 				status: 'warning',
 				duration: 5000,
 				isClosable: false
@@ -169,67 +189,139 @@ export default function EventDetails({
 			setLoading(false)
 		}
 	}
+	const onPay = async () => {
+		console.log(metadata);
+		console.log(metadata.data.result.assetBlock.cid);
+		
+		try {
+			if(!certificateInfo) {
+				setLoading(false)
+				setPurchase(false)
+				toast({
+					title: 'Error Purchasing Certificate.',
+					description: 'Error fetching certificate data.',
+					status: 'warning',
+					duration: 5000,
+					isClosable: false
+				})
+				return
+			}
+			// const CO2Total = certificateInfo?.event_co2.co2_amount
+			const CO2Total = 4
+			const CO2TotalInWei = ethers.utils.parseUnits(CO2Total.toString(), 18);
+			const IPFSURL = `https://ipfs.io/ipfs/${metadata.data.result.assetBlock.cid}`
 
-	const ModalPurchase = () => {
+			const ethereum = (window as any).ethereum
+
+			const web3Provider: ethers.providers.Web3Provider =
+				new ethers.providers.Web3Provider(ethereum)
+			await web3Provider.send('eth_requestAccounts', [])
+			const web3Signer: ethers.providers.JsonRpcSigner =
+				web3Provider.getSigner()
+
+			const contract = new Contract(
+				FootprintContractJson.address,
+				FootprintContractJson.abi,
+				web3Signer
+			) as Footprint
+			const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(
+				CO2TotalInWei,
+				IPFSURL, 
+			) // Debe pasar CO2Total a la 18
+			console.log(mintNetZeroCertificateTX)
+			contract.on('Minted', (to, tokenId, uri, event) => {
+				console.log("Minted Event:");
+				console.log("To:", to);
+				console.log("Token ID:", tokenId.toString());
+				console.log("URI:", uri);
+			});
+
+			//await mintTx.wait(1)
+			//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
+		} catch (error) {
+			console.log(error)
+			toast({
+				title: 'Error Creating Metadata.',
+				description: 'Please try again.',
+				status: 'warning',
+				duration: 5000,
+				isClosable: false
+			})
+		}
+	}
+	const ModalInfo = () => {
 		return (
 			<>
-				<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
-					<ModalOverlay />
+				<Modal isCentered isOpen={finished} onClose={() => setFinished(false)}>
+					<ModalOverlay
+						bg='blackAlpha.300'
+						backdropFilter='blur(10px) hue-rotate(90deg)'
+					/>
 					<ModalContent>
-						{!loading ? (
-							<>
-								<ModalHeader>Purchase Certificate</ModalHeader>
-								<ModalCloseButton />
-								<ResultsChart
-									co2_amount={event.emissionDetails.co2_amount}
-									sections={event.emissionDetails.sections}
-								/>
-								<ModalBody pb={6}>
-									<Text>{`Total Consumption : ${event.emissionDetails.co2_amount}`}</Text>
-									<Text>{`Total Cost : $${
-										event.emissionDetails.co2_amount * 10
-									}`}</Text>
-								</ModalBody>
-							</>
-						) : (
-							<>
-								<ModalHeader>{titlePurchase}</ModalHeader>
-								<ModalBody pb={6}>
-									<Flex
-										align='center'
-										justify='center'
-										direction='column'
-										mt='4'
-									>
-										<Spinner color='blue.500' size='xl' mb='2' />
-										<Text fontSize='lg' textAlign={'center'}>
-											{bodyPurchase}
-										</Text>
-									</Flex>
-								</ModalBody>
-							</>
-						)}
-
-						{!loading && (
-							<ModalFooter>
-								<Button
-									colorScheme='blue'
-									mr={3}
-									disabled={loading}
-									onClick={onStartPurchase}
-								>
-									Purchase
-								</Button>
-								<Button onClick={onClose} disabled={loading}>
-									Cancel
-								</Button>
-							</ModalFooter>
-						)}
+						<ModalHeader>Completed</ModalHeader>
+						<ModalCloseButton />
+						<ModalBody>
+							<Text>Please wait for some seconds for the transaction to be confirmed</Text>
+							<Text>You will be able to see your certificate on the dashboard once complete</Text>
+						</ModalBody>
+						<ModalFooter>
+							<Button w='7rem' variant='primary' onClick={() => setFinished(false)}>
+								Close
+							</Button>
+						</ModalFooter>
 					</ModalContent>
 				</Modal>
 			</>
 		)
 	}
+	const ModalPurchase = () => {
+		return (
+			<>
+				<Modal isCentered isOpen={isOpen} onClose={onClose}>
+					<ModalOverlay
+						bg='blackAlpha.300'
+						backdropFilter='blur(10px) hue-rotate(90deg)'
+					/>
+					<ModalContent>
+						<ModalHeader>Purchase</ModalHeader>
+						<ModalCloseButton />
+						<ModalBody>
+							<Text>Are you sure about purchasing this certificate?</Text>
+							<Text>{`The approx cost is ${
+								event.emissionDetails.co2_amount * 10
+							} USD`}</Text>
+						</ModalBody>
+						<ModalFooter>
+							<Button w='7rem' variant='primary' onClick={onStartPurchase}>
+								Purchase
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</Modal>
+			</>
+		)
+	}
+	if (loading) {
+		return (
+			<Flex align='center' justify='center' direction='column' mt='4'>
+				<Spinner color='brand.dark' size='xl' mb='2' />
+				<Text fontSize='lg' textColor='gray.500' fontWeight='medium'>
+					{titlePurchase}
+				</Text>
+				{purchase && (
+					<>
+						<Text fontSize='m' textColor='gray.500' fontWeight='medium' mt='5%'>
+							{'Please click on pay button to execute the transaction'}
+						</Text>
+						<Button variant='primary' size='sm' mt='2%' onClick={onPay}>
+							Purchase certificate
+						</Button>
+					</>
+				)}
+			</Flex>
+		)
+	}
+
 	return (
 		<>
 			<HStack align='start'>
@@ -263,6 +355,7 @@ export default function EventDetails({
 				</VStack>
 			</HStack>
 			{isOpen && <ModalPurchase />}
+			{finished && <ModalInfo />}
 		</>
 	)
 }

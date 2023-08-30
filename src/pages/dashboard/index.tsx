@@ -22,8 +22,10 @@ import EventTable from '../../components/EventTable'
 import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
 import Head from 'next/head'
-
+import FootprintContractJson from '../../assets/contracts/Footprint.json'
 import { Project, Event } from '@/models/project.model'
+import { BigNumber, Contract, ethers } from 'ethers'
+import { Footprint } from '../../../@types/typechain-types/Footprint'
 
 const metadata = {
 	title: 'Footprint',
@@ -48,6 +50,7 @@ const Dashboard = () => {
 	}, [router.query.id])
 	const readInfo = async (id: string) => {
 		try {
+			readCertificates()
 			const info: Project | null = await getProjectById(id)
 			console.log(info)
 			if (info) {
@@ -106,8 +109,23 @@ const Dashboard = () => {
 			setOwner(false)
 		}
 	}
+	const readCertificates = async () => {
+		try {
+			const provider = new ethers.providers.Web3Provider((window as any).ethereum); // Usa el proveedor de Metamask
+			const contract = new ethers.Contract(FootprintContractJson.address, FootprintContractJson.abi, provider);
+			const balance = await contract.balanceOf(account.address);
+			console.log('balance is ', balance);
+			console.log(BigNumber.from(balance._hex).toString());
+			const balances = await contract.balances(account.address);
+			console.log('balances are ', balances);	
+			console.log(BigNumber.from(balances._hex).toString());
+			
+		} catch (error) {
+			console.log(error);
+		}
+	}
 	return !loading ? (
-		<>
+		<Flex>
 			<Head>
 				<title>{metadata.title}</title>
 				<meta name='description' content={metadata.description} />
@@ -211,7 +229,7 @@ const Dashboard = () => {
 					</GridItem>
 				)}
 			</SimpleGrid>
-		</>
+		</Flex>
 	) : (
 		<Flex align='center' justify='center' direction='column' mt='4'>
 			<Spinner color='brand.dark' size='xl' mb='2' />
