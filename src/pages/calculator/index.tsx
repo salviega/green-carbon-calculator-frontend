@@ -28,7 +28,10 @@ import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
 import { CertificateDetails } from '../../models/certificate-details.model'
 import CreateForm from '../create'
-export default function Calculator() {
+interface CalculatorProps {
+	isInternal?: boolean
+}
+export default function Calculator(props: CalculatorProps) {
 	const account = getAccount()
 	const toast = useToast()
 	const router = useRouter();
@@ -395,7 +398,7 @@ export default function Calculator() {
       <Box
         borderWidth='1px'
         rounded='lg'
-        maxWidth={800}
+        maxWidth={900}
         p={6}
         m='40px auto'
         as='form'

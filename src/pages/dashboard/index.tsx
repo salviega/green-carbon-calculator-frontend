@@ -12,7 +12,14 @@ import {
   Spacer,
   HStack,
   Flex,
-  Spinner
+  Spinner,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalCloseButton,
+	ModalBody,
+	ModalFooter
 } from '@chakra-ui/react'
 import OverviewPublic from '../../components/ProjectOverviewPublic'
 import OverviewPrivate from '../../components/ProjectOverviewPrivate'
@@ -25,8 +32,8 @@ import Head from 'next/head'
 import FootprintContractJson from '../../assets/contracts/Footprint.json'
 import { Project, Event } from '@/models/project.model'
 import { BigNumber, Contract, ethers } from 'ethers'
-import { Footprint } from '../../../@types/typechain-types/Footprint'
 import ProjectCertificate from '@/components/ProjectCertificate'
+import Calculator from '../calculator'
 
 const metadata = {
   title: 'Footprint',
@@ -43,6 +50,7 @@ const Dashboard = () => {
 	const [eventOnDetail, setEventOnDetail] = useState<Event | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
 	const [owner, setOwner] = useState<boolean>(false)
+	const [createEvent, setCreateEvent] = useState(true)
 	const [emissionSummary, setEmissionSummary] =
 		useState<EmissionDetails | null>(null)
 	useEffect(() => {
@@ -125,6 +133,25 @@ const Dashboard = () => {
 			console.log(error);
 		}
 	}
+	const ModalCreateEvent = () => {
+		return (
+			<>
+				<Modal isCentered isOpen={createEvent} onClose={() => setCreateEvent(false)} size={'6xl'}>
+					<ModalOverlay
+						bg='blackAlpha.300'
+						backdropFilter='blur(10px) hue-rotate(90deg)'
+					/>
+					<ModalContent>
+						<ModalHeader>Create Event</ModalHeader>
+						<ModalCloseButton />
+						<ModalBody>
+							<Calculator isInternal={true}/>
+						</ModalBody>
+					</ModalContent>
+				</Modal>
+			</>
+		)
+	}
   return !loading ? (
     <>
     <Flex>
@@ -202,7 +229,7 @@ const Dashboard = () => {
             </Text>
             <Spacer />
             {owner && (
-              <Button size='sm' textColor='gray.600'>
+              <Button size='sm' textColor='gray.600' onClick={() => setCreateEvent(true)}>
                 + New event
               </Button>
             )}
@@ -243,6 +270,7 @@ const Dashboard = () => {
         )}
       </SimpleGrid>
       </Flex>
+			{createEvent && <ModalCreateEvent/>}
     </>
   ) : (
     <Flex align='center' justify='center' direction='column' mt='4'>
