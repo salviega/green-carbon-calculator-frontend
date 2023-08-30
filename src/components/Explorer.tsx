@@ -46,7 +46,6 @@ export default function Explorer() {
         <Image src={'/Images/toucan.png'} alt='celo logo' h={24} w={36} fit="contain"/>
         <Image src={'/Images/gitcoin.png'} alt='celo logo' h={24} w={36} fit="contain"/>
         <Image src={'/Images/filecoin.png'} alt='celo logo' h={24} w={36} fit="contain"/>
-        <Image src={'/Images/balcahau.png'} alt='celo logo' h={24} w={36} fit="contain"/>
       </SimpleGrid>
       </Box>
       <SimpleGrid columns={[1, 2, 2]}  spacing={10} marginTop="36" marginBottom="48" >
