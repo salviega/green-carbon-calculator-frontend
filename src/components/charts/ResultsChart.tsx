@@ -65,10 +65,7 @@ const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : Emiss
 	}, [colorMode])
 	useEffect(() => {
 		const sectionValues = Object.values(sections);
-  	const sectionKeys = Object.keys(sections);
-		
 		setSeries(sectionValues)
-		
 	}, [sections, co2_amount])
 
 	return (
