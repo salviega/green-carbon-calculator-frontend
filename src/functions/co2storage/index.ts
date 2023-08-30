@@ -139,7 +139,19 @@ export async function addTemplate(): Promise<any> {
 }
 
 export async function returnCertifiedEventsTotals(): Promise<[number, number]> {
-	let searchAssetsResponse = await fgStorage.searchAssets('Footprint')
+	let searchAssetsResponse = await fgStorage.searchAssets(
+		'Footprint',
+		null,
+		null,
+		null,
+		null,
+		null,
+		0,
+		1000,
+		null,
+		null
+	)
+
 	if (searchAssetsResponse.error != null) {
 		console.error(searchAssetsResponse.error)
 		await new Promise((_, reject) => setTimeout(reject, 300))
