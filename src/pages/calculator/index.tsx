@@ -184,91 +184,82 @@ export default function Calculator(props: CalculatorProps) {
 		}
 	}
 	const onCalculate = async () => {
+		setLoading(true)
+
+		let response: any
+
+		const body: EventDetails = {
+			event_name: formInfo.event_name,
+			event_description: formInfo.event_description,
+			event_duration: formInfo.event_duration,
+			country: formInfo.country,
+			participants: formInfo.participants,
+			employees: formInfo.employees,
+			heated_area: formInfo.heated_area ?? 0,
+			air_conditioned_area: formInfo.air_conditioned_area ?? 0,
+			number_of_people_arriving_by_car:
+				formInfo.number_of_people_arriving_by_car ?? 0,
+			average_distance_traveled_by_car:
+				formInfo.average_distance_traveled_by_car ?? '0',
+			number_of_people_traveling_by_public_transport:
+				formInfo.number_of_people_traveling_by_public_transport ?? 0,
+			average_distance_traveled_public:
+				formInfo.average_distance_traveled_public ?? 0,
+			short_haul_flights: formInfo.short_haul_flights ?? 0,
+			medium_haul_flights: formInfo.medium_haul_flights ?? 0,
+			long_haul_flights: formInfo.long_haul_flights ?? 0,
+			percentage_business_class: formInfo.percentage_business_class ?? '0',
+			over_night_stay_three_stars: formInfo.over_night_stay_three_stars ?? '0',
+			over_night_stay_four_stars: formInfo.over_night_stay_four_stars ?? '0',
+			over_night_stay_five_stars: formInfo.over_night_stay_five_stars ?? '0',
+			meal_meat_amount: formInfo.meal_meat_amount ?? '0',
+			meal_vegetarian_amount: formInfo.meal_vegetarian_amount ?? '0',
+			snacks_amount: formInfo.snacks_amount ?? '0',
+			soda_liters: formInfo.soda_liters ?? '0',
+			coffee_cups: formInfo.coffee_cups ?? '0',
+			tea_cups: formInfo.tea_cups ?? '0',
+			wine_liters: formInfo.wine_liters ?? '0',
+			beer_liters: formInfo.beer_liters ?? '0',
+			spirits_liters: formInfo.spirits_liters ?? '0',
+			power_consumption: formInfo.power_consumption ?? '0',
+			printed_matter: formInfo.printed_matter ?? '0',
+			plastics: formInfo.plastics ?? '0',
+			recyclable_material: formInfo.recyclable_material ?? '0',
+			plant_based_materials: formInfo.plant_based_materials ?? '0',
+			event_stand_area: formInfo.event_stand_area ?? '0',
+			transported_weight: form6info.transported_weight,
+			transported_distance: form6info.transported_distance,
+			garbage: form6info.garbage,
+			recycling: form6info.recycling
+		}
+		//Rewrites the event information into formInfo const
+		setFormInfo(body)
+
 		try {
-			setLoading(true)
-			const body: EventDetails = {
-				event_name: formInfo.event_name,
-				event_description: formInfo.event_description,
-				event_duration: formInfo.event_duration,
-				country: formInfo.country,
-				participants: formInfo.participants,
-				employees: formInfo.employees,
-				heated_area: formInfo.heated_area ?? 0,
-				air_conditioned_area: formInfo.air_conditioned_area ?? 0,
-				number_of_people_arriving_by_car:
-					formInfo.number_of_people_arriving_by_car ?? 0,
-				average_distance_traveled_by_car:
-					formInfo.average_distance_traveled_by_car ?? '0',
-				number_of_people_traveling_by_public_transport:
-					formInfo.number_of_people_traveling_by_public_transport ?? 0,
-				average_distance_traveled_public:
-					formInfo.average_distance_traveled_public ?? 0,
-				short_haul_flights: formInfo.short_haul_flights ?? 0,
-				medium_haul_flights: formInfo.medium_haul_flights ?? 0,
-				long_haul_flights: formInfo.long_haul_flights ?? 0,
-				percentage_business_class: formInfo.percentage_business_class ?? '0',
-				over_night_stay_three_stars:
-					formInfo.over_night_stay_three_stars ?? '0',
-				over_night_stay_four_stars: formInfo.over_night_stay_four_stars ?? '0',
-				over_night_stay_five_stars: formInfo.over_night_stay_five_stars ?? '0',
-				meal_meat_amount: formInfo.meal_meat_amount ?? '0',
-				meal_vegetarian_amount: formInfo.meal_vegetarian_amount ?? '0',
-				snacks_amount: formInfo.snacks_amount ?? '0',
-				soda_liters: formInfo.soda_liters ?? '0',
-				coffee_cups: formInfo.coffee_cups ?? '0',
-				tea_cups: formInfo.tea_cups ?? '0',
-				wine_liters: formInfo.wine_liters ?? '0',
-				beer_liters: formInfo.beer_liters ?? '0',
-				spirits_liters: formInfo.spirits_liters ?? '0',
-				power_consumption: formInfo.power_consumption ?? '0',
-				printed_matter: formInfo.printed_matter ?? '0',
-				plastics: formInfo.plastics ?? '0',
-				recyclable_material: formInfo.recyclable_material ?? '0',
-				plant_based_materials: formInfo.plant_based_materials ?? '0',
-				event_stand_area: formInfo.event_stand_area ?? '0',
-				transported_weight: form6info.transported_weight,
-				transported_distance: form6info.transported_distance,
-				garbage: form6info.garbage,
-				recycling: form6info.recycling
-			}
-			//Rewrites the event information into formInfo const
-			setFormInfo(body)
 			const headers = {
 				'Content-Type': 'application/json'
 			}
+
 			const scrapperUrl = 'http://localhost:8000/co2calculation'
-			let response: any
 
-			try {
-				response = await axios.post(scrapperUrl, body, {
-					headers: headers
-				})
-				response = response.data
-			} catch (error) {
-				const response: EmissionDetails = generateRandomEmissionDetails()
-			}
-
-			console.log(response)
-
-			toast({
-				title: 'Event calculated.',
-				description: "We've finished calculating the impact.",
-				status: 'success',
-				duration: 5000,
-				isClosable: true
+			response = await axios.post(scrapperUrl, body, {
+				headers: headers
 			})
-			showResults(response)
 		} catch (error) {
-			console.log(error)
-			toast({
-				title: 'Error calculating.',
-				description: 'Pleaase try again later.',
-				status: 'error',
-				duration: 3000,
-				isClosable: true
-			})
-			setLoading(false)
+			console.error(error)
+			response = generateRandomEmissionDetails()
 		}
+
+		console.log('response:', response)
+
+		toast({
+			title: 'Event calculated.',
+			description: "We've finished calculating the impact.",
+			status: 'success',
+			duration: 5000,
+			isClosable: true
+		})
+		showResults(response)
 	}
 	const showResults = (emissionDetails: EmissionDetails) => {
 		setResults(emissionDetails)
