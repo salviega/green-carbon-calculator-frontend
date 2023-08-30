@@ -25,12 +25,10 @@ export default async function handler(
 				if (req.query.type === 'getCertifiedEventsTotals') {
 					return getCertifiedEventsTotals(req, res)
 				}
-				// if (req.query.type === 'getAsset') {
-				// 	return getAsset(req, res)
-				// }
+
 				break
 			default:
-				res.status(405).end() // Método no permitido
+				res.status(405).end()
 				break
 		}
 	} catch (error) {
@@ -77,5 +75,3 @@ async function getCertifiedEventsTotals(
 			'Error fetching certificed events and CO2 total of the certificed events'
 	})
 }
-
-// const IPFSURL = `https://ipfs.io/ipfs/${CID}`

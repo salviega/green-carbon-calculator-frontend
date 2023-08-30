@@ -16,14 +16,12 @@ export default function NotFoundPage() {
 	return (
 		<Box
 			width={'100%'}
-			height={'100vh'}
+			height={'75vh'}
 			display={'flex'}
 			flexDir={'column'}
 			alignItems={'center'}
 			justifyContent={'center'}
-			background={'#61ab17'}
 		>
-			<Image width={280} src={logo} alt='logo' priority={true} />
 			<Text marginY={6} fontSize='3xl' as='b'>
 				This Page could not be found
 			</Text>
