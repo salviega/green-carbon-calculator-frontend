@@ -3,7 +3,7 @@ import React from 'react'
 import { Box, Button, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 
-import logo from '../assets/images/brand-transparent.svg'
+import logo from '../assets/Images/brand-transparent.svg'
 import { useRouter } from 'next/router'
 
 export default function NotFoundPage() {

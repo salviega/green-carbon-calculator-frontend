@@ -76,7 +76,7 @@ export default function Explorer() {
 			>
 				<Flex flexDirection='column'>
 					<Image
-						src='/images/step1.png'
+						src='/Images/step1.png'
 						width={200}
 						height={300}
 						mb='6'
@@ -112,7 +112,7 @@ export default function Explorer() {
 						credits available right on our platform.
 					</Text>
 					<Image
-						src='/images/step2.png'
+						src='/Images/step2.png'
 						width={300}
 						height={280}
 						alt='Picture of the author'
@@ -120,7 +120,7 @@ export default function Explorer() {
 				</Flex>
 				<Flex flexDirection='column'>
 					<Image
-						src='/images/step3.png'
+						src='/Images/step3.png'
 						width={400}
 						height={300}
 						alt='Picture of the author'
@@ -207,7 +207,7 @@ export default function Explorer() {
 					</VStack>
 				</GridItem>
 				<GridItem colSpan={1} alignSelf='center'>
-						{data && 
+						{data &&
 
 					<VStack align='start' justify='center' gap='16'>
             <VStack align='start'>
@@ -260,7 +260,7 @@ export default function Explorer() {
 				p='12'
 				align='start'
 				flexDirection='column'
-				backgroundImage={'/images/cta.jpg'}
+				backgroundImage={'/Images/cta.jpg'}
 				backgroundSize='cover'
 				backgroundPosition={'bottom right'}
 				mb='36'

@@ -79,7 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 					<HStack spacing={2} alignItems={'center'}>
 						<Link href='/'>
 							<Image
-								src='/images/logo.png'
+								src='/Images/logo.png'
 								width={30}
 								height={30}
 								alt='Picture of the author'
