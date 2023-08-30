@@ -324,36 +324,36 @@ export default function EventDetails({
 
 	return (
 		<>
-			<Flex align='start' flexDirection={{ base: 'column', md: 'row' }}>
+		   <Flex align='start' flexDirection={{ base: 'column', md: 'row' }}>
         <VStack align='start' width={{ base: '100%', md: '40%' }}>
-					<Text fontWeight='semibold' pb='2'>
-						{' '}
-						{event.name}
-					</Text>
-					<Text> {event.description}</Text>
-					{event.isCertified && (
-						<Button variant='outline' size='sm'>
-							Show Certificate
-						</Button>
-					)}
-					{owner && !event.isCertified && (
-						<Button
-							variant='solid'
-							size='sm'
-							bg={'brand.light'}
-							onClick={() => setIsOpen(true)}
-						>
-							Purchase Certificate
-						</Button>
-					)}
-				</VStack>
-				<VStack width={{ base: '100%', md: '60%' }}>
-					<ResultsChart
-						co2_amount={event.emissionDetails.co2_amount}
-						sections={event.emissionDetails.sections}
-					/>
-				</VStack>
-			</Flex>
+          <Text fontWeight="semibold" fontSize="lg" textColor="gray.700" pb='2'>
+            {' '}
+            {event.name}
+          </Text>
+          <Text textColor="gray.500"> {event.description}</Text>
+          {event.isCertified && (
+            <Button variant='primary' size='sm'>
+              Show Certificate
+            </Button>
+          )}
+          {owner && !event.isCertified && (
+            <Button
+              variant='primary'
+              size='sm'
+              onClick={() => setIsOpen(true)}
+              mt="6"
+            >
+              Purchase Certificate
+            </Button>
+          )}
+        </VStack>
+        <VStack width={{ base: '100%', md: '60%' }}>
+          <ResultsChart
+            co2_amount={event.emissionDetails.co2_amount}
+            sections={event.emissionDetails.sections}
+          />
+        </VStack>
+      </Flex>
 			{isOpen && <ModalPurchase />}
 			{finished && <ModalInfo />}
 		</>
