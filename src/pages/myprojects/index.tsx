@@ -5,7 +5,9 @@ import {
 	Flex,
 	Spacer,
 	Button,
+  Container,
 	Text,
+  Center,
 	VStack,
 	useBreakpointValue,
 	Box,
@@ -17,6 +19,8 @@ import {
 import Projectsection from '../../components/ProjectsSection'
 import Head from 'next/head'
 import { firebaseApi } from '../../../services/firebaseApi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+
 
 const metadata = {
 	title: 'Footprint',
@@ -34,7 +38,7 @@ const MyProjects = () => {
     }
   }, [account.isConnected])
   const readProjects = async () => {
-    
+
   }
 	return (
 		<>
@@ -46,12 +50,20 @@ const MyProjects = () => {
 			</Head>
 			{isConnected ?
 			<>
+        <Text as="h2" fontSize="5xl" marginY="12" fontWeight="bold" textColor="brand.newBlack">My projects</Text>
 				<Projectsection />
 			</>
 			:
 			<>
-				
-				Please connect your wallet
+        <Container>
+        <Center h="800px" w='100%'>
+        <VStack>
+        <Text fontSize="5xl" fontWeight="bold" textColor="brand.newBlack">We don't bite🥹</Text>
+        <Text fontSize="lg"  textColor="gray.600" mb='4'>Please connect your wallet to see all your awesome projects🌴</Text>
+        <ConnectButton />
+        </VStack>
+        </Center>
+        </Container>
 			</>}
 		</>
 	)

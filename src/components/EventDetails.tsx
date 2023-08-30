@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Contract, ethers } from 'ethers'
 import {
-	Button,
-	Text,
-	VStack,
-	HStack,
-	useDisclosure,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalCloseButton,
-	ModalBody,
-	ModalFooter,
-	Flex,
-	Spinner,
-	useToast
+  Button,
+  Text,
+  VStack,
+  HStack,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Flex,
+  Spinner,
+  useToast
 } from '@chakra-ui/react'
 import ResultsChart from './charts/ResultsChart'
 import { EmissionDetails } from '../models/emission-details.model'
@@ -27,14 +27,14 @@ import FootprintContractJson from '../assets/contracts/Footprint.json'
 import { Footprint } from '../../@types/typechain-types/Footprint'
 import {firebaseApi} from '../../services/firebaseApi'
 interface EventDetailProps {
-	event: Event
-	owner: boolean
-	projectInfo: Project
+  event: Event
+  owner: boolean
+  projectInfo: Project
 }
 export default function EventDetails({
-	event,
-	owner,
-	projectInfo
+  event,
+  owner,
+  projectInfo
 }: EventDetailProps) {
   const { updateProject } = firebaseApi()
 	const account = getAccount()
@@ -60,7 +60,7 @@ export default function EventDetails({
 			projectInfo.country = 'Colombia'
 			const update = await updateProject(projectInfo)
 			console.log(update);
-			
+
 			return;
 			setIsOpen(false)
 			setLoading(true)
@@ -136,7 +136,7 @@ export default function EventDetails({
 			})
 
 			const data = await response.json()
-			
+
 			if (response.ok) {
 				console.log('Asset created:', data)
 				setMetadata(data)
@@ -192,7 +192,7 @@ export default function EventDetails({
 	const onPay = async () => {
 		console.log(metadata);
 		console.log(metadata.data.result.assetBlock.cid);
-		
+
 		try {
 			if(!certificateInfo) {
 				setLoading(false)
@@ -226,7 +226,7 @@ export default function EventDetails({
 			) as Footprint
 			const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(
 				CO2TotalInWei,
-				IPFSURL, 
+				IPFSURL,
 			) // Debe pasar CO2Total a la 18
 			console.log(mintNetZeroCertificateTX)
 			contract.on('Minted', (to, tokenId, uri, event) => {
@@ -324,8 +324,8 @@ export default function EventDetails({
 
 	return (
 		<>
-			<HStack align='start'>
-				<VStack align='start' width='60%'>
+			<Flex align='start' flexDirection={{ base: 'column', md: 'row' }}>
+        <VStack align='start' width={{ base: '100%', md: '40%' }}>
 					<Text fontWeight='semibold' pb='2'>
 						{' '}
 						{event.name}
@@ -347,13 +347,13 @@ export default function EventDetails({
 						</Button>
 					)}
 				</VStack>
-				<VStack width='40%'>
+				<VStack width={{ base: '100%', md: '60%' }}>
 					<ResultsChart
 						co2_amount={event.emissionDetails.co2_amount}
 						sections={event.emissionDetails.sections}
 					/>
 				</VStack>
-			</HStack>
+			</Flex>
 			{isOpen && <ModalPurchase />}
 			{finished && <ModalInfo />}
 		</>
@@ -361,14 +361,14 @@ export default function EventDetails({
 }
 
 const initValuesResults: EmissionDetails = {
-	co2_amount: 0,
-	sections: {
-		Mobility: 10,
-		Accommodation: 10,
-		Catering: 10,
-		Energy: 10,
-		Materials: 10,
-		Transport: 10,
-		Waste: 25
-	}
+  co2_amount: 0,
+  sections: {
+    Mobility: 10,
+    Accommodation: 10,
+    Catering: 10,
+    Energy: 10,
+    Materials: 10,
+    Transport: 10,
+    Waste: 25
+  }
 }

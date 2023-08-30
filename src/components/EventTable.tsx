@@ -46,7 +46,7 @@ export default function EventTable({ events }: EventListProps) {
 					<Tbody>
 						{events.map(event => {
 							return (
-								<Tr>
+								<Tr key={event.event_id}>
 									<Td>{trimString(event.event_id)}</Td>
 									<Td>{event.name}</Td>
 									<Td isNumeric>{event.emissionDetails.sections.Mobility}</Td>
