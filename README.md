@@ -16,6 +16,8 @@ Repository url: https://github.com/RookieCol/scrapper_co2.git
 
 ### Green Carbon Calculator - UI Figma:
 
+https://www.figma.com/file/To6fTxvXGyqAvdXcw1r9WH/greenCalc?type=design&node-id=66-345&mode=design
+
 ## Quick start 🏄
 
 Prerequisites: [Node (v19 LTS)](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
