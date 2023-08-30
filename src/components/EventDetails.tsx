@@ -239,14 +239,14 @@ export default function EventDetails({
 			eventItem.isCertified = true
 			eventItem.creationTx = hash
 			eventItem.nftId = nftId
-			projectInfo.totalToraise += eventItem.emissionDetails.co2_amount * 10
+			projectInfo.totalToraise += (eventItem.emissionDetails.co2_amount * 10)
 		} else {
 			console.log('not encountered the event')
 			projectInfo.events.push(event)
 			projectInfo.events[projectInfo.events.length - 1].isCertified = true
 			projectInfo.events[projectInfo.events.length - 1].creationTx = hash
 			projectInfo.events[projectInfo.events.length - 1].nftId = nftId
-			projectInfo.totalToraise += event.emissionDetails.co2_amount * 10
+			projectInfo.totalToraise += (event.emissionDetails.co2_amount * 10)
 		}
 		if(certificateInfo) projectInfo.certificates.push(certificateInfo)
 		const update = await updateProject(projectInfo)

@@ -16,9 +16,9 @@ import { Project } from "../src/models/project.model";
 export function firebaseApi() {
   const projectsCollectionRef = collection(database, "projects");
 
-  const getAllProjects = async () => {
+  const getAllProjects = async () :  Promise<Project[]>  => {
     const data = await getDocs(projectsCollectionRef);
-    return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    return data.docs.map((doc) => ({ ...doc.data(), id: doc.id } as unknown as Project)) ;
   }
   const getProject = async (id: string) => {
     const item = await getDoc(doc(database, "projects", id));
@@ -69,6 +69,7 @@ export function firebaseApi() {
     getProject,
     getProjectById, 
     getProjectsByOwnerAddress,
-    updateProject
+    updateProject,
+    getAllProjects
   };
 }

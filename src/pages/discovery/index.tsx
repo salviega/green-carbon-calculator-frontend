@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Projectsection from '../../components/ProjectsSection'
+import Projectsection, { SectionType } from '../../components/ProjectsSection'
 import Head from 'next/head'
 
 const metadata = {
@@ -16,7 +16,7 @@ const Discovery = () => {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/Images/favicon.ico' sizes='any' />
 			</Head>
-			<Projectsection />
+			<Projectsection type={SectionType.GENERAL}/>
 		</>
 	)
 }

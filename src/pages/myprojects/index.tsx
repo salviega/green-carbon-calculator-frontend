@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getAccount } from '@wagmi/core'
 import { Container, Text, Center, VStack } from '@chakra-ui/react'
-import Projectsection from '../../components/ProjectsSection'
+import Projectsection, { SectionType } from '../../components/ProjectsSection'
 import Head from 'next/head'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
@@ -42,7 +42,7 @@ const MyProjects = () => {
 					>
 						My projects
 					</Text>
-					<Projectsection />
+					<Projectsection type={SectionType.MY_PROJECTS}/>
 				</>
 			) : (
 				<>

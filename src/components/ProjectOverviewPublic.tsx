@@ -31,7 +31,7 @@ export default function OverviewPublic({ project, owner }: ProjectProps) {
         pos='relative'
       >
         <HStack pos='absolute' bottom='2' left='2'>
-          <Avatar name={project.name[0]} src={`url(${project.logo})`} size='lg' />
+          <Avatar name={project.name[0]} src={`${project.logo}`} size='lg' />
           <Text textColor='white' fontWeight='bold' fontSize='2xl'>
             {project.name}
           </Text>
