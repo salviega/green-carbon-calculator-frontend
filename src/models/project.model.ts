@@ -27,6 +27,8 @@ export interface Event {
 	description: string
 	details?: EventDetails
 	emissionDetails: EmissionDetails
+	creationTx?: string
+	nftId?: string
 }
 interface SocialMedia {
 	webpage?: string
