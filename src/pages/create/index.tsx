@@ -219,7 +219,7 @@ export default function CreateForm(props: FormProps) {
       <Box
         borderWidth='1px'
         rounded='lg'
-        maxWidth={800}
+        maxWidth={900}
         p={6}
         m='40px auto'
         as='form'

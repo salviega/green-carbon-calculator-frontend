@@ -59,11 +59,16 @@ export function firebaseApi() {
   const createProject = async (project: Project) => {
     return await addDoc(projectsCollectionRef, project);
   };
-
+  const updateProject = async (project: any) => {
+    const userDoc = doc(database, "projects", project.id);
+    await updateDoc(userDoc, project);
+    console.log("item updated");
+  };
   return {
     createProject,
     getProject,
     getProjectById, 
-    getProjectsByOwnerAddress
+    getProjectsByOwnerAddress,
+    updateProject
   };
 }

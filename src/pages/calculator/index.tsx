@@ -4,14 +4,14 @@ import { getAccount } from '@wagmi/core'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
 import {
-  Progress,
-  Box,
-  ButtonGroup,
-  Button,
-  Flex,
-  useToast,
-  Heading,
-  Text
+	Progress,
+	Box,
+	ButtonGroup,
+	Button,
+	Flex,
+	useToast,
+	Heading,
+	Text
 } from '@chakra-ui/react'
 import { Contract, ethers } from 'ethers'
 import FootprintContractJson from '../../assets/contracts/Footprint.json'
@@ -28,10 +28,14 @@ import ResultsChart from '../../components/charts/ResultsChart'
 import { EmissionDetails } from '../../models/emission-details.model'
 import { CertificateDetails } from '../../models/certificate-details.model'
 import CreateForm from '../create'
-export default function Calculator() {
+interface CalculatorProps {
+	isInternal?: boolean
+	onCreateEvent?: (event: EventDetails, results: EmissionDetails) => Promise<void>
+}
+export default function Calculator(props: CalculatorProps) {
 	const account = getAccount()
 	const toast = useToast()
-	const router = useRouter();
+	const router = useRouter()
 	const stepNumber = 6
 	let form6info: Form6Input
 	const form1Ref = useRef<Form1Ref>(null)
@@ -40,13 +44,13 @@ export default function Calculator() {
 	const form4Ref = useRef<Form4Ref>(null)
 	const form5Ref = useRef<Form5Ref>(null)
 	const form6Ref = useRef<Form6Ref>(null)
-	const [calculated, setCalculated] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [onCreate, setOnCreate] = useState(false);
-	const [results, setResults] = useState<EmissionDetails>(initValuesResults);
-	const [step, setStep] = useState(1);
-	const [progress, setProgress] = useState(100 / stepNumber);
-	const [formInfo, setFormInfo] = useState<EventDetails>(initFormInfo);
+	const [calculated, setCalculated] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [onCreate, setOnCreate] = useState(false)
+	const [results, setResults] = useState<EmissionDetails>(initValuesResults)
+	const [step, setStep] = useState(1)
+	const [progress, setProgress] = useState(100 / stepNumber)
+	const [formInfo, setFormInfo] = useState<EventDetails>(initFormInfo)
 	const onNext = () => {
 		if (step === 1 && form1Ref.current) {
 			form1Ref.current.validateAndSubmit(() => {
@@ -226,7 +230,7 @@ export default function Calculator() {
 				recycling: form6info.recycling
 			}
 			//Rewrites the event information into formInfo const
-			setFormInfo(body);
+			setFormInfo(body)
 			const headers = {
 				'Content-Type': 'application/json'
 			}
@@ -240,7 +244,7 @@ export default function Calculator() {
 				duration: 5000,
 				isClosable: true
 			})
-			showResults(response.data);
+			showResults(response.data)
 		} catch (error) {
 			console.log(error)
 			toast({
@@ -271,304 +275,219 @@ export default function Calculator() {
 		setProgress(100 / stepNumber)
 		setCalculated(false)
 	}
-	//TODO this must be done after create the project
-	const onCreateAsset = async () => {
-		if (!account.address) {
-			toast({
-				title: 'Error Searching User.',
-				description: 'Pleaase connect your wallet.',
-				status: 'warning',
-				duration: 5000,
-				isClosable: false
-			})
-			return
+	const onCreateEvent = async () => {
+		if(props.onCreateEvent){
+			props.onCreateEvent(formInfo, results)
 		}
-		const url = '/api/co2storage'
-		const certificate: CertificateDetails = {
-			owner: account.address, // wallet
-			image:
-				'', // ipfs image
-			project_id: nanoid(),
-			project_name: 'My project name',
-			project_description: 'My project desc',
-			event_id: nanoid(), // consecutivo
-			event_name: formInfo.event_name,
-			event_description: formInfo.event_description,
-			event_duration: formInfo.event_duration,
-			event_co2: results,
-			country: formInfo.country,
-			participants: formInfo.participants,
-			employees: formInfo.employees,
-			heated_area: formInfo.heated_area,
-			air_conditioned_area: formInfo.air_conditioned_area,
-			number_of_people_arriving_by_car:
-				formInfo.number_of_people_arriving_by_car,
-			average_distance_traveled_by_car:
-				formInfo.average_distance_traveled_by_car,
-			number_of_people_traveling_by_public_transport:
-				formInfo.number_of_people_traveling_by_public_transport,
-			short_haul_flights: formInfo.short_haul_flights,
-			medium_haul_flights: formInfo.medium_haul_flights,
-			long_haul_flights: formInfo.long_haul_flights,
-			percentage_business_class: formInfo.percentage_business_class,
-			over_night_stay_three_stars: formInfo.over_night_stay_three_stars,
-			over_night_stay_four_stars: formInfo.over_night_stay_four_stars,
-			over_night_stay_five_stars: formInfo.over_night_stay_five_stars,
-			meal_meat_amount: formInfo.meal_meat_amount,
-			meal_vegetarian_amount: formInfo.meal_vegetarian_amount,
-			snacks_amount: formInfo.snacks_amount,
-			soda_liters: formInfo.soda_liters,
-			coffee_cups: formInfo.coffee_cups,
-			tea_cups: formInfo.tea_cups,
-			wine_liters: formInfo.wine_liters,
-			beer_liters: formInfo.beer_liters,
-			spirits_liters: formInfo.spirits_liters,
-			power_consumption: formInfo.power_consumption,
-			printed_matter: formInfo.printed_matter,
-			plastics: formInfo.plastics,
-			recyclable_material: formInfo.recyclable_material,
-			plant_based_materials: formInfo.plant_based_materials,
-			event_stand_area: formInfo.event_stand_area,
-			transported_weight: formInfo.transported_weight,
-			transported_distance: formInfo.transported_distance,
-			garbage: formInfo.garbage,
-			recycling: formInfo.recycling
-		}
-		const body = {
-			type: 'createAsset',
-			event: certificate
-		}
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(body)
-			})
+	}
+	if (onCreate) {
+		return <CreateForm eventData={formInfo} results={results} />
+	}
 
-      const data = await response.json()
-
-      if (response.ok) {
-        console.log('Asset creado:', data)
-
-        const CO2Total = data.event_co2.co2_amount
-        const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
-
-        //TODO send this to smart contract
-
-        const ethereum = (window as any).ethereum
-
-        const web3Provider: ethers.providers.Web3Provider =
-          new ethers.providers.Web3Provider(ethereum)
-        await web3Provider.send('eth_requestAccounts', [])
-        const web3Signer: ethers.providers.JsonRpcSigner =
-          web3Provider.getSigner()
-
-				const contract = new Contract(
-					FootprintContractJson.address,
-					FootprintContractJson.abi,
-					web3Signer
-				) as Footprint
-				const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(CO2Total, IPFSURL) // Debe pasar CO2Total a la 18
-				//await mintTx.wait(1)
-				//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
-
-        return data
-      } else {
-        console.error('Error al crear template:', data.message)
-        throw new Error(data.message)
-      }
-    } catch (error) {
-      console.error('Error en la petición:', error)
-    }
-  }
-
-  if (onCreate) {
-    return (
-      <CreateForm eventData={formInfo} results={results} />
-    )
-  }
-
-  return !calculated ? (
-    <div>
-      <Box
-        borderWidth='1px'
-        rounded='lg'
-        maxWidth={800}
-        p={6}
-        m='40px auto'
-        as='form'
-      >
-        <Progress
-          hasStripe
-          value={progress}
-          mb='5%'
-          isAnimated
-          borderRadius="lg"
-        ></Progress>
-        {step === 1 ? (
-          <Form1 ref={form1Ref} onValidationComplete={onSetInfoForm1} />
-        ) : step === 2 ? (
-          <Form2 ref={form2Ref} onValidationComplete={onSetInfoForm2} />
-        ) : step === 3 ? (
-          <Form3 ref={form3Ref} onValidationComplete={onSetInfoForm3} />
-        ) : step === 4 ? (
-          <Form4 ref={form4Ref} onValidationComplete={onSetInfoForm4} />
-        ) : step === 5 ? (
-          <Form5 ref={form5Ref} onValidationComplete={onSetInfoForm5} />
-        ) : (
-          <Form6
-            ref={form6Ref}
-            onValidationComplete={onSetInfoForm6}
-            loading={loading}
-          />
-        )}
-        <ButtonGroup mt='5%' w='100%' justifyContent="flex-end">
-          <Button
-            onClick={() => {
-              setStep(step - 1)
-              setProgress(progress - 100 / stepNumber)
-            }}
-            isDisabled={step === 1}
-            w='7rem'
-            mr='5%'
-            isLoading={loading}
-          >
-            Back
-          </Button>
-          {step !== stepNumber ? (
-            <Button
-              w='7rem'
-              isDisabled={step === stepNumber}
-              onClick={onNext}
-              variant='primary'
-              isLoading={loading}
-            >
-              Next
-            </Button>
-          ) : null}
-          {step === stepNumber ? (
-            <Button
-              w='7rem'
-              variant='darkie'
-              onClick={onNext}
-              isLoading={loading}
-            >
-              Calculate
-            </Button>
-          ) : null}
-        </ButtonGroup>
-      </Box>
-    </div>
-  ) : (
-    <div>
-      <Box
-        borderWidth='1px'
-        rounded='lg'
-        maxWidth={800}
-        p={6}
-        m='40px auto'
-        as='form'
-      >
-        <Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='xl' textAlign='center' mb='2%'>
-          My carbon footprint
-        </Heading>
-        <Heading w='100%' textColor="gray.600" fontWeight='medium' fontSize='3xl' textAlign='center' mb='2%'>
-          {formInfo.event_name}
-        </Heading>
-        <ResultsChart
-          co2_amount={results.co2_amount}
-          sections={results.sections}
-        />
-        <Flex
-          flexDirection='column'
-          alignItems='center'
-          justifyContent='center'
-          mt={2}
-        >
-        </Flex>
-        <ButtonGroup mt='5%' w='100%' justifyContent='flex-end'>
-          <Button
-            onClick={() => {
-              router.push('/');
-            }}
-            w='7rem'
-            isLoading={loading}
-          >
-            Go Home
-          </Button>
-          <Button
-            w='12rem'
-            onClick={onRecalculate}
-            variant='primary'
-            isLoading={loading}
-          >
-            ↺ Re-Calculate
-          </Button>
-          <Button
-            isLoading={loading}
-            w='12rem'
-            variant='darkie'
-            onClick={() => setOnCreate(true)}
-          >
-            Create Project
-          </Button>
-        </ButtonGroup>
-      </Box>
-    </div>
-  )
+	return !calculated ? (
+		<div>
+			<Box
+				borderWidth='1px'
+				rounded='lg'
+				maxWidth={900}
+				p={6}
+				m='40px auto'
+				as='form'
+			>
+				<Progress
+					hasStripe
+					value={progress}
+					mb='5%'
+					isAnimated
+					borderRadius='lg'
+				></Progress>
+				{step === 1 ? (
+					<Form1 ref={form1Ref} onValidationComplete={onSetInfoForm1} />
+				) : step === 2 ? (
+					<Form2 ref={form2Ref} onValidationComplete={onSetInfoForm2} />
+				) : step === 3 ? (
+					<Form3 ref={form3Ref} onValidationComplete={onSetInfoForm3} />
+				) : step === 4 ? (
+					<Form4 ref={form4Ref} onValidationComplete={onSetInfoForm4} />
+				) : step === 5 ? (
+					<Form5 ref={form5Ref} onValidationComplete={onSetInfoForm5} />
+				) : (
+					<Form6
+						ref={form6Ref}
+						onValidationComplete={onSetInfoForm6}
+						loading={loading}
+					/>
+				)}
+				<ButtonGroup mt='5%' w='100%' justifyContent='flex-end'>
+					<Button
+						onClick={() => {
+							setStep(step - 1)
+							setProgress(progress - 100 / stepNumber)
+						}}
+						isDisabled={step === 1}
+						w='7rem'
+						mr='5%'
+						isLoading={loading}
+					>
+						Back
+					</Button>
+					{step !== stepNumber ? (
+						<Button
+							w='7rem'
+							isDisabled={step === stepNumber}
+							onClick={onNext}
+							variant='primary'
+							isLoading={loading}
+						>
+							Next
+						</Button>
+					) : null}
+					{step === stepNumber ? (
+						<Button
+							w='7rem'
+							variant='darkie'
+							onClick={onNext}
+							isLoading={loading}
+						>
+							Calculate
+						</Button>
+					) : null}
+				</ButtonGroup>
+			</Box>
+		</div>
+	) : (
+		<div>
+			<Box
+				borderWidth='1px'
+				rounded='lg'
+				maxWidth={800}
+				p={6}
+				m='40px auto'
+				as='form'
+			>
+				<Heading
+					w='100%'
+					textColor='gray.600'
+					fontWeight='medium'
+					fontSize='xl'
+					textAlign='center'
+					mb='2%'
+				>
+					My carbon footprint
+				</Heading>
+				<Heading
+					w='100%'
+					textColor='gray.600'
+					fontWeight='medium'
+					fontSize='3xl'
+					textAlign='center'
+					mb='2%'
+				>
+					{formInfo.event_name}
+				</Heading>
+				<ResultsChart
+					co2_amount={results.co2_amount}
+					sections={results.sections}
+				/>
+				<Flex
+					flexDirection='column'
+					alignItems='center'
+					justifyContent='center'
+					mt={2}
+				></Flex>
+				<ButtonGroup mt='5%' w='100%' justifyContent='flex-end'>
+					{!props.isInternal &&
+					<Button
+						onClick={() => {
+							router.push('/')
+						}}
+						w='7rem'
+						isLoading={loading}
+					>
+						Go Home
+					</Button>}
+					<Button
+						w='12rem'
+						onClick={onRecalculate}
+						variant='primary'
+						isLoading={loading}
+					>
+						↺ Re-Calculate
+					</Button>
+					{props.isInternal ? (
+						<Button
+							isLoading={loading}
+							w='12rem'
+							variant='darkie'
+							onClick={onCreateEvent}
+						>
+							Create Event
+						</Button>
+					) : (
+						<Button
+							isLoading={loading}
+							w='12rem'
+							variant='darkie'
+							onClick={() => setOnCreate(true)}
+						>
+							Create Project
+						</Button>
+					)}
+				</ButtonGroup>
+			</Box>
+		</div>
+	)
 }
 
 export const initValuesResults: EmissionDetails = {
-  co2_amount: 0,
-  sections: {
-    Mobility: 0,
-    Accommodation: 0,
-    Catering: 0,
-    Energy: 0,
-    Materials: 0,
-    Transport: 0,
-    Waste: 0
-  }
+	co2_amount: 0,
+	sections: {
+		Mobility: 0,
+		Accommodation: 0,
+		Catering: 0,
+		Energy: 0,
+		Materials: 0,
+		Transport: 0,
+		Waste: 0
+	}
 }
 export const initFormInfo: EventDetails = {
-  event_name: '',
-  event_description: '',
-  event_duration: 0,
-  country: '',
-  participants: 0,
-  employees: 0,
-  heated_area: 0,
-  air_conditioned_area: 0,
-  number_of_people_arriving_by_car: 0,
-  average_distance_traveled_by_car: '',
-  number_of_people_traveling_by_public_transport: 0,
-  average_distance_traveled_public: 0,
-  short_haul_flights: 0,
-  medium_haul_flights: 0,
-  long_haul_flights: 0,
-  percentage_business_class: '0',
-  over_night_stay_three_stars: '0',
-  over_night_stay_four_stars: '0',
-  over_night_stay_five_stars: '0',
-  meal_meat_amount: '0',
-  meal_vegetarian_amount: '0',
-  snacks_amount: '0',
-  soda_liters: '0',
-  coffee_cups: '0',
-  tea_cups: '0',
-  wine_liters: '0',
-  beer_liters: '0',
-  spirits_liters: '0',
-  power_consumption: '0',
-  printed_matter: '0',
-  plastics: '0',
-  recyclable_material: '0',
-  plant_based_materials: '0',
-  event_stand_area: '0',
-  transported_weight: '0',
-  transported_distance: '0',
-  garbage: '0',
-  recycling: '0'
+	event_name: '',
+	event_description: '',
+	event_duration: 0,
+	country: '',
+	participants: 0,
+	employees: 0,
+	heated_area: 0,
+	air_conditioned_area: 0,
+	number_of_people_arriving_by_car: 0,
+	average_distance_traveled_by_car: '',
+	number_of_people_traveling_by_public_transport: 0,
+	average_distance_traveled_public: 0,
+	short_haul_flights: 0,
+	medium_haul_flights: 0,
+	long_haul_flights: 0,
+	percentage_business_class: '0',
+	over_night_stay_three_stars: '0',
+	over_night_stay_four_stars: '0',
+	over_night_stay_five_stars: '0',
+	meal_meat_amount: '0',
+	meal_vegetarian_amount: '0',
+	snacks_amount: '0',
+	soda_liters: '0',
+	coffee_cups: '0',
+	tea_cups: '0',
+	wine_liters: '0',
+	beer_liters: '0',
+	spirits_liters: '0',
+	power_consumption: '0',
+	printed_matter: '0',
+	plastics: '0',
+	recyclable_material: '0',
+	plant_based_materials: '0',
+	event_stand_area: '0',
+	transported_weight: '0',
+	transported_distance: '0',
+	garbage: '0',
+	recycling: '0'
 }

@@ -30,7 +30,7 @@ const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : Emiss
 			}
 		},
 		legend: {
-			offsetY: 2,
+			offsetY: 0,
 			position: 'bottom',
 			horizontalAlign: 'left',
 			labels: {
@@ -71,7 +71,7 @@ const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : Emiss
 
 	return (
 		<Box>
-			<Chart options={options} series={series} height='400' type='donut' />
+			<Chart options={options} series={series} type='donut' />
 		</Box>
 	)
 }
