@@ -30,23 +30,23 @@ const ProyectCard = ({ project }: ProjectCardInput) => {
 						h={'250px'}
 						backgroundImage={`url(${project.banner})`}
 						backgroundSize={'cover'}
-						borderRadius='lg'
+						borderRadius='2xl'
 						pos='relative'
 					>
-						<HStack pos='absolute' bottom='2' left='2'>
+						<HStack pos='absolute' bottom='-7' right='4'>
 							<Avatar name='T P' src={`${project.logo}`} size='lg' />
 						</HStack>
 					</Flex>
 				</CardHeader>
-				<CardBody>
+				<CardBody minH="24" py={0}>
 					<Stack align='start' w='full'>
 						<Text fontWeight={700} lineHeight={1.2} fontSize='xl'>
 							{project.name}{' '}
 						</Text>
-						<Text textColor='gray.500'>{project.description}</Text>
+						<Text textColor='gray.500' noOfLines={2}>{project.description}</Text>
 					</Stack>
 				</CardBody>
-				<CardFooter justify='left' flexWrap='wrap'>
+				<CardFooter justify='left' flexWrap='wrap' pt={1}>
 					<Flex justifyContent='space-between' width='100%'>
 						<VStack gap='1'>
 							<Text fontSize='xs' textColor='gray.400' fontWeight='semibold'>
