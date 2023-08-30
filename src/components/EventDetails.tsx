@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Contract, ethers } from 'ethers'
 import {
-  Button,
-  Text,
-  VStack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Flex,
-  Box,
-  HStack,
-  Link,
-  Spacer,
-  Image,
-  Spinner,
-  useToast
+	Button,
+	Text,
+	VStack,
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalCloseButton,
+	ModalBody,
+	ModalFooter,
+	Flex,
+	Box,
+	HStack,
+	Link,
+	Spacer,
+	Image,
+	Spinner,
+	useToast
 } from '@chakra-ui/react'
 import ResultsChart from './charts/ResultsChart'
 import { EmissionDetails } from '../models/emission-details.model'
@@ -30,35 +30,36 @@ import FootprintContractJson from '../assets/contracts/Footprint.json'
 import { Footprint } from '../../@types/typechain-types/Footprint'
 import { firebaseApi } from '../../services/firebaseApi'
 interface EventDetailProps {
-  event: Event
-  owner: boolean
-  projectInfo: Project
+	event: Event
+	owner: boolean
+	projectInfo: Project
 }
 export default function EventDetails({
-  event,
-  owner,
-  projectInfo,
+	event,
+	owner,
+	projectInfo
 }: EventDetailProps) {
-  const { updateProject } = firebaseApi()
-  const account = getAccount()
-  const toast = useToast()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [finished, setFinished] = useState<boolean>(false)
-  const [certificate, setCertificate] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
-  const [purchase, setPurchase] = useState<boolean>(false)
+	const { updateProject } = firebaseApi()
+	const account = getAccount()
+	const toast = useToast()
+	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [finished, setFinished] = useState<boolean>(false)
+	const [certificate, setCertificate] = useState<boolean>(false)
+	const [loading, setLoading] = useState<boolean>(false)
+	const [purchase, setPurchase] = useState<boolean>(false)
 	const [purchased, setPurchased] = useState<boolean>(false)
-  const [metadata, setMetadata] = useState<any | null>(null)
-  const [certificateInfo, setCertificateInfo] = useState<CertificateDetails | null>(null)
-  const [titlePurchase, setTitlePurchase] = useState<string>(
-    'Preparing Certificate'
-  )
-  const [bodyPurchase, setBodyPurchase] = useState<string>(
-    'Preparing certificate metadata.. please wait.'
-  )
-  const onClose = () => {
-    setIsOpen(false)
-  }
+	const [metadata, setMetadata] = useState<any | null>(null)
+	const [certificateInfo, setCertificateInfo] =
+		useState<CertificateDetails | null>(null)
+	const [titlePurchase, setTitlePurchase] = useState<string>(
+		'Preparing Certificate'
+	)
+	const [bodyPurchase, setBodyPurchase] = useState<string>(
+		'Preparing certificate metadata.. please wait.'
+	)
+	const onClose = () => {
+		setIsOpen(false)
+	}
 
 	const onStartPurchase = async () => {
 		try {
@@ -71,7 +72,8 @@ export default function EventDetails({
 			const url = '/api/co2storage'
 			const certificate: CertificateDetails = {
 				owner: projectInfo?.ownerWallet ?? (account.address as string), // wallet
-				image: 'https://emerald-personal-constrictor-170.mypinata.cloud/ipfs/QmV6aG6rHjfsUcYur1McNzze2xZ2vKsReSpAkBpJV19ejs', //TODO include ipfs image
+				image:
+					'https://emerald-personal-constrictor-170.mypinata.cloud/ipfs/QmV6aG6rHjfsUcYur1McNzze2xZ2vKsReSpAkBpJV19ejs', //TODO include ipfs image
 				project_id: projectInfo.project_id,
 				project_name: projectInfo.name,
 				project_description: projectInfo.description,
@@ -135,7 +137,7 @@ export default function EventDetails({
 				body: JSON.stringify(body)
 			})
 
-      const data = await response.json()
+			const data = await response.json()
 
 			if (response.ok) {
 				console.log('Asset created:', data)
@@ -166,12 +168,12 @@ export default function EventDetails({
 		}
 	}
 	const onPay = async () => {
-		console.log(metadata);
-		console.log(metadata.data.result.assetBlock.cid);
+		console.log(metadata)
+		console.log(metadata.data.result.assetBlock.cid)
 		setPurchased(true)
 		setTitlePurchase('Interacting with smart contract ...')
 		try {
-			if(!certificateInfo) {
+			if (!certificateInfo) {
 				setLoading(false)
 				setPurchase(false)
 				setPurchased(false)
@@ -186,16 +188,16 @@ export default function EventDetails({
 			}
 			// const CO2Total = certificateInfo?.event_co2.co2_amount
 			const CO2Total = 4
-			const CO2TotalInWei = ethers.utils.parseUnits(CO2Total.toString(), 18);
+			const CO2TotalInWei = ethers.utils.parseUnits(CO2Total.toString(), 18)
 			const IPFSURL = `https://ipfs.io/ipfs/${metadata.data.result.assetBlock.cid}`
 
-      const ethereum = (window as any).ethereum
+			const ethereum = (window as any).ethereum
 
-      const web3Provider: ethers.providers.Web3Provider =
-        new ethers.providers.Web3Provider(ethereum)
-      await web3Provider.send('eth_requestAccounts', [])
-      const web3Signer: ethers.providers.JsonRpcSigner =
-        web3Provider.getSigner()
+			const web3Provider: ethers.providers.Web3Provider =
+				new ethers.providers.Web3Provider(ethereum)
+			await web3Provider.send('eth_requestAccounts', [])
+			const web3Signer: ethers.providers.JsonRpcSigner =
+				web3Provider.getSigner()
 
 			const contract = new Contract(
 				FootprintContractJson.address,
@@ -204,16 +206,16 @@ export default function EventDetails({
 			) as Footprint
 			const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(
 				CO2TotalInWei,
-				IPFSURL,
+				IPFSURL
 			) // Debe pasar CO2Total a la 18
 			console.log(mintNetZeroCertificateTX)
 			contract.on('Minted', (to, tokenId, uri, event) => {
-				console.log("Minted Event:");
-				console.log("To:", to);
-				console.log("Token ID:", tokenId.toString());
-				console.log("URI:", uri);
+				console.log('Minted Event:')
+				console.log('To:', to)
+				console.log('Token ID:', tokenId.toString())
+				console.log('URI:', uri)
 				onEventDone(tokenId.toString(), mintNetZeroCertificateTX.hash)
-			});
+			})
 		} catch (error) {
 			console.log(error)
 			setLoading(false)
@@ -229,22 +231,28 @@ export default function EventDetails({
 		}
 	}
 	const onEventDone = async (nftId: string, hash: string) => {
-			let eventItem = projectInfo.events.find(_event => _event.event_id === event.event_id)
-			if(eventItem){
-				console.log('event found')
-				eventItem.isCertified = true
-				eventItem.creationTx = hash
-				eventItem.nftId = nftId
-			} else {
-				console.log('not encountered the event')
-				projectInfo.events.push(event)
-				projectInfo.events[projectInfo.events.length - 1].isCertified = true;
-				projectInfo.events[projectInfo.events.length - 1].creationTx = hash;
-				projectInfo.events[projectInfo.events.length - 1].nftId = nftId;
-			}
-			const update = await updateProject(projectInfo)
-			console.log('event updated')
-			return;
+		let eventItem = projectInfo.events.find(
+			_event => _event.event_id === event.event_id
+		)
+		if (eventItem) {
+			console.log('event found')
+			eventItem.isCertified = true
+			eventItem.creationTx = hash
+			eventItem.nftId = nftId
+			projectInfo.totalToraise += eventItem.emissionDetails.co2_amount * 10
+		} else {
+			console.log('not encountered the event')
+			projectInfo.events.push(event)
+			projectInfo.events[projectInfo.events.length - 1].isCertified = true
+			projectInfo.events[projectInfo.events.length - 1].creationTx = hash
+			projectInfo.events[projectInfo.events.length - 1].nftId = nftId
+			projectInfo.totalToraise += event.emissionDetails.co2_amount * 10
+		}
+		if(certificateInfo) projectInfo.certificates.push(certificateInfo)
+		const update = await updateProject(projectInfo)
+		console.log('event updated')
+		setPurchased(false)
+		setLoading(false)
 	}
 	const ModalInfo = () => {
 		return (
@@ -258,11 +266,20 @@ export default function EventDetails({
 						<ModalHeader>Completed</ModalHeader>
 						<ModalCloseButton />
 						<ModalBody>
-							<Text>Please wait for some seconds for the transaction to be confirmed</Text>
-							<Text>You will be able to see your certificate on the dashboard once complete</Text>
+							<Text>
+								Please wait for some seconds for the transaction to be confirmed
+							</Text>
+							<Text>
+								You will be able to see your certificate on the dashboard once
+								complete
+							</Text>
 						</ModalBody>
 						<ModalFooter>
-							<Button w='7rem' variant='primary' onClick={() => setFinished(false)}>
+							<Button
+								w='7rem'
+								variant='primary'
+								onClick={() => setFinished(false)}
+							>
 								Close
 							</Button>
 						</ModalFooter>
@@ -271,47 +288,80 @@ export default function EventDetails({
 			</>
 		)
 	}
-  const ModalNFT = () => {
-    return (
-      <>
-        <Modal isCentered isOpen={certificate} onClose={() => setCertificate(false)}>
-          <ModalOverlay
-            bg='blackAlpha.300'
-            backdropFilter='blur(10px) hue-rotate(90deg)'
-          />
-          <ModalContent>
-            <ModalHeader>
-              <ModalCloseButton />
-            </ModalHeader>
+	const ModalNFT = () => {
+		return (
+			<>
+				<Modal
+					isCentered
+					isOpen={certificate}
+					onClose={() => setCertificate(false)}
+				>
+					<ModalOverlay
+						bg='blackAlpha.300'
+						backdropFilter='blur(10px) hue-rotate(90deg)'
+					/>
+					<ModalContent>
+						<ModalHeader>
+							<ModalCloseButton />
+						</ModalHeader>
 
-            <ModalBody>
-              <Image
-                objectFit='cover'
-                src='/Images/nft.jpg'
-                alt='Chakra UI'
-                borderRadius="lg"
-              />
-              <Flex align="start" mt='4' justify='center' flexDirection='column' width='100%' >
-                <Flex justify='space-between' align='center' width='100%'>
-                  <Text textColor="gray.600" fontWeight="bold" fontSize="2xl">    {event.name}</Text>
-                  <Text textColor="gray.500" fontWeight="semibold" fontSize="3xl">{event.emissionDetails.co2_amount} CO2</Text>
-                </Flex>
-                <Text textColor="gray.500" fontSize="md">For a greener tomorrow! This NFT represents a tokenized carbon offset and stands as your pledge towards the environment. </Text>
-                <Flex width="100%" justify='flex-end'>
-                <Link mt='2' fontWeight='semibold' textColor="brand.dark" href='https://chakra-ui.com' isExternal> View on Etherscan</Link>
-                </Flex>
-              </Flex>
-            </ModalBody>
-            <ModalFooter>
-              <Button w='7rem' onClick={() => setCertificate(false)}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    )
-  }
+						<ModalBody>
+							<Image
+								objectFit='cover'
+								src='/Images/nft.jpg'
+								alt='Chakra UI'
+								borderRadius='lg'
+							/>
+							<Flex
+								align='start'
+								mt='4'
+								justify='center'
+								flexDirection='column'
+								width='100%'
+							>
+								<Flex justify='space-between' align='center' width='100%'>
+									<Text textColor='gray.600' fontWeight='bold' fontSize='2xl'>
+										{' '}
+										{event.name}
+									</Text>
+									<Text
+										textColor='gray.500'
+										fontWeight='semibold'
+										fontSize='3xl'
+									>
+										{event.emissionDetails.co2_amount} CO2
+									</Text>
+								</Flex>
+								<Text textColor='gray.500' fontSize='md'>
+									For a greener tomorrow! This NFT represents a tokenized carbon
+									offset and stands as your pledge towards the environment.{' '}
+								</Text>
+								<Flex width='100%' justify='flex-end'>
+									<Link
+										mt='2'
+										fontWeight='semibold'
+										textColor='brand.dark'
+										href={`https://explorer.celo.org/alfajores/tx/${event.creationTx}`}
+										isExternal
+										target="_blank"
+   									rel="noopener noreferrer"
+									>
+										{' '}
+										View on Etherscan
+									</Link>
+								</Flex>
+							</Flex>
+						</ModalBody>
+						<ModalFooter>
+							<Button w='7rem' onClick={() => setCertificate(false)}>
+								Close
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</Modal>
+			</>
+		)
+	}
 	const ModalPurchase = () => {
 		return (
 			<>
@@ -346,70 +396,74 @@ export default function EventDetails({
 				<Text fontSize='lg' textColor='gray.500' fontWeight='medium'>
 					{titlePurchase}
 				</Text>
-				{purchase && (
+				{purchase && !purchased && (
 					<>
 						<Text fontSize='m' textColor='gray.500' fontWeight='medium' mt='5%'>
 							{'Please click on pay button to execute the transaction'}
 						</Text>
-						{!purchased && <Button variant='primary' size='sm' mt='2%' onClick={onPay}>
-							Purchase certificate
-						</Button>}
+						{!purchased && (
+							<Button variant='primary' size='sm' mt='2%' onClick={onPay}>
+								Purchase certificate
+							</Button>
+						)}
 					</>
 				)}
 			</Flex>
 		)
 	}
 
-  return (
-    <>
-      <Flex align='start' flexDirection={{ base: 'column', md: 'row' }}>
-        <VStack align='start' width={{ base: '100%', md: '40%' }}>
-          <Text fontWeight="semibold" fontSize="lg" textColor="gray.700" pb='2'>
-            {' '}
-            {event.name}
-          </Text>
-          <Text textColor="gray.500"> {event.description}</Text>
-          {event.isCertified && (
-            <Button variant='primary' size='sm'
-              onClick={() => setCertificate(true)}>
-              Show Certificate
-            </Button>
-          )}
-          {owner && !event.isCertified && (
-            <Button
-              variant='primary'
-              size='sm'
-              onClick={() => setIsOpen(true)}
-              mt="6"
-            >
-              Purchase Certificate
-            </Button>
-          )}
-        </VStack>
-        <VStack width={{ base: '100%', md: '60%' }}>
-          <ResultsChart
-            co2_amount={event.emissionDetails.co2_amount}
-            sections={event.emissionDetails.sections}
-          />
-        </VStack>
-      </Flex>
-      {isOpen && <ModalPurchase />}
-      {finished && <ModalInfo />}
-      {certificate && <ModalNFT />}
-
-    </>
-  )
+	return (
+		<>
+			<Flex align='start' flexDirection={{ base: 'column', md: 'row' }}>
+				<VStack align='start' width={{ base: '100%', md: '40%' }}>
+					<Text fontWeight='semibold' fontSize='lg' textColor='gray.700' pb='2'>
+						{' '}
+						{event.name}
+					</Text>
+					<Text textColor='gray.500'> {event.description}</Text>
+					{event.isCertified && (
+						<Button
+							variant='primary'
+							size='sm'
+							onClick={() => setCertificate(true)}
+						>
+							Show Certificate
+						</Button>
+					)}
+					{owner && !event.isCertified && (
+						<Button
+							variant='primary'
+							size='sm'
+							onClick={() => setIsOpen(true)}
+							mt='6'
+						>
+							Purchase Certificate
+						</Button>
+					)}
+				</VStack>
+				<VStack width={{ base: '100%', md: '60%' }}>
+					<ResultsChart
+						co2_amount={event.emissionDetails.co2_amount}
+						sections={event.emissionDetails.sections}
+					/>
+				</VStack>
+			</Flex>
+			{isOpen && <ModalPurchase />}
+			{finished && <ModalInfo />}
+			{certificate && <ModalNFT />}
+		</>
+	)
 }
 
 const initValuesResults: EmissionDetails = {
-  co2_amount: 0,
-  sections: {
-    Mobility: 10,
-    Accommodation: 10,
-    Catering: 10,
-    Energy: 10,
-    Materials: 10,
-    Transport: 10,
-    Waste: 25
-  }
+	co2_amount: 0,
+	sections: {
+		Mobility: 10,
+		Accommodation: 10,
+		Catering: 10,
+		Energy: 10,
+		Materials: 10,
+		Transport: 10,
+		Waste: 25
+	}
 }
