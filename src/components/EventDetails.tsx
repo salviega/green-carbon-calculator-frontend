@@ -57,11 +57,6 @@ export default function EventDetails({
 
 	const onStartPurchase = async () => {
 		try {
-			projectInfo.country = 'Colombia'
-			const update = await updateProject(projectInfo)
-			console.log(update);
-			
-			return;
 			setIsOpen(false)
 			setLoading(true)
 			setTitlePurchase('Creating Metadata ...')
@@ -142,30 +137,6 @@ export default function EventDetails({
 				setMetadata(data)
 				setTitlePurchase('Purchasing ...')
 				setPurchase(true)
-				// const CO2Total = certificate.event_co2.co2_amount
-				// const IPFSURL = `https://ipfs.io/ipfs/${data.result.assetBlock.cid}`
-
-				// const ethereum = (window as any).ethereum
-
-				// const web3Provider: ethers.providers.Web3Provider =
-				// 	new ethers.providers.Web3Provider(ethereum)
-				// await web3Provider.send('eth_requestAccounts', [])
-				// const web3Signer: ethers.providers.JsonRpcSigner =
-				// 	web3Provider.getSigner()
-
-				// const contract = new Contract(
-				// 	FootprintContractJson.address,
-				// 	FootprintContractJson.abi,
-				// 	web3Signer
-				// ) as Footprint
-				// const mintNetZeroCertificateTX = await contract.mintNetZeroCertificate(
-				// 	CO2Total,
-				// 	IPFSURL
-				// ) // Debe pasar CO2Total a la 18
-				// console.log(mintNetZeroCertificateTX)
-				// setLoading(false)
-				// //await mintTx.wait(1)
-				// //mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
 			} else {
 				console.error('Error al crear template:', data.message)
 				setLoading(false)
@@ -234,10 +205,8 @@ export default function EventDetails({
 				console.log("To:", to);
 				console.log("Token ID:", tokenId.toString());
 				console.log("URI:", uri);
+				onEventDone(tokenId.toString(), mintNetZeroCertificateTX.hash)
 			});
-
-			//await mintTx.wait(1)
-			//mandar el total de co2 =>> certificate.event_co2.co2_amount, IPFSURL
 		} catch (error) {
 			console.log(error)
 			toast({
@@ -248,6 +217,24 @@ export default function EventDetails({
 				isClosable: false
 			})
 		}
+	}
+	const onEventDone = async (nftId: string, hash: string) => {
+			let eventItem = projectInfo.events.find(_event => _event.event_id === event.event_id)
+			if(eventItem){
+				console.log('event found')
+				eventItem.isCertified = true
+				eventItem.creationTx = hash
+				eventItem.nftId = nftId
+			} else {
+				console.log('not encountered the event')
+				projectInfo.events.push(event)
+				projectInfo.events[projectInfo.events.length - 1].isCertified = true;
+				projectInfo.events[projectInfo.events.length - 1].creationTx = hash;
+				projectInfo.events[projectInfo.events.length - 1].nftId = nftId;
+			}
+			const update = await updateProject(projectInfo)
+			console.log('event updated')
+			return;
 	}
 	const ModalInfo = () => {
 		return (
