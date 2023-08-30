@@ -41,6 +41,9 @@ export default function Explorer() {
 			console.log(error)
 		}
 	}
+
+  const number = data.CO2total; // Assuming data.CO2total is a number
+  const trimmedNumber = number.toString().slice(0, number.toString().indexOf('.') + 3);
 	return (
 		<>
 			<Hero />
@@ -76,7 +79,7 @@ export default function Explorer() {
 			>
 				<Flex flexDirection='column'>
 					<Image
-						src='/Images/step1.png'
+						src='/images/step1.png'
 						width={200}
 						height={300}
 						mb='6'
@@ -112,7 +115,7 @@ export default function Explorer() {
 						credits available right on our platform.
 					</Text>
 					<Image
-						src='/Images/step2.png'
+						src='/images/step2.png'
 						width={300}
 						height={280}
 						alt='Picture of the author'
@@ -120,7 +123,7 @@ export default function Explorer() {
 				</Flex>
 				<Flex flexDirection='column'>
 					<Image
-						src='/Images/step3.png'
+						src='/images/step3.png'
 						width={400}
 						height={300}
 						alt='Picture of the author'
@@ -219,7 +222,7 @@ export default function Explorer() {
 								lineHeight='1'
 								textTransform='uppercase'
 							>
-								{data.CO2total}
+								{trimmedNumber}
 							</Text>
 							<Text
 								fontSize={{ base: 'xl', md: '2xl' }}
@@ -260,7 +263,7 @@ export default function Explorer() {
 				p='12'
 				align='start'
 				flexDirection='column'
-				backgroundImage={'/Images/cta.jpg'}
+				backgroundImage={'/images/cta.jpg'}
 				backgroundSize='cover'
 				backgroundPosition={'bottom right'}
 				mb='36'
