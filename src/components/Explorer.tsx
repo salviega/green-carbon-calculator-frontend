@@ -223,7 +223,6 @@ export default function Explorer() {
 					</VStack>
 				</GridItem>
 				<GridItem colSpan={1} alignSelf='center'>
-					{data && (
 						<VStack align='start' justify='center' gap='16'>
 							<VStack align='start'>
 								<Text
@@ -234,7 +233,7 @@ export default function Explorer() {
 									lineHeight='1'
 									textTransform='uppercase'
 								>
-									{data.CO2total}
+									{data?.CO2total ?? 0}
 								</Text>
 								<Text
 									fontSize={{ base: 'xl', md: '2xl' }}
@@ -254,7 +253,7 @@ export default function Explorer() {
 									lineHeight='1'
 									textTransform='uppercase'
 								>
-									{data.certifiedEventsTotal}
+									{data?.certifiedEventsTota ?? 0}
 								</Text>
 								<Text
 									fontSize={{ base: 'xl', md: '2xl' }}
@@ -266,7 +265,6 @@ export default function Explorer() {
 								</Text>
 							</VStack>
 						</VStack>
-					)}
 				</GridItem>
 			</SimpleGrid>
 			<Flex
