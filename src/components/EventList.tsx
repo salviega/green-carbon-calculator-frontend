@@ -47,14 +47,14 @@ export default function EventList({
 								</Text>
 							</VStack>
 						</HStack>
-							<Button
-								variant={(index !== eventIndex) ? 'outline' : 'darkie'}
-								size='sm'
-								mr='1%'
-								onClick={() => setIndex(index)}
-							>
-								View
-							</Button>
+						<Button
+							variant={index !== eventIndex ? 'outline' : 'darkie'}
+							size='sm'
+							mr='1%'
+							onClick={() => setIndex(index)}
+						>
+							View
+						</Button>
 					</HStack>
 				)
 			})}

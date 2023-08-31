@@ -10,7 +10,7 @@ export interface Project {
 	responsableName: string
 	logo?: string //firebase storage url
 	banner?: string //firebase storage url
-	country : string
+	country: string
 	events: Event[]
 	raisedTotal: number
 	socialNetwors: SocialMedia

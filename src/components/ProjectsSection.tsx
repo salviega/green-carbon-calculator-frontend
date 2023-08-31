@@ -24,25 +24,24 @@ const ProjectsSection = (props: ProjectsSectionProps) => {
 	const readProjects = async () => {
 		console.log('read projects')
 		try {
-      switch (props.type) {
-        case SectionType.MY_PROJECTS:
-          if (address) {
-            const projects = await getProjectsByOwnerAddress(address)
-            console.log(projects)
-            setProjects(projects)
-            setLoading(false)
-          }
-          break;
-        case SectionType.GENERAL:
-            const projects = await getAllProjects()
-            console.log(projects)
-            setProjects(projects)
-            setLoading(false)
-          break;
-        default:
-          break;
-      }
-			
+			switch (props.type) {
+				case SectionType.MY_PROJECTS:
+					if (address) {
+						const projects = await getProjectsByOwnerAddress(address)
+						console.log(projects)
+						setProjects(projects)
+						setLoading(false)
+					}
+					break
+				case SectionType.GENERAL:
+					const projects = await getAllProjects()
+					console.log(projects)
+					setProjects(projects)
+					setLoading(false)
+					break
+				default:
+					break
+			}
 		} catch (error) {
 			console.log(error)
 			console.log('error reading projects')
@@ -61,8 +60,8 @@ const ProjectsSection = (props: ProjectsSectionProps) => {
 	return (
 		<SimpleGrid columns={[1, 2, 3]} spacing={5}>
 			{projects &&
-				projects.map((project : Project) => {
-					return <ProyectCard key={project.project_id} project={project}/>
+				projects.map((project: Project) => {
+					return <ProyectCard key={project.project_id} project={project} />
 				})}
 		</SimpleGrid>
 	)

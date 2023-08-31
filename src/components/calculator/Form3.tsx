@@ -60,7 +60,7 @@ const Form3: React.ForwardRefRenderFunction<Form3Ref, Form3Props> = (
 						value={inputValues.overnight2_3Stars}
 						textColor='gray.600'
 						focusBorderColor='brand.dark'
-            onChange={handleInputChange}
+						onChange={handleInputChange}
 					/>
 				</FormControl>
 				<FormControl mr='2%'>
@@ -80,7 +80,7 @@ const Form3: React.ForwardRefRenderFunction<Form3Ref, Form3Props> = (
 						value={inputValues.overnight4Stars}
 						textColor='gray.600'
 						focusBorderColor='brand.dark'
-            onChange={handleInputChange}
+						onChange={handleInputChange}
 					/>
 				</FormControl>
 			</Flex>
@@ -102,7 +102,7 @@ const Form3: React.ForwardRefRenderFunction<Form3Ref, Form3Props> = (
 						value={inputValues.overnight5Stars}
 						textColor='gray.600'
 						focusBorderColor='brand.dark'
-            onChange={handleInputChange}
+						onChange={handleInputChange}
 					/>
 				</FormControl>
 				<FormControl mr='2%'></FormControl>

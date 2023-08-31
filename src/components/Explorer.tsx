@@ -207,50 +207,50 @@ export default function Explorer() {
 					</VStack>
 				</GridItem>
 				<GridItem colSpan={1} alignSelf='center'>
-						{data &&
-
-					<VStack align='start' justify='center' gap='16'>
-            <VStack align='start'>
-							<Text
-								as='h2'
-								fontSize='6xl'
-								fontWeight='bold'
-								textColor='brand.newBlack'
-								lineHeight='1'
-								textTransform='uppercase'
-							>
-								{data.CO2total}
-							</Text>
-							<Text
-								fontSize={{ base: 'xl', md: '2xl' }}
-								fontWeight='medium'
-								textColor='brand.newBlack'
-							>
-								{' '}
-								CARBON TONS
-							</Text>
+					{data && (
+						<VStack align='start' justify='center' gap='16'>
+							<VStack align='start'>
+								<Text
+									as='h2'
+									fontSize='6xl'
+									fontWeight='bold'
+									textColor='brand.newBlack'
+									lineHeight='1'
+									textTransform='uppercase'
+								>
+									{data.CO2total}
+								</Text>
+								<Text
+									fontSize={{ base: 'xl', md: '2xl' }}
+									fontWeight='medium'
+									textColor='brand.newBlack'
+								>
+									{' '}
+									CARBON TONS
+								</Text>
+							</VStack>
+							<VStack align='start'>
+								<Text
+									as='h2'
+									fontSize='6xl'
+									fontWeight='bold'
+									textColor='brand.newBlack'
+									lineHeight='1'
+									textTransform='uppercase'
+								>
+									{data.certifiedEventsTotal}
+								</Text>
+								<Text
+									fontSize={{ base: 'xl', md: '2xl' }}
+									fontWeight='medium'
+									textColor='brand.newBlack'
+								>
+									{' '}
+									PROJECTS RAISED FUNDS
+								</Text>
+							</VStack>
 						</VStack>
-						<VStack align='start'>
-							<Text
-								as='h2'
-								fontSize='6xl'
-								fontWeight='bold'
-								textColor='brand.newBlack'
-								lineHeight='1'
-								textTransform='uppercase'
-							>
-								{data.certifiedEventsTotal}
-							</Text>
-							<Text
-								fontSize={{ base: 'xl', md: '2xl' }}
-								fontWeight='medium'
-								textColor='brand.newBlack'
-							>
-								{' '}
-								PROJECTS RAISED FUNDS
-							</Text>
-						</VStack>
-					</VStack>}
+					)}
 				</GridItem>
 			</SimpleGrid>
 			<Flex

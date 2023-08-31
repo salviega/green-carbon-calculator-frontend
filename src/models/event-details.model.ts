@@ -10,7 +10,7 @@ export interface EventDetails {
 	number_of_people_arriving_by_car: number
 	average_distance_traveled_by_car: string
 	number_of_people_traveling_by_public_transport: number
-	average_distance_traveled_public: number,
+	average_distance_traveled_public: number
 	short_haul_flights: number
 	medium_haul_flights: number
 	long_haul_flights: number

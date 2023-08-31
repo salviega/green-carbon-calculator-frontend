@@ -75,7 +75,7 @@ export default function EventDetails({
 			const certificate: CertificateDetails = {
 				owner: projectInfo?.ownerWallet ?? (account.address as string), // wallet
 				image:
-					"https://emerald-personal-constrictor-170.mypinata.cloud/ipfs/QmPa51x8AwFYRi6NhqkcQKQdEmMzFUnU5vuvzJWYv36WWm", //TODO include ipfs image
+					'https://emerald-personal-constrictor-170.mypinata.cloud/ipfs/QmPa51x8AwFYRi6NhqkcQKQdEmMzFUnU5vuvzJWYv36WWm', //TODO include ipfs image
 				project_id: projectInfo.project_id,
 				project_name: projectInfo.name,
 				project_description: projectInfo.description,
@@ -417,20 +417,34 @@ export default function EventDetails({
 
 	return (
 		<>
-			<Flex align='start' flexDirection={{ base: 'column', md: 'row' }} height='90%'>
+			<Flex
+				align='start'
+				flexDirection={{ base: 'column', md: 'row' }}
+				height='90%'
+			>
 				<VStack align='start' width={{ base: '100%', md: '40%' }} height='100%'>
-					<Text fontWeight='semibold' fontSize='lg' textColor='gray.700' pb='2' width='100%' height='10%'>
+					<Text
+						fontWeight='semibold'
+						fontSize='lg'
+						textColor='gray.700'
+						pb='2'
+						width='100%'
+						height='10%'
+					>
 						{' '}
 						{event.name}
 					</Text>
-					<Text textColor='gray.500' width='100%' height='70%' noOfLines={5}> {event.description}</Text>
+					<Text textColor='gray.500' width='100%' height='70%' noOfLines={5}>
+						{' '}
+						{event.description}
+					</Text>
 					{event.isCertified && (
 						<Button
 							variant='primary'
-              justifyContent='flex-end'
+							justifyContent='flex-end'
 							size='sm'
 							onClick={() => setCertificate(true)}
-              mt='1'
+							mt='1'
 						>
 							Show Certificate
 						</Button>
@@ -438,7 +452,7 @@ export default function EventDetails({
 					{owner && !event.isCertified && (
 						<Button
 							variant='primary'
-              alignSelf='flex-end'
+							alignSelf='flex-end'
 							size='sm'
 							onClick={() => setIsOpen(true)}
 							mt='1'

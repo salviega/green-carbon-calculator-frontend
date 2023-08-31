@@ -42,7 +42,7 @@ const MyProjects = () => {
 					>
 						My projects
 					</Text>
-					<Projectsection type={SectionType.MY_PROJECTS}/>
+					<Projectsection type={SectionType.MY_PROJECTS} />
 				</>
 			) : (
 				<>

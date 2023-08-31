@@ -26,7 +26,7 @@ interface LayoutProps {
 }
 interface NavLinkProps {
 	children: React.ReactNode
-  link: string
+	link: string
 }
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -103,7 +103,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 							fontWeight='semibold'
 						>
 							{Links.map(link => (
-								<NavLink key={link.link} link={link.link}>{link.name}</NavLink>
+								<NavLink key={link.link} link={link.link}>
+									{link.name}
+								</NavLink>
 							))}
 						</HStack>
 					</HStack>
@@ -126,7 +128,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 					<Box pb={4} display={{ md: 'none' }}>
 						<Stack as={'nav'} spacing={4}>
 							{Links.map(link => (
-								<NavLink key={link.link} link={link.link}>{link.name}</NavLink>
+								<NavLink key={link.link} link={link.link}>
+									{link.name}
+								</NavLink>
 							))}
 						</Stack>
 					</Box>
