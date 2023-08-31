@@ -8,7 +8,7 @@ const metadata = {
 	description: 'Decentralized calculator'
 }
 
-const Discovery = () => {
+const Explore = () => {
 	return (
 		<>
 			<Head>
@@ -31,4 +31,4 @@ const Discovery = () => {
 	)
 }
 
-export default Discovery
+export default Explore

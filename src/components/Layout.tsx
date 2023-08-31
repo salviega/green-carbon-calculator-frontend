@@ -18,8 +18,8 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Link from 'next/link'
 
 const Links = [
-	{ name: 'My projects', link: 'myprojects' },
-	{ name: 'Discover projects', link: 'discovery' }
+	{ name: 'Explore', link: 'explore' },
+	{ name: 'My projects', link: 'myprojects' }
 ]
 interface LayoutProps {
 	children: React.ReactNode

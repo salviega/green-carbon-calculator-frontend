@@ -153,14 +153,7 @@ export default function Explorer() {
 				</Text>
 				<SimpleGrid minChildWidth='80px' spacing='40px'>
 					<Image
-						src={'/Images/celo.png'}
-						alt='celo logo'
-						h={24}
-						w={36}
-						fit='contain'
-					/>
-					<Image
-						src={'/Images/toucan.png'}
+						src={'/Images/fundingthecommons.png'}
 						alt='celo logo'
 						h={24}
 						w={36}
@@ -175,6 +168,28 @@ export default function Explorer() {
 					/>
 					<Image
 						src={'/Images/filecoin.png'}
+						alt='celo logo'
+						h={24}
+						w={36}
+						fit='contain'
+					/>
+					<Image
+						src={'/Images/celo.png'}
+						alt='celo logo'
+						h={24}
+						w={36}
+						fit='contain'
+					/>
+					<Image
+						src={'/Images/toucan.png'}
+						alt='celo logo'
+						h={24}
+						w={36}
+						fit='contain'
+					/>
+
+					<Image
+						src={'/Images/myclimate.png'}
 						alt='celo logo'
 						h={24}
 						w={36}
