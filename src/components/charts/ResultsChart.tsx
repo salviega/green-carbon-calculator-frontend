@@ -59,7 +59,10 @@ const ResultsChart: React.FC<EmissionDetails> = ({
 							color: undefined,
 							offsetY: 16,
 							formatter: function (val: number) {
-								return val.toFixed(2).toString() // Convert val to string using toFixed()
+								if (typeof val === 'number') {
+									return val.toFixed(2)
+								}
+								return val // O cualquier valor de respaldo que desees mostrar
 							}
 						},
 						total: {
