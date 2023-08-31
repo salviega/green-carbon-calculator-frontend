@@ -110,12 +110,12 @@ const Form2Create: React.ForwardRefRenderFunction<
 					fontWeight='medium'
 					fontSize='md'
 				>
-					Main Responsable Name (or handle)
+					Project Representative (Name/ENS)
 				</FormLabel>
 				<Input
 					disabled={loading}
 					id='responsableName'
-					placeholder='Main responsable ...'
+					placeholder='Project representative ...'
 					type='text'
 					maxLength={70}
 					required
@@ -133,7 +133,7 @@ const Form2Create: React.ForwardRefRenderFunction<
 					fontWeight='medium'
 					fontSize='md'
 				>
-					Main Responsable wallet
+					Representative Wallet
 				</FormLabel>
 				<Input
 					disabled={true}
@@ -155,7 +155,7 @@ const Form2Create: React.ForwardRefRenderFunction<
 					fontWeight='medium'
 					fontSize='md'
 				>
-					Country where the group is based
+					Base Country
 				</FormLabel>
 				<Select
 					disabled={loading}

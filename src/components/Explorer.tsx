@@ -205,10 +205,11 @@ export default function Explorer() {
 			>
 				<GridItem colSpan={1}>
 					<VStack align='start'>
-						<Text fontSize='xl' fontWeight='medium' textColor='brand.newBlack'>
-							{' '}
-							Total offsets
-						</Text>
+						<Text
+							fontSize='xl'
+							fontWeight='medium'
+							textColor='brand.newBlack'
+						></Text>
 						<Text
 							as='h2'
 							fontSize={{ base: '4xl', md: '6xl' }}
@@ -241,7 +242,7 @@ export default function Explorer() {
 									textColor='brand.newBlack'
 								>
 									{' '}
-									CARBON TONS
+									CARBON OFFSET
 								</Text>
 							</VStack>
 							<VStack align='start'>
@@ -261,7 +262,7 @@ export default function Explorer() {
 									textColor='brand.newBlack'
 								>
 									{' '}
-									PROJECTS RAISED FUNDS
+									REGISTRED PROJECTS
 								</Text>
 							</VStack>
 						</VStack>
