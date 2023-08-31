@@ -245,6 +245,7 @@ export default function Calculator(props: CalculatorProps) {
 			response = await axios.post(scrapperUrl, body, {
 				headers: headers
 			})
+			response = response.data
 		} catch (error) {
 			console.error(error)
 			response = generateRandomEmissionDetails()

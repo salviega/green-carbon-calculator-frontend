@@ -11,6 +11,9 @@ const ResultsChart: React.FC<EmissionDetails> = ({
 	co2_amount,
 	sections
 }: EmissionDetails) => {
+	console.log('this is sections ',sections);
+	console.log('this is co2_amount',co2_amount);
+	
 	const sectionValues = Object.values(sections)
 	const sectionKeys = Object.keys(sections)
 	const [series, setSeries] = useState<number[]>(sectionValues)

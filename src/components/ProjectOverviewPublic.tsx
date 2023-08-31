@@ -54,6 +54,8 @@ export default function OverviewPublic({ project, owner }: ProjectProps) {
 					>
 						<Link
 							href={`https://mumbai.polygonscan.com/address/${FootprintContractJson.address}`}
+							target='blank'
+							rel='noopener noreferrer'
 						>
 							{FootprintContractJson.address}
 						</Link>
