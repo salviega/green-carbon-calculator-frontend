@@ -22,7 +22,7 @@ const ProyectCard = ({ project }: ProjectCardInput) => {
 		<Card maxW='sm' borderRadius='3xl'>
 			<Link
 				href={`dashboard?id=${project.project_id}`}
-				target='_blank'
+				target='_self'
 				rel='noopener noreferrer'
 			>
 				<CardHeader>

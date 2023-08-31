@@ -17,10 +17,6 @@ import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Link from 'next/link'
 
-const Links = [
-	{ name: 'Explore', link: 'explore' },
-	{ name: 'My projects', link: 'myprojects' }
-]
 interface LayoutProps {
 	children: React.ReactNode
 }
@@ -28,9 +24,10 @@ interface NavLinkProps {
 	children: React.ReactNode
 	link: string
 }
+
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
-	// const { colorMode, toggleColorMode } = useColorMode()
+
 	const NavLink: React.FC<NavLinkProps> = ({ children, link }) => {
 		return (
 			<Box
@@ -102,11 +99,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 							color='white'
 							fontWeight='semibold'
 						>
-							{Links.map(link => (
-								<NavLink key={link.link} link={link.link}>
-									{link.name}
-								</NavLink>
-							))}
+							<NavLink link='explore'>Explore</NavLink>
+							<NavLink link='myprojects'>My projects</NavLink>
 						</HStack>
 					</HStack>
 					<Flex alignItems={'center'} justifyContent={'space-between'}>
