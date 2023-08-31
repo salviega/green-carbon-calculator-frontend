@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+	Box,
 	Stack,
 	Flex,
 	Button,
@@ -10,11 +11,16 @@ import {
 	Avatar,
 	HStack
 } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { Project } from '@/models/project.model'
 export interface ProjectProps {
 	project: Project
 	owner?: boolean
 }
+
+import FootprintContractJson from '../assets/contracts/Footprint.json'
+import Link from 'next/link'
+
 export default function OverviewPublic({ project, owner }: ProjectProps) {
 	const sliderValue =
 		project.raisedTotal === 0
@@ -23,9 +29,37 @@ export default function OverviewPublic({ project, owner }: ProjectProps) {
 
 	return (
 		<>
-			<Text fontWeight='semibold' pb='2'>
-				Project Overview
-			</Text>
+			<Box
+				display={'flex'}
+				alignItems={'center'}
+				justifyContent={'space-between'}
+			>
+				<Text fontWeight='semibold' pb='2'>
+					Project Overview
+				</Text>
+				<Box
+					display={'flex'}
+					alignItems={'center'}
+					justifyContent={'space-between'}
+					gap={1}
+				>
+					<Text fontWeight='semibold' pb='2'>
+						Footprint address:
+					</Text>
+
+					<Text
+						pb='1'
+						fontSize={'xs'}
+						_hover={{ textDecoration: 'none', color: 'green' }}
+					>
+						<Link
+							href={`https://mumbai.polygonscan.com/address/${FootprintContractJson.address}`}
+						>
+							{FootprintContractJson.address}
+						</Link>
+					</Text>
+				</Box>
+			</Box>
 			<Flex
 				h={'250px'}
 				backgroundImage={`url(${project.banner})`}

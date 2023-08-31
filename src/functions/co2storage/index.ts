@@ -120,7 +120,7 @@ export async function addTemplate(): Promise<any> {
 		recycling: { type: 'string' }
 	}
 
-	const templateName: string = 'Footprint v3'
+	const templateName: string = 'Footprint v4'
 	const templateDescription: string =
 		'Template to compensate netzero certificate events'
 	const chainName: string = 'Footprint'
