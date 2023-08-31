@@ -500,7 +500,7 @@ export const initFormInfo: EventDetails = {
 type SectionKey = keyof EmissionDetails['sections']
 
 function generateRandomEmissionDetails(): EmissionDetails {
-	const co2_amount = Math.round(Math.random() * 200) / 100 + 2
+	const co2_amount = Math.random() * 2 + 2
 
 	const sectionKeys: SectionKey[] = [
 		'Mobility',
