@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { getAccount } from '@wagmi/core'
-import { Container, Text, Center, VStack } from '@chakra-ui/react'
+import { Container, Text, Center, VStack, Button, Flex } from '@chakra-ui/react'
 import Projectsection, { SectionType } from '../../components/ProjectsSection'
 import Head from 'next/head'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -23,6 +23,9 @@ const MyProjects = () => {
 			console.log('Disconnected')
 		}
 	})
+	const onCreateProject = () => {
+
+	}
 	return (
 		<>
 			<Head>
@@ -33,15 +36,24 @@ const MyProjects = () => {
 			</Head>
 			{walletConnected ? (
 				<>
-					<Text
-						as='h2'
-						fontSize='5xl'
-						marginY='12'
-						fontWeight='bold'
-						textColor='brand.newBlack'
-					>
-						My projects
-					</Text>
+					<Flex justifyContent="flex-start" alignItems="center" my="12">
+						<Text
+							as='h2'
+							fontSize='5xl'
+							fontWeight='bold'
+							textColor='brand.newBlack'
+						>
+							My projects
+						</Text>
+						<Button
+							w='10rem'
+							onClick={onCreateProject}
+							variant='primary'
+							ml="10" // Agregar un margen izquierdo para dar espacio entre el texto y el botón
+						>
+							Create Project
+						</Button>
+					</Flex>
 					<Projectsection type={SectionType.MY_PROJECTS}/>
 				</>
 			) : (
