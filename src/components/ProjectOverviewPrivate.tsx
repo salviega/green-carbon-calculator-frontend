@@ -29,7 +29,7 @@ export default function OverviewPrivate({ project, owner }: ProjectProps) {
           <Circle bg="brand.light" size="36px" color="gray.500">
             <Icon as={TbSum} /></Circle>
           <VStack gap="0" align="start">
-            <Text fontWeight="semibold" fontSize="xl" textColor="gray.700">{`$ ${project.raisedTotal}`}</Text>
+            <Text fontWeight="semibold" fontSize="xl" textColor="gray.700">{`$ ${project.raisedTotal.toFixed(2)}`}</Text>
             <Text textColor="gray.500" fontSize="md">Total Raised</Text>
           </VStack>
           <Spacer />
@@ -40,7 +40,7 @@ export default function OverviewPrivate({ project, owner }: ProjectProps) {
           <Circle bg="brand.light" size="36px" color="gray.500">
             <Icon as={SlTarget} /></Circle>
           <VStack gap="0" align="start">
-            <Text fontWeight="semibold" fontSize="xl" textColor="gray.700">{`$ ${project.totalToraise}`}</Text>
+            <Text fontWeight="semibold" fontSize="xl" textColor="gray.700">{`$ ${project.totalToraise.toFixed(2)}`}</Text>
             <Text textColor="gray.500" fontSize="md">Goal</Text>
           </VStack>
           <Spacer />

@@ -53,7 +53,7 @@ const ProyectCard = ({ project }: ProjectCardInput) => {
 								Total Raised
 							</Text>
 							<Text fontSize='xl' textColor='gray.700' fontWeight='bold'>
-								{`$ ${project.raisedTotal}`}
+								{`$ ${project.raisedTotal.toFixed(2)}`}
 							</Text>
 						</VStack>
 						<VStack gap='1'>
@@ -61,7 +61,7 @@ const ProyectCard = ({ project }: ProjectCardInput) => {
 								Goals
 							</Text>
 							<Text fontSize='xl' textColor='gray.700' fontWeight='bold'>
-								{`$ ${project.totalToraise}`}
+								{`$ ${project.totalToraise.toFixed(2)}`}
 							</Text>
 						</VStack>
 						<VStack gap='1'>
@@ -69,7 +69,7 @@ const ProyectCard = ({ project }: ProjectCardInput) => {
 								Left
 							</Text>
 							<Text fontSize='xl' textColor='gray.700' fontWeight='bold'>
-								{`$ ${project.totalToraise - project.raisedTotal}`}
+								{`$ ${project.totalToraise.toFixed(2) - project.raisedTotal.toFixed(2)}`}
 							</Text>
 						</VStack>
 					</Flex>
