@@ -344,7 +344,7 @@ export default function EventDetails({
 										mt='2'
 										fontWeight='semibold'
 										textColor='brand.dark'
-										href={`https://mumbai.polygonscan.com/address/${event.creationTx}`}
+										href={`https://mumbai.polygonscan.com/tx/${event.creationTx}`}
 										isExternal
 										target='_blank'
 										rel='noopener noreferrer'

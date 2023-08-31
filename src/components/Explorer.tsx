@@ -253,7 +253,7 @@ export default function Explorer() {
 									lineHeight='1'
 									textTransform='uppercase'
 								>
-									{data?.certifiedEventsTota ?? 0}
+									{data?.certifiedEventsTotal ?? 0}
 								</Text>
 								<Text
 									fontSize={{ base: 'xl', md: '2xl' }}
