@@ -121,11 +121,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 				{isOpen ? (
 					<Box pb={4} display={{ md: 'none' }}>
 						<Stack as={'nav'} spacing={4}>
-							{Links.map(link => (
-								<NavLink key={link.link} link={link.link}>
-									{link.name}
-								</NavLink>
-							))}
+							<NavLink link='explore'>Explore</NavLink>
+							<NavLink link='myprojects'>My projects</NavLink>
 						</Stack>
 					</Box>
 				) : null}
