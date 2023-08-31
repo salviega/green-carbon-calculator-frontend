@@ -25,10 +25,45 @@ const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : Emiss
 		tooltip: {
 			y: {
 				formatter: function (val: number) {
-					return `${val}%`
+					return `${parseFloat(val).toFixed(2)}%`
 				}
 			}
 		},
+    plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            show: true,
+            name: {
+              show: true,
+              fontSize: '22px',
+              fontFamily: 'Rubik',
+              color: '#dfsda',
+              offsetY: -10
+            },
+            value: {
+              show: true,
+              fontSize: '16px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              color: undefined,
+              offsetY: 16,
+              formatter: function (val) {
+                return parseFloat(val).toFixed(2); // Formatea el valor a dos decimales
+              }
+            },
+            total: {
+              show: true,
+              label: 'Total',
+              color: '#373d3f',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontWeight: 'bold',
+              formatter: function (w) {
+                const totalValue = w.globals.seriesTotals.reduce((a, b) => {
+                  return a + b;
+                }, 0);
+                return totalValue.toFixed(2);
+              }}
+            }}}},
 		legend: {
 			offsetY: 0,
 			position: 'bottom',
@@ -51,6 +86,7 @@ const ResultsChart: React.FC<EmissionDetails> = ( {co2_amount, sections} : Emiss
 			}
 		]
 	})
+
 
 	useEffect(() => {
 		setOptions((prevOptions: any) => ({
