@@ -53,9 +53,7 @@ export default function OverviewPublic({ project, owner }: ProjectProps) {
 						_hover={{ textDecoration: 'none', color: 'green' }}
 					>
 						<Link
-							size='sm'
 							href={`https://mumbai.polygonscan.com/address/${FootprintContractJson.address}`}
-							isExternal
 						>
 							{FootprintContractJson.address}
 						</Link>
