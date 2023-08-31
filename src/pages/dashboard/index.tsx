@@ -58,18 +58,15 @@ const Dashboard = () => {
 	const [emissionSummary, setEmissionSummary] =
 		useState<EmissionDetails | null>(null)
 	useEffect(() => {
-		console.log(router.query.id)
 		if (router.query.id) readInfo(router.query.id as string)
 	}, [router.query.id])
 	useEffect(() => {
-		console.log('change event ', eventIndex)
 		if (projectInfo) setEventOnDetail(projectInfo.events[eventIndex])
 	}, [eventIndex])
 	const readInfo = async (id: string) => {
 		try {
-			readCertificates()
 			const info: Project | null = await getProjectById(id)
-			console.log(info)
+			console.log('info is ', info)
 			if (info) {
 				setProjectInfo(info)
 				setLoading(false)
@@ -80,6 +77,26 @@ const Dashboard = () => {
 		} catch (error) {
 			console.log(error)
 			router.push('/')
+		}
+	}
+	const refetch = async () => {
+		try {
+			if (router.query.id) {
+				setLoading(true)
+				const info: Project | null = await getProjectById(
+					router.query.id as string
+				)
+				console.log('new info is ', info)
+				if (info) {
+					setProjectInfo(info)
+					setLoading(false)
+					calculateTotalEmissions(info)
+					setEventOnDetail(info.events[eventIndex])
+					checkOwner(info)
+				}
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 	const calculateTotalEmissions = (info: Project) => {
@@ -124,26 +141,6 @@ const Dashboard = () => {
 			}
 		} else {
 			setOwner(false)
-		}
-	}
-	const readCertificates = async () => {
-		try {
-			const provider = new ethers.providers.Web3Provider(
-				(window as any).ethereum
-			) // Usa el proveedor de Metamask
-			const contract = new ethers.Contract(
-				FootprintContractJson.address,
-				FootprintContractJson.abi,
-				provider
-			)
-			const balance = await contract.balanceOf(account.address)
-			console.log('balance is ', balance)
-			console.log(BigNumber.from(balance._hex).toString())
-			const balances = await contract.balances(account.address)
-			console.log('balances are ', balances)
-			console.log(BigNumber.from(balances._hex).toString())
-		} catch (error) {
-			console.log(error)
 		}
 	}
 	const onCreateEvent = async (
@@ -325,6 +322,7 @@ const Dashboard = () => {
 								event={eventOnDetail}
 								owner={owner}
 								projectInfo={projectInfo}
+								refetch={refetch}
 							/>
 						</GridItem>
 					)}

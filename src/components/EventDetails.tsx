@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 import { Contract, ethers } from 'ethers'
 import {
 	Button,
@@ -12,10 +12,7 @@ import {
 	ModalBody,
 	ModalFooter,
 	Flex,
-	Box,
-	HStack,
 	Link,
-	Spacer,
 	Image,
 	Spinner,
 	useToast
@@ -32,11 +29,13 @@ interface EventDetailProps {
 	event: Event
 	owner: boolean
 	projectInfo: Project
+	refetch: () => void;
 }
 export default function EventDetails({
 	event,
 	owner,
-	projectInfo
+	projectInfo, 
+	refetch
 }: EventDetailProps) {
 	const { updateProject } = firebaseApi()
 	const account = getAccount()
@@ -254,6 +253,7 @@ export default function EventDetails({
 		if (certificateInfo) projectInfo.certificates.push(certificateInfo)
 		const update = await updateProject(projectInfo)
 		console.log('event updated')
+		refetch()
 		setPurchased(false)
 		setLoading(false)
 	}
@@ -379,7 +379,7 @@ export default function EventDetails({
 						<ModalBody>
 							<Text>Are you sure about purchasing this certificate?</Text>
 							<Text>{`The approx cost is ${
-								event.emissionDetails.co2_amount * 10
+								(event.emissionDetails.co2_amount * 10).toFixed(2)
 							} USD`}</Text>
 						</ModalBody>
 						<ModalFooter>
