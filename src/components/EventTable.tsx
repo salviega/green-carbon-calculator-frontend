@@ -49,6 +49,9 @@ export default function EventTable({ events }: EventListProps) {
 								<Tr key={event.event_id}>
 									<Td>{trimString(event.event_id)}</Td>
 									<Td>{event.name}</Td>
+									<Td isNumeric>
+										{event.emissionDetails.co2_amount.toFixed(2)}
+									</Td>
 									<Td isNumeric>{event.emissionDetails.sections.Mobility}</Td>
 									<Td isNumeric>
 										{event.emissionDetails.sections.Accommodation}
@@ -57,7 +60,6 @@ export default function EventTable({ events }: EventListProps) {
 									<Td isNumeric>{event.emissionDetails.sections.Energy}</Td>
 									<Td isNumeric>{event.emissionDetails.sections.Materials}</Td>
 									<Td isNumeric>{event.emissionDetails.sections.Transport}</Td>
-									<Td isNumeric>{event.emissionDetails.sections.Waste}</Td>
 									<Td isNumeric>{event.emissionDetails.sections.Waste}</Td>
 								</Tr>
 							)
